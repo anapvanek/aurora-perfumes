@@ -1,7 +1,7 @@
 # Aurora Perfumes – catálogo web
 
-Catálogo de Aurora Perfumes (Mendoza). Publicado en https://auroraperfumesmza.netlify.app/
-(Netlify publica la carpeta `site/` automáticamente con cada push a `main`).
+Catálogo de Aurora Perfumes (Mendoza). Publicado en https://aurora-perfumes.tiendamendoza.workers.dev/
+(Cloudflare Workers publica la carpeta `site/` automáticamente con cada push a `main`; config en wrangler.jsonc). Antes estaba en Netlify (auroraperfumesmza.netlify.app), que cobra créditos por publicación: no usar.
 
 La dueña escribe en español rioplatense; responderle siempre en español.
 

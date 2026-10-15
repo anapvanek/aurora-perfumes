@@ -4,7 +4,7 @@ Uso: python3 src/build.py"""
 import json,os,re,shutil
 R=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC=os.path.join(R,'src');SITE=os.path.join(R,'site')
-URL="https://auroraperfumesmza.netlify.app/"
+URL="https://aurora-perfumes.tiendamendoza.workers.dev/"
 data=open(os.path.join(SRC,'data.js'),encoding='utf8').read()
 ph={f[:-4]:'img/'+f for f in sorted(os.listdir(os.path.join(SITE,'img'))) if f.endswith('.jpg')}
 # Fotos de árabes originales: producto sobre fondo blanco -> se muestran enteras (contain)
