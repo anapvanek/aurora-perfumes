@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Aurora Perfumes</title>
+<meta name="description" content="Catálogo de Aurora Perfumes, Mendoza: perfumes árabes originales, extractos de 60 ml, tubitos de 35 ml, perfuminas textiles y difusores. Armá tu pedido y envialo por WhatsApp.">
+<meta name="theme-color" content="#2f4528">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Aurora Perfumes · Catálogo">
+<meta property="og:description" content="Perfumes árabes originales, extractos, tubitos, perfuminas y difusores. Armá tu pedido y envialo por WhatsApp.">
+<meta property="og:image" content="{{SITE}}og.jpg">
+<meta property="og:url" content="{{SITE}}">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="{{SITE}}">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
+<link rel="preload" href="fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:"Montserrat";font-style:normal;font-display:swap;font-weight:100 900;src:url(fonts/montserrat.woff2) format("woff2")}
+/* Aurora Perfumes catalog. Brand: forest green + linen, round Didone logo.
+   Motif: the arched "bottle window" that frames every product photo. */
+:root{
+  color-scheme:light;
+  --forest:#2f4528; --forest-2:#3f5c36; --moss:#5d7a52;
+  --linen:#f1ede4; --paper:#fbfaf6; --cream:#efe9dc;
+  --ink:#1d2618; --muted:#646a5a; --line:#dcd5c5; --line-2:#e8e2d5;
+  --brass:#94743d; --red:#a8261d; --ok:#2f6b3a;
+  --display:"Montserrat",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --ui:"Montserrat",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --r:16px; --wrap:1180px; --gut:16px;
+  --shadow:0 1px 2px rgba(29,38,24,.06),0 8px 24px -12px rgba(29,38,24,.18);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:150px}
+body{margin:0;background:var(--linen);color:var(--ink);font:400 15px/1.5 var(--ui);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--forest);outline-offset:2px;border-radius:6px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-inline:var(--gut)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- Hero ---------- */
+.hero{background:var(--forest);color:var(--cream);position:relative;overflow:hidden}
+.hero::after{content:"";display:none;position:absolute;right:-120px;top:-160px;width:420px;height:560px;border-radius:999px 999px 0 0;border:1px solid rgba(239,233,220,.14);pointer-events:none}
+.hero .wrap{padding-block:22px 20px;display:grid;grid-template-columns:auto 1fr;gap:14px 16px;align-items:center;position:relative;z-index:1}
+.logo{width:76px;height:76px;border-radius:50%;box-shadow:0 0 0 4px rgba(239,233,220,.12)}
+.hero h1{font:700 clamp(26px,7vw,46px)/1.05 var(--display);letter-spacing:-.015em;margin:0}
+.hero .where{margin:6px 0 0;font-size:13.5px;opacity:.75}
+.lede{grid-column:1/-1;margin:0;max-width:62ch;font-size:14.5px;line-height:1.55;color:rgba(239,233,220,.88)}
+.perks{grid-column:1/-1;list-style:none;margin:0 calc(var(--gut)*-1);padding:0 var(--gut);display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}.perks::-webkit-scrollbar{display:none}
+.perks li{flex:none;display:flex;align-items:center;gap:7px;font-size:12.5px;white-space:nowrap;font-weight:500;padding:7px 12px 7px 10px;border-radius:999px;background:rgba(239,233,220,.1);border:1px solid rgba(239,233,220,.16)}
+.perks svg{width:16px;height:16px;flex:none;opacity:.9}
+@media (min-width:760px){
+  .hero::after{display:block}
+  .hero .wrap{padding-block:44px 40px;gap:20px 32px}
+  .lede{font-size:15px}
+  .perks{flex-wrap:wrap;margin:2px 0 0;padding:0;overflow:visible}
+  .logo{width:132px;height:132px;grid-row:span 2}
+  .lede{grid-column:2}
+  .perks{grid-column:2}
+}
+
+/* ---------- Sticky bar ---------- */
+.bar{position:sticky;top:0;z-index:20;background:rgba(241,237,228,.92);-webkit-backdrop-filter:saturate(1.4) blur(12px);backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line)}
+.bar .wrap{padding-block:10px;display:grid;gap:10px}
+.srow{display:flex;gap:10px;align-items:center}
+.search{flex:1;min-width:0;position:relative;display:flex;align-items:center}
+.search svg{position:absolute;left:14px;width:18px;height:18px;color:var(--muted);pointer-events:none}
+#q{width:100%;font:inherit;font-size:16px;padding:11px 42px 11px 42px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--ink);-webkit-appearance:none;appearance:none}
+#q::placeholder{color:#8a8e80}
+#q::-webkit-search-cancel-button{display:none}
+#q:focus{outline:none;border-color:var(--forest);box-shadow:0 0 0 3px rgba(47,69,40,.15)}
+.qx{position:absolute;right:6px;width:32px;height:32px;border:0;border-radius:50%;background:var(--line-2);color:var(--muted);cursor:pointer;display:grid;place-items:center;font-size:18px;line-height:1}
+.cart-btn{position:relative;flex:none;width:46px;height:46px;border-radius:50%;border:0;background:var(--forest);color:var(--cream);display:grid;place-items:center;cursor:pointer}
+.cart-btn svg{width:22px;height:22px}
+.badge{position:absolute;top:-3px;right:-3px;min-width:21px;height:21px;padding:0 6px;border-radius:999px;background:var(--brass);color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center;box-shadow:0 0 0 2px var(--linen);font-variant-numeric:tabular-nums}
+.badge.bump{animation:bump .35s ease}
+@keyframes bump{40%{transform:scale(1.3)}}
+.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:4px}
+.tab{border:0;background:transparent;border-radius:10px;padding:7px 2px 6px;cursor:pointer;display:grid;gap:1px;justify-items:center;color:var(--muted);line-height:1.15;min-width:0}
+.tab b{font-weight:600;font-size:clamp(11.5px,3.05vw,13.5px);letter-spacing:-.015em;color:var(--ink);max-width:100%;text-align:center}
+.tab small{font-size:11.5px;font-variant-numeric:tabular-nums}
+.tab:disabled{opacity:.45;cursor:default}
+.tab[aria-selected="true"]{background:var(--forest);color:rgba(239,233,220,.8)}
+.tab[aria-selected="true"] b{color:var(--cream)}
+.tab .lg{display:none}
+@media (min-width:640px){.tab .lg{display:inline}.tab .sm{display:none}.tab b{font-size:14px}}
+
+/* ---------- Category intro ---------- */
+.intro{padding-top:26px;display:grid;gap:12px}
+.intro h2{font:700 clamp(24px,5vw,34px)/1.1 var(--display);letter-spacing:-.01em;margin:0;color:var(--forest)}
+.intro p{margin:0;max-width:66ch;color:#3c4535}
+.intro .fine{font-size:13px;color:var(--muted)}
+.prices-box{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;max-width:640px}
+.pb-h{padding:13px 16px 10px;font-weight:700}
+.pb-h small{display:block;font-weight:400;font-size:13px;color:var(--muted)}
+.tl{list-style:none;margin:0;padding:0 16px 8px;border-top:1px solid var(--line-2)}
+.tl li{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line-2);font-size:14px;font-variant-numeric:tabular-nums}
+.tl li:last-child{border-bottom:0}
+.tl li{align-items:baseline}
+.tl li>span:first-child{text-align:left}
+.tl li>span:last-child{text-align:right;white-space:nowrap}
+.tl small{display:block;color:var(--muted);font-size:12px;font-weight:400}
+.tl .best{color:var(--forest);font-weight:600}
+
+/* ---------- Tools ---------- */
+.tools{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;padding-top:18px}
+.seg{display:inline-flex;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:3px}
+.seg button{border:0;background:transparent;border-radius:999px;padding:7px 14px;font-size:13.5px;font-weight:600;color:var(--muted);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--forest);color:var(--cream)}
+.seg-l{font-size:13px;color:var(--muted);margin-right:-6px}
+.sel{position:relative;display:inline-flex;align-items:center}
+.sel select{font:inherit;font-size:13.5px;font-weight:600;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:8px 34px 8px 14px;-webkit-appearance:none;appearance:none;cursor:pointer}
+.sel svg{position:absolute;right:12px;width:14px;height:14px;pointer-events:none;color:var(--muted)}
+.chk{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:500;cursor:pointer;user-select:none}
+.chk input{width:18px;height:18px;accent-color:var(--forest);margin:0}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:14px 0 2px;margin-inline:calc(var(--gut)*-1);padding-inline:var(--gut);scroll-padding-inline:var(--gut)}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:7px 14px;border-radius:999px;font-size:13.5px;font-weight:500;cursor:pointer;white-space:nowrap}
+.chip small{color:var(--muted);margin-left:4px;font-variant-numeric:tabular-nums}
+.chip[aria-pressed="true"]{border-color:var(--forest);background:var(--forest);color:var(--cream)}
+.chip[aria-pressed="true"] small{color:rgba(239,233,220,.7)}
+
+/* ---------- Product grid ---------- */
+.group{padding-top:30px}
+.ghead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:14px}
+.ghead h2,.ghead h3{font:700 19px/1.2 var(--display);margin:0;color:var(--forest)}
+.ghead span{font-size:13px;color:var(--muted);white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (min-width:980px){
+  .group.side{display:grid;grid-template-columns:200px minmax(0,1fr);gap:28px;align-items:start;padding-top:40px}
+  .group.side .ghead{position:sticky;top:150px;flex-direction:column;align-items:flex-start;gap:4px;margin:0;padding-top:6px;border-top:2px solid var(--forest)}
+  .group.side .ghead h3{font-size:20px}
+  .group.side .grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media (min-width:640px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}}
+@media (min-width:900px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (min-width:1140px){.grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.card{background:var(--paper);border:1px solid var(--line-2);border-radius:var(--r);padding:10px;display:flex;flex-direction:column;gap:10px;min-width:0;box-shadow:var(--shadow)}
+.pic{display:block;width:100%;border:0;padding:0;background:none;cursor:pointer;text-align:left}
+.arch{position:relative;aspect-ratio:4/5;border-radius:999px 999px 10px 10px;overflow:hidden;background:#fff;isolation:isolate}
+.arch::after{content:"";position:absolute;inset:6px;border-radius:999px 999px 6px 6px;box-shadow:inset 0 0 0 1px rgba(47,69,40,.12);pointer-events:none;z-index:2}
+.arch img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.arch.cn img{object-fit:contain;padding:16% 8% 6%}
+@media (hover:hover){.pic:hover .arch img{transform:scale(1.04)}}
+.arch.ph{background:radial-gradient(110% 80% at 50% 12%,var(--moss),var(--forest));display:grid;place-items:center;color:var(--cream)}
+.arch.ph .mk{font:700 26px/1 var(--display);letter-spacing:.02em}
+.ml-tag{position:absolute;z-index:3;top:12px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;background:rgba(251,250,246,.9);color:var(--forest);white-space:nowrap;box-shadow:0 0 0 1px rgba(47,69,40,.1)}
+.more-tag{position:absolute;z-index:3;right:10px;bottom:10px;font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;background:rgba(29,38,24,.62);color:#fff}
+.out-tag{position:absolute;z-index:3;left:50%;bottom:12px;transform:translateX(-50%);font-size:12px;font-weight:700;padding:5px 12px;border-radius:999px;background:var(--red);color:#fff;white-space:nowrap}
+.card .meta{display:grid;gap:2px;min-width:0}
+.card .br{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .nm{font-size:15.5px;font-weight:600;line-height:1.25;margin:0;min-height:2.5em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card .nm button{all:unset;cursor:pointer}
+.card .nm button:focus-visible{outline:2px solid var(--forest);outline-offset:2px;border-radius:4px}
+.pr{display:grid;gap:1px;margin-top:auto;font-variant-numeric:tabular-nums}
+.pr b{font-size:19px;font-weight:700;line-height:1.15;color:var(--forest);letter-spacing:-.01em}
+.pr small{font-size:12.5px;color:var(--muted);line-height:1.3}
+.card.out .arch img,.card.out .arch.ph{filter:grayscale(1);opacity:.55}
+.card.out .nm,.card.out .pr{opacity:.55}
+@media (max-width:380px){.card{padding:8px}.card .nm{font-size:14.5px}.pr b{font-size:17px}}
+
+/* add / stepper */
+.add{min-height:42px;display:flex}
+.btn-add{flex:1;border:0;border-radius:999px;background:var(--forest);color:var(--cream);font-weight:600;font-size:14px;padding:11px 10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background .15s}
+.btn-add svg{width:16px;height:16px}
+@media (hover:hover){.btn-add:not(:disabled):hover{background:var(--forest-2)}}
+.btn-add:disabled{background:var(--line-2);color:var(--muted);cursor:not-allowed}
+.step{flex:1;display:flex;align-items:center;justify-content:space-between;background:var(--cream);border-radius:999px;padding:3px}
+.step button{width:36px;height:36px;border-radius:50%;border:0;background:var(--forest);color:var(--cream);font-size:20px;line-height:1;cursor:pointer;display:grid;place-items:center;flex:none}
+.step span{font-weight:700;font-size:16px;font-variant-numeric:tabular-nums;min-width:2ch;text-align:center}
+.step span small{display:block;font-size:10.5px;font-weight:500;color:var(--muted);line-height:1}
+
+/* empty */
+.empty{padding:56px 0 24px;text-align:center;display:grid;gap:12px;justify-items:center}
+.empty h2{font:700 20px/1.25 var(--display);margin:0;color:var(--forest)}
+.empty p{margin:0;color:var(--muted);max-width:40ch}
+.btn-ghost{border:1px solid var(--forest);background:transparent;color:var(--forest);border-radius:999px;padding:10px 18px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+
+/* ---------- How to buy + info ---------- */
+.how{margin-top:56px;background:var(--forest);color:var(--cream);border-radius:22px;padding:26px 20px;display:grid;gap:18px}
+.how h2{font:700 22px/1.2 var(--display);margin:0}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:14px;counter-reset:s}
+.steps li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;counter-increment:s}
+.steps li::before{content:counter(s);width:34px;height:34px;border-radius:50%;border:1px solid rgba(239,233,220,.4);display:grid;place-items:center;font:700 15px/1 var(--display)}
+.steps b{display:block;font-weight:600}
+.steps span{font-size:14px;color:rgba(239,233,220,.78)}
+@media (min-width:760px){.how{padding:34px 36px}.steps{grid-template-columns:repeat(3,1fr);gap:24px}}
+.info{margin-top:14px;display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.ibox{background:var(--paper);border:1px solid var(--line-2);border-radius:var(--r);padding:16px 18px;display:grid;gap:6px;align-content:start}
+.ibox h3{margin:0;font-size:14px;font-weight:700;color:var(--forest);display:flex;align-items:center;gap:8px}
+.ibox h3 svg{width:18px;height:18px}
+.ibox p{margin:0;font-size:14px}
+.ibox a{color:var(--forest);font-weight:600;text-decoration:none;border-bottom:1px solid rgba(47,69,40,.3)}
+footer{margin-top:40px;padding:22px 0 140px;border-top:1px solid var(--line);display:flex;gap:14px;align-items:flex-start;font-size:12.5px;color:var(--muted)}
+footer img{width:44px;height:44px;border-radius:50%;flex:none}
+footer p{margin:0 0 6px}
+
+/* ---------- Cart bar, toast, WA fab ---------- */
+.cartbar{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:0 12px calc(12px + env(safe-area-inset-bottom,0px));pointer-events:none}
+.cartbar .in{pointer-events:auto;max-width:620px;margin:0 auto;background:var(--forest);color:var(--cream);border-radius:20px;padding:10px 10px 10px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 12px 32px -8px rgba(29,38,24,.45)}
+.cartbar .info{flex:1;min-width:0;display:grid;line-height:1.25}
+.cartbar .info b{font-size:17px;font-weight:700;font-variant-numeric:tabular-nums}
+.cartbar .info small{font-size:12.5px;color:rgba(239,233,220,.78);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cartbar button{border:0;border-radius:999px;background:var(--cream);color:var(--forest);font-weight:700;font-size:14px;padding:12px 18px;cursor:pointer;white-space:nowrap}
+.toast{position:fixed;left:50%;bottom:calc(98px + env(safe-area-inset-bottom,0px));transform:translate(-50%,12px);z-index:40;background:var(--ink);color:#fff;border-radius:999px;padding:10px 18px 10px 14px;font-size:14px;display:flex;align-items:center;gap:8px;box-shadow:0 10px 24px -8px rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:calc(100% - 32px)}
+.toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.toast span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.toast button{border:0;background:rgba(255,255,255,.14);color:#fff;border-radius:999px;padding:6px 12px;font-weight:600;font-size:13px;cursor:pointer;white-space:nowrap}
+.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:25;width:56px;height:56px;border-radius:50%;background:#1f8f4e;color:#fff;display:grid;place-items:center;box-shadow:0 10px 24px -6px rgba(0,0,0,.35)}
+.fab svg{width:28px;height:28px}
+
+/* ---------- Sheets ---------- */
+.sheet-bg{position:fixed;inset:0;z-index:50;background:rgba(18,24,15,.55);display:flex;align-items:flex-end;justify-content:center;animation:fade .2s ease}
+.sheet{background:var(--linen);width:100%;max-width:560px;max-height:92vh;max-height:92dvh;overflow:auto;overscroll-behavior:contain;border-radius:22px 22px 0 0;padding:8px 18px calc(22px + env(safe-area-inset-bottom,0px));animation:up .28s cubic-bezier(.2,.8,.2,1)}
+@media (min-width:760px){.sheet-bg{align-items:center;padding:24px}.sheet{border-radius:22px;max-height:88vh}}
+@keyframes up{from{transform:translateY(40px);opacity:.4}}
+@keyframes fade{from{opacity:0}}
+.grab{width:40px;height:4px;border-radius:4px;background:var(--line);margin:4px auto 6px}
+@media (min-width:760px){.grab{display:none}}
+.sh-head{display:flex;justify-content:space-between;align-items:center;gap:12px;position:sticky;top:-8px;background:var(--linen);padding:8px 0;z-index:2}
+.sh-head h2{font:700 22px/1.2 var(--display);margin:0;color:var(--forest)}
+.x{flex:none;width:38px;height:38px;border-radius:50%;border:0;background:var(--paper);box-shadow:0 0 0 1px var(--line);color:var(--ink);cursor:pointer;display:grid;place-items:center}
+.x svg{width:18px;height:18px}
+/* product detail */
+.pd{display:grid;gap:16px}
+.gal{position:relative}
+.gal .arch{aspect-ratio:4/5;max-height:56vh;margin-inline:auto}
+.gal .slides{display:flex;width:100%;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.gal .slides::-webkit-scrollbar{display:none}
+.gal .slides img{flex:0 0 100%;scroll-snap-align:center}
+.dots{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:6px;z-index:3}
+.dots i{width:7px;height:7px;border-radius:50%;background:rgba(29,38,24,.25)}
+.dots i.on{background:var(--forest)}
+.nav{position:absolute;top:50%;z-index:3;width:38px;height:38px;margin-top:-19px;border-radius:50%;border:0;background:rgba(251,250,246,.92);box-shadow:0 1px 4px rgba(0,0,0,.15);cursor:pointer;display:grid;place-items:center}
+.nav svg{width:18px;height:18px}
+.nav.p{left:8px}.nav.n{right:8px}
+.pd .br{font-size:14px;color:var(--muted)}
+.pd h3{font:700 24px/1.15 var(--display);margin:2px 0 0;color:var(--ink)}
+.pd .stock{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--ok)}
+.pd .stock::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+.pd .stock.no{color:var(--red)}
+.pbox{background:var(--paper);border:1px solid var(--line-2);border-radius:var(--r);padding:4px 16px}
+.pbox .tl{padding:0;border:0}
+.pd .add{min-height:48px}
+.pd .btn-add{font-size:15px}
+.pd .step button{width:42px;height:42px}
+.pd .wa-q{justify-self:start}
+.pd .fine{font-size:12.5px;color:var(--muted);margin:0}
+/* cart */
+.cart{display:grid;gap:14px}
+.cgrp{display:grid;gap:8px}
+.cgrp h3{margin:6px 0 0;font-size:13px;font-weight:700;color:var(--forest)}
+.prog{background:var(--paper);border:1px solid var(--line-2);border-radius:12px;padding:10px 12px;display:grid;gap:7px;font-size:13.5px}
+.prog .tr{height:6px;border-radius:6px;background:var(--line-2);overflow:hidden}
+.prog .tr i{display:block;height:100%;background:var(--brass);border-radius:6px;transition:width .3s}
+.prog.done{border-color:rgba(47,107,58,.35)}
+.prog.done .tr i{background:var(--ok)}
+.prog.done span{color:var(--ok);font-weight:600}
+.line{display:grid;grid-template-columns:48px 1fr auto;gap:4px 12px;align-items:center;background:var(--paper);border:1px solid var(--line-2);border-radius:14px;padding:8px 10px 8px 8px}
+.line .th{grid-row:span 2;width:48px;height:60px;border-radius:999px 999px 6px 6px;overflow:hidden;background:#fff}
+.line .th img{width:100%;height:100%;object-fit:cover}
+.line .th.cn img{object-fit:contain;padding:10% 6% 4%}
+.line .th.ph{background:var(--forest)}
+.line .t{min-width:0}
+.line .t small{display:block;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.line .t b{display:block;font-size:14.5px;font-weight:600;line-height:1.2}
+.line .lp{grid-column:2/4;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.line .add{grid-row:1;grid-column:3;min-height:0}
+.line .step{gap:4px;padding:2px}
+.line .step button{width:30px;height:30px;font-size:17px}
+.line .step span{font-size:14px}
+.totals{border-top:1px solid var(--line);padding-top:12px;display:grid;gap:4px}
+.totals .r{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.totals .r b{font-size:26px;font-weight:700;color:var(--forest);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.totals .sv{font-size:13.5px;color:var(--ok);font-weight:600}
+.opts{display:grid;gap:6px}
+.opts .t{font-size:13px;font-weight:600;color:var(--muted)}
+.seg2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg2 button{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:12px;padding:11px 10px;font-weight:600;font-size:14px;cursor:pointer;line-height:1.2}
+.seg2 button[aria-pressed="true"]{border-color:var(--forest);background:var(--forest);color:var(--cream)}
+.fld{display:grid;gap:6px;font-size:13px;font-weight:600;color:var(--muted)}
+.fld input{font:inherit;font-size:16px;font-weight:400;padding:11px 14px;border:1px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink)}
+.fld input:focus{outline:none;border-color:var(--forest);box-shadow:0 0 0 3px rgba(47,69,40,.15)}
+.wa{display:flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;background:#1f8f4e;color:#fff;border-radius:999px;padding:15px;font-weight:700;font-size:16px}
+.wa svg{width:22px;height:22px}
+.small{font-size:12.5px;color:var(--muted);text-align:center;margin:0}
+.clear{border:0;background:transparent;color:var(--muted);text-decoration:underline;font-size:13px;cursor:pointer;justify-self:center;padding:6px}
+body.lock{overflow:hidden}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <img class="logo" src="logo.png" alt="" width="132" height="132">
+    <div>
+      <h1>Aurora Perfumes</h1>
+      <p class="where">Mendoza, Argentina</p>
+    </div>
+    <p class="lede">Perfumes árabes 100% originales, extractos de 60 ml y tubitos de 35 ml inspirados en las fragancias más buscadas. También perfuminas textiles y difusores para tu casa y tu auto.</p>
+    <ul class="perks">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l7 3v6c0 4.4-3 7.8-7 9-4-1.2-7-4.6-7-9V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg>Árabes originales</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg>Retiro o envío en Mendoza</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 12h-8M4 7h16M4 17h10"/></svg>Precios por cantidad</li>
+    </ul>
+  </div>
+</header>
+
+<div class="bar">
+  <div class="wrap">
+    <div class="srow">
+      <label class="search"><span class="sr">Buscar</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" placeholder="Buscar en todo el catálogo" autocomplete="off" enterkeyhint="search">
+        <button class="qx" id="qx" type="button" aria-label="Borrar búsqueda" hidden>×</button>
+      </label>
+      <button class="cart-btn" id="cart-btn" type="button" aria-label="Ver pedido">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        <span class="badge" id="badge" hidden>0</span>
+      </button>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Categorías" id="tabs"></div>
+  </div>
+</div>
+
+<main class="wrap" id="main">
+  <section class="intro" id="intro"></section>
+  <div class="tools" id="tools"></div>
+  <nav class="chips" id="chips" aria-label="Filtrar por marca"></nav>
+  <div id="list" aria-live="polite"></div>
+
+  <section class="how" aria-labelledby="how-t">
+    <h2 id="how-t">Cómo pedir</h2>
+    <ol class="steps">
+      <li><div><b>Elegí tus productos</b><span>Tocá Agregar en cada uno. Podés combinar categorías.</span></div></li>
+      <li><div><b>Revisá tu pedido</b><span>El precio por cantidad se aplica solo y te avisamos cuánto te falta para el siguiente.</span></div></li>
+      <li><div><b>Envialo por WhatsApp</b><span>Se abre el chat con el pedido escrito. Ahí coordinamos pago y entrega.</span></div></li>
+    </ol>
+  </section>
+  <section class="info" aria-label="Información">
+    <div class="ibox"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M6 15h4"/></svg>Formas de pago</h3><p>Efectivo o transferencia.</p></div>
+    <div class="ibox"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg>Entregas</h3><p>Retiro en Mendoza Ciudad o envío a domicilio.</p></div>
+    <div class="ibox"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12a9 9 0 1 1-4-7.5L21 3l-1 4.5A9 9 0 0 1 21 12Z"/></svg>Contacto</h3>
+      <p>WhatsApp: <a href="https://wa.me/5492612420544" target="_blank" rel="noopener">261 242-0544</a> y <a href="https://wa.me/5492616812944" target="_blank" rel="noopener">261 681-2944</a></p>
+      <p>Instagram: <a href="https://instagram.com/aurora.perfumes.mza" target="_blank" rel="noopener">@aurora.perfumes.mza</a></p></div>
+  </section>
+  <footer>
+    <img src="logo.png" alt="" width="44" height="44" loading="lazy">
+    <div>
+      <p>Precios en pesos argentinos, sujetos a cambios sin previo aviso.</p>
+      <p>Árabes originales: precio mayorista desde 4 unidades, combinables entre modelos. Extractos y tubitos: el precio baja según la cantidad total de cada categoría. Perfuminas y difusores: precio mayorista desde 10 unidades combinadas.</p>
+      <p>Los extractos y tubitos son fragancias inspiradas en perfumes de las marcas mencionadas; no son productos originales de esas marcas ni están asociados a ellas.</p>
+    </div>
+  </footer>
+</main>
+
+<a class="fab" id="fab" href="https://wa.me/5492612420544?text=Hola%20Aurora%20Perfumes!%20Quer%C3%ADa%20hacer%20una%20consulta." target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg></a>
+
+<div class="cartbar" id="cartbar" hidden><div class="in">
+  <div class="info"><b id="cb-total"></b><small id="cb-info"></small></div>
+  <button id="cb-open" type="button">Ver pedido</button>
+</div></div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" width="16" height="16" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg><span id="toast-t"></span></div>
+
+<div class="sheet-bg" id="pd-sheet" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-label="Detalle del producto">
+    <div class="grab"></div>
+    <div class="sh-head"><span></span><button class="x" data-close type="button" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <div class="pd" id="pd"></div>
+  </div>
+</div>
+
+<div class="sheet-bg" id="cart-sheet" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="cs-t">
+    <div class="grab"></div>
+    <div class="sh-head"><h2 id="cs-t">Tu pedido</h2><button class="x" data-close type="button" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <div class="cart">
+      <div id="cs-lines" class="cart"></div>
+      <div class="totals"><div class="r"><span>Total</span><b id="cs-total"></b></div><div class="sv" id="cs-save"></div></div>
+      <div class="opts"><span class="t">Entrega</span><div class="seg2" data-opt="ent"><button type="button" aria-pressed="true" data-v="Retiro en Mendoza Ciudad">Retiro en Mendoza Ciudad</button><button type="button" aria-pressed="false" data-v="Envío a domicilio">Envío a domicilio</button></div></div>
+      <div class="opts"><span class="t">Pago</span><div class="seg2" data-opt="pago"><button type="button" aria-pressed="true" data-v="Efectivo">Efectivo</button><button type="button" aria-pressed="false" data-v="Transferencia">Transferencia</button></div></div>
+      <label class="fld" for="cs-name">Tu nombre (opcional)<input id="cs-name" type="text" autocomplete="name" placeholder="Ej: Sofía"></label>
+      <a class="wa" id="cs-wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>Enviar pedido por WhatsApp</a>
+      <p class="small">Se abre WhatsApp con el pedido escrito para Aurora Perfumes (261 242-0544).</p>
+      <button class="clear" id="cs-clear" type="button">Vaciar pedido</button>
+    </div>
+  </div>
+</div>
+
+<script>
+{{DATA}}
+const PHOTOS={{PHOTOS}};
+const CONTAIN=new Set({{CONTAIN}});
+const WA="5492612420544";
+const TIERS={E:[[1,20000],[2,15000],[5,13000],[10,11000],[20,9500],[40,9000]],
+             T:[[1,4000],[10,2600],[20,2000],[60,1900],[100,1800]]};
+const WH={A:4,H:10};
+const tierPrice=(c,n)=>{let p=TIERS[c][0][1];for(const[q,v]of TIERS[c])if(n>=q)p=v;return p};
+const nextTier=(c,n)=>TIERS[c].find(([q])=>q>n);
+const fmt=n=>"$"+Math.round(n).toLocaleString("es-AR");
+const cap=s=>s.toLowerCase().replace(/(^|\s|&|'|\()(\S)/g,(m,a,b)=>a+b.toUpperCase()).replace(/\bCh\b/,"CH").replace(/\bXs\b/g,"XS").replace(/\bEdt\b/,"EDT").replace(/\bVip\b/,"VIP").replace(/\b(Am|Pm)\b/g,m=>m.toUpperCase()).replace(/ De /g," de ").replace(/ Y /g," y ").replace(/ Del /g," del ").replace(/ En /g," en ");
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
+const plural=(n,a,b)=>n===1?a:b;
+const norm=s=>s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+const $=id=>document.getElementById(id);
+const IC={
+  plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>',
+  chev:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>',
+  left:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>',
+  right:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>',
+  wa:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="18" height="18"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/></svg>'
+};
+
+/* ---- Catalog model ---- */
+const CATS={
+  A:{label:"Árabes originales",short:"Árabes",word:["perfume","perfumes"]},
+  E:{label:"Extractos 60 ml",short:"Extractos",word:["extracto","extractos"]},
+  T:{label:"Tubitos 35 ml",short:"Tubitos",word:["tubito","tubitos"]},
+  H:{label:"Hogar y auto",short:"Hogar y auto",word:["producto","productos"]}
+};
+const ORDER=["A","E","T","H"];
+const ITEMS={},LIST={A:[],E:[],T:[],H:[]};
+function addItem(it){it.id=it.c+"|"+it.b+"|"+it.n;it.ph=(it.ph||[]).filter(k=>PHOTOS[k]);it.key=norm(it.b+" "+it.n+(it.c==="H"?" "+HMETA[it.b].k:""));ITEMS[it.id]=it;LIST[it.c].push(it)}
+DATA.forEach(([b,its])=>its.forEach(([n,ml,pm,pM,ph])=>addItem({c:"A",b,n,ml,pm,pM,ph,ok:!OUT_A.includes(n)})));
+EXT.forEach(([b,its])=>its.forEach(([n,ok,ph])=>addItem({c:"E",b,n,ml:60,ph,ok:!!ok})));
+TUB.forEach(([b,its])=>its.forEach(([n,ph])=>addItem({c:"T",b,n,ml:35,ph,ok:!OUT_T.includes(n)})));
+HOG.forEach(([b,its])=>its.forEach(([n,ok])=>{const M=HMETA[b];addItem({c:"H",b,n,ml:M.ml,pm:M.pm,pM:M.pM,ph:M.ph,ok:!!ok})}));
+const BRANDS={};ORDER.forEach(c=>{BRANDS[c]=[];LIST[c].forEach(it=>{if(!BRANDS[c].includes(it.b))BRANDS[c].push(it.b)})});
+const brandName=(c,b)=>c==="H"?cap(b):cap(b);
+const itemName=it=>cap(it.n);
+const brandLine=it=>it.c==="A"?cap(it.b):it.c==="H"?HMETA[it.b].k:"Inspirado en "+cap(it.b);
+const unitLabel=it=>it.c==="T"?"Tubito 35 ml":it.ml+" ml";
+
+/* ---- State ---- */
+const LS={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:v}catch(e){return d}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const HASH={A:"",E:"#extractos",T:"#tubitos",H:"#hogar"};
+let cat=({"#extractos":"E","#tubitos":"T","#hogar":"H"})[location.hash]||"A";
+let mode=LS.get("pmode","min"),brand="",q="",sort="brand",onlyStock=LS.get("stock","0")==="1";
+let cart={};
+try{const s=JSON.parse(LS.get("cart","{}"));for(const k in s){const kk=ITEMS[k]?k:ITEMS["A|"+k]?"A|"+k:null;if(kk&&s[k]>0&&ITEMS[kk].ok)cart[kk]=s[k]}}catch(e){}
+const save=()=>LS.set("cart",JSON.stringify(cart));
+const OPT={ent:"Retiro en Mendoza Ciudad",pago:"Efectivo"};
+
+/* ---- Pieces ---- */
+function arch(it,cls,first){
+  const k=it.ph[0];const c=CONTAIN.has(k)?" cn":"";
+  if(!k)return `<div class="arch ph ${cls||""}"><span class="mk">${esc(itemName(it).split(/\s+/).slice(0,2).map(w=>w[0]).join(""))}</span>`;
+  return `<div class="arch${c} ${cls||""}"><img src="${PHOTOS[k]}" alt="${esc(brandLine(it)+" "+itemName(it))}" loading="${first?"eager":"lazy"}" decoding="async">`;
+}
+function addHTML(id){const it=ITEMS[id];
+  if(!it.ok)return `<button class="btn-add" type="button" disabled>Sin stock</button>`;
+  const c=cart[id]||0;
+  return c?`<div class="step"><button type="button" data-act="dec" aria-label="Quitar uno de ${esc(itemName(it))}">−</button><span aria-live="polite">${c}</span><button type="button" data-act="inc" aria-label="Agregar otro ${esc(itemName(it))}">+</button></div>`
+          :`<button class="btn-add" type="button" data-act="inc">${IC.plus}Agregar</button>`}
+function priceHTML(it){
+  if(it.c==="A"||it.c==="H"){const n=WH[it.c];
+    return mode==="may"?`<b>${fmt(it.pM)}</b><small>Mayorista desde ${n} u. · Minorista ${fmt(it.pm)}</small>`
+                      :`<b>${fmt(it.pm)}</b><small>Mayorista ${fmt(it.pM)} desde ${n} u.</small>`}
+  const T=TIERS[it.c];return `<b>${fmt(T[0][1])}</b><small>Por cantidad, desde ${fmt(T[T.length-1][1])} c/u</small>`}
+function card(it,i){
+  const n=itemName(it);
+  return `<article class="card${it.ok?"":" out"}">
+  <button class="pic" type="button" data-open="${esc(it.id)}" aria-label="Ver ${esc(n)}">${arch(it,"",i<4)}<span class="ml-tag">${unitLabel(it)}</span>${it.ph.length>1?`<span class="more-tag">${it.ph.length} fotos</span>`:""}${it.ok?"":`<span class="out-tag">Sin stock</span>`}</div></button>
+  <div class="meta"><span class="br">${esc(brandLine(it))}</span><h3 class="nm"><button type="button" data-open="${esc(it.id)}">${esc(n)}</button></h3></div>
+  <div class="pr">${priceHTML(it)}</div>
+  <div class="add" data-id="${esc(it.id)}">${addHTML(it.id)}</div></article>`}
+
+/* ---- Intro per category ---- */
+function tierList(c,box){const T=TIERS[c];
+  if(c==="E")return T.map(([q,v],i)=>`<li${i===T.length-1?' class="best"':""}><span>${q===1?"1 unidad":q+" o más"}</span><span>${fmt(v)} c/u${q>1?`<small>(${q} u. = ${fmt(q*v)})</small>`:""}</span></li>`).join("");
+  return `<li><span>1 unidad</span><span>$4.000</span></li>
+    <li><span>10 o más</span><span>$2.600 c/u<small>(10 u. = $26.000)</small></span></li>
+    <li><span>Caja de 20 a elección</span><span>$40.000<small>($2.000 c/u)</small></span></li>
+    <li><span>3 cajas o más</span><span>$38.000 c/caja<small>($1.900 c/u)</small></span></li>
+    <li class="best"><span>5 cajas o más</span><span>$36.000 c/caja<small>($1.800 c/u)</small></span></li>`}
+const INTRO={
+  A:()=>`<h2>Árabes originales</h2><p>Perfumes árabes 100% originales, en su caja. Llevando 4 o más, aunque sean modelos distintos, pagás precio mayorista.</p>`,
+  E:()=>`<h2>Extractos 60 ml</h2><p>Extractos concentrados inspirados en perfumes conocidos. El precio baja según cuántos lleves, y podés combinar aromas.</p>
+    <div class="prices-box"><div class="pb-h">Precio por cantidad<small>De $20.000 a $9.000 c/u</small></div><ul class="tl">${tierList("E")}</ul></div>
+    <p class="fine">No son productos originales de las marcas mencionadas ni están asociados a ellas.</p>`,
+  T:()=>`<h2>Tubitos 35 ml</h2><p>Tubitos con aromas inspirados en perfumes árabes. El precio baja según cuántos lleves, combinando los aromas que quieras.</p>
+    <div class="prices-box"><div class="pb-h">Precio por cantidad<small>De $4.000 a $1.800 c/u</small></div><ul class="tl">${tierList("T")}</ul></div>
+    <p class="fine">No son productos originales de las marcas mencionadas ni están asociados a ellas.</p>`,
+  H:()=>`<h2>Hogar y auto</h2><p>Perfuminas textiles, difusores de ambiente y difusores para auto. Llevando 10 o más, combinados como quieras, pagás precio mayorista.</p>
+    <div class="prices-box"><div class="pb-h">Precios<small>Minorista y mayorista por producto</small></div><ul class="tl">${HOG.map(([b])=>{const M=HMETA[b];return `<li><span>${M.k} ${M.ml} ml</span><span>${fmt(M.pm)}<small>(mayorista ${fmt(M.pM)})</small></span></li>`}).join("")}</ul></div>`
+};
+
+/* ---- Render ---- */
+function matches(it,ql){return !ql||ql.split(/\s+/).every(w=>it.key.includes(w))}
+function sorted(arr){const a=arr.slice();
+  const pk=it=>it.c==="A"||it.c==="H"?(mode==="may"?it.pM:it.pm):TIERS[it.c][0][1];
+  if(sort==="az")a.sort((x,y)=>itemName(x).localeCompare(itemName(y),"es"));
+  else if(sort==="lo")a.sort((x,y)=>pk(x)-pk(y));
+  else if(sort==="hi")a.sort((x,y)=>pk(y)-pk(x));
+  return a.sort((x,y)=>(y.ok?1:0)-(x.ok?1:0))}
+function renderTabs(ql){
+  $("tabs").innerHTML=ORDER.map(c=>{const n=ql?LIST[c].filter(it=>matches(it,ql)&&(!onlyStock||it.ok)).length:LIST[c].length;const C=CATS[c];
+    return `<button class="tab" role="tab" type="button" data-c="${c}" aria-selected="${!ql&&c===cat}"${ql&&!n?" disabled":""}><b><span class="lg">${C.label}</span><span class="sm">${C.short}</span></b><small>${n}${ql?" resultados":""}</small></button>`}).join("")}
+function render(){
+  const ql=norm(q.trim());
+  renderTabs(ql);
+  $("qx").hidden=!q;
+  const searching=!!ql;
+  $("intro").hidden=searching;$("chips").hidden=searching;
+  if(!searching)$("intro").innerHTML=INTRO[cat]();
+  const priceMode=!searching&&(cat==="A"||cat==="H");
+  const sortOpts=cat==="A"||cat==="H"?[["brand","Por marca"],["lo","Menor precio"],["hi","Mayor precio"],["az","Nombre A–Z"]]:[["brand",cat==="H"?"Por producto":"Por marca"],["az","Nombre A–Z"]];
+  if(!sortOpts.some(o=>o[0]===sort))sort="brand";
+  $("tools").innerHTML=`${priceMode?`<span class="seg-l" id="seg-l">Ver precio</span><div class="seg" role="group" aria-labelledby="seg-l"><button type="button" data-mode="min" aria-pressed="${mode==="min"}">Minorista</button><button type="button" data-mode="may" aria-pressed="${mode==="may"}">Mayorista</button></div>`:""}
+    ${searching?"":`<label class="sel"><span class="sr">Ordenar</span><select id="sort">${sortOpts.map(([v,l])=>`<option value="${v}"${v===sort?" selected":""}>${l}</option>`).join("")}</select>${IC.chev}</label>`}
+    <label class="chk"><input type="checkbox" id="only" ${onlyStock?"checked":""}>Ocultar sin stock</label>`;
+  if(!searching){const bs=BRANDS[cat];if(brand&&!bs.includes(brand))brand="";
+    $("chips").innerHTML=[["","Todas",LIST[cat].length],...bs.map(b=>[b,brandName(cat,b),LIST[cat].filter(it=>it.b===b).length])].map(([b,l,n])=>`<button class="chip" type="button" data-b="${esc(b)}" aria-pressed="${b===brand}">${esc(l)}<small>${n}</small></button>`).join("")}
+  let html="",idx=0;
+  const vis=it=>(!onlyStock||it.ok);
+  if(searching){
+    ORDER.forEach(c=>{const f=sorted(LIST[c].filter(it=>matches(it,ql)&&vis(it)));if(!f.length)return;
+      html+=`<section class="group" id="res-${c}"><div class="ghead"><h2>${CATS[c].label}</h2><span>${f.length} ${plural(f.length,"resultado","resultados")}</span></div><div class="grid">${f.map(it=>card(it,idx++)).join("")}</div></section>`});
+    if(!html)html=`<div class="empty"><h2>No encontramos “${esc(q.trim())}”</h2><p>Probá con otra palabra, por ejemplo la marca o parte del nombre. Si no lo ves, preguntanos por WhatsApp.</p><button class="btn-ghost" type="button" id="clear-q">Borrar búsqueda</button></div>`;
+  }else if(sort!=="brand"){
+    const f=sorted(LIST[cat].filter(it=>(!brand||it.b===brand)&&vis(it)));
+    html=`<section class="group"><div class="grid">${f.map(it=>card(it,idx++)).join("")}</div></section>`;
+  }else{
+    BRANDS[cat].forEach(b=>{if(brand&&b!==brand)return;const f=sorted(LIST[cat].filter(it=>it.b===b&&vis(it)));if(!f.length)return;const w=CATS[cat].word;
+      html+=`<section class="group side"><div class="ghead"><h3>${esc(brandName(cat,b))}</h3><span>${f.length} ${plural(f.length,w[0],w[1])}</span></div><div class="grid">${f.map(it=>card(it,idx++)).join("")}</div></section>`});
+    if(!html)html=`<div class="empty"><h2>Sin productos en stock acá</h2><p>Desmarcá “Ocultar sin stock” para ver todo.</p></div>`;
+  }
+  $("list").innerHTML=html;
+}
+function setCat(c,scroll){cat=c;brand="";if(q){q="";$("q").value=""}render();
+  try{history.replaceState(null,"",HASH[c]||location.pathname+location.search)}catch(e){}
+  if(scroll){const y=$("main").getBoundingClientRect().top+scrollY-document.querySelector(".bar").offsetHeight;if(scrollY>y)scrollTo({top:y,behavior:"smooth"})}}
+
+/* ---- Cart math ---- */
+function totals(){const t={u:0,uA:0,uE:0,uT:0,uH:0,minA:0,mayA:0,minH:0,mayH:0};
+  for(const k in cart){const it=ITEMS[k],n=cart[k];t.u+=n;t["u"+it.c]+=n;
+    if(it.c==="A"){t.minA+=n*it.pm;t.mayA+=n*it.pM}if(it.c==="H"){t.minH+=n*it.pm;t.mayH+=n*it.pM}}
+  t.whA=t.uA>=WH.A;t.whH=t.uH>=WH.H;
+  t.totA=t.whA?t.mayA:t.minA;t.totH=t.whH?t.mayH:t.minH;
+  t.pE=tierPrice("E",t.uE);t.totE=t.uE*t.pE;t.pT=tierPrice("T",t.uT);t.totT=t.uT*t.pT;
+  t.total=t.totA+t.totE+t.totT+t.totH;
+  t.list=t.minA+t.minH+t.uE*TIERS.E[0][1]+t.uT*TIERS.T[0][1];t.save=t.list-t.total;return t}
+const unitPrice=(it,t)=>it.c==="A"?(t.whA?it.pM:it.pm):it.c==="H"?(t.whH?it.pM:it.pm):it.c==="E"?t.pE:t.pT;
+function progress(c,t){const u=t["u"+c];
+  if(c==="A"||c==="H"){const n=WH[c],ok=u>=n,f=n-u;
+    return {pct:Math.min(u/n,1),ok,t:ok?"Precio mayorista aplicado":`Sumá ${f} ${plural(f,"unidad más","unidades más")} y pagás precio mayorista${c==="H"?" (combinando perfuminas y difusores)":""}`}}
+  const p=t["p"+c],nx=nextTier(c,u),W=CATS[c].word;
+  if(!nx)return {pct:1,ok:1,t:`Mejor precio aplicado: ${fmt(p)} c/u`};
+  const f=nx[0]-u;
+  return {pct:u/nx[0],ok:0,t:`${u} a ${fmt(p)} c/u. Sumá ${f} ${plural(f,W[0],W[1])} más y pagás ${fmt(nx[1])} c/u`}}
+function thumb(it){const k=it.ph[0];if(!k)return `<div class="th ph"></div>`;return `<div class="th${CONTAIN.has(k)?" cn":""}"><img src="${PHOTOS[k]}" alt="" loading="lazy"></div>`}
+function renderCart(){const t=totals();
+  $("cartbar").hidden=!t.u;$("fab").hidden=!!t.u;
+  const b=$("badge");b.hidden=!t.u;b.textContent=t.u;
+  $("cb-total").textContent=fmt(t.total);
+  let tip="";
+  for(const c of ORDER){if(!t["u"+c])continue;const P=progress(c,t);if(!P.ok){
+    if(c==="A"&&WH.A-t.uA<=2){tip=`Sumá ${WH.A-t.uA} árabe${WH.A-t.uA>1?"s":""} para mayorista`;break}
+    if(c==="H"&&WH.H-t.uH<=3){tip=`Sumá ${WH.H-t.uH} de hogar y auto para mayorista`;break}
+    if((c==="E"||c==="T")){const nx=nextTier(c,t["u"+c]);if(nx[0]-t["u"+c]<=3){const f=nx[0]-t["u"+c];tip=`Sumá ${f} ${plural(f,CATS[c].word[0],CATS[c].word[1])} y pagás ${fmt(nx[1])} c/u`;break}}}}
+  $("cb-info").textContent=`${t.u} ${plural(t.u,"producto","productos")}${tip?" · "+tip:t.save>0?" · ahorrás "+fmt(t.save):""}`;
+  let html="";
+  ORDER.forEach(c=>{const L=Object.keys(cart).filter(k=>ITEMS[k].c===c);if(!L.length)return;const P=progress(c,t);
+    html+=`<div class="cgrp"><h3>${CATS[c].label}</h3><div class="prog${P.ok?" done":""}"><span>${P.t}</span><div class="tr"><i style="width:${Math.round(P.pct*100)}%"></i></div></div>`+
+    L.map(k=>{const it=ITEMS[k],n=cart[k],p=unitPrice(it,t);return `<div class="line">${thumb(it)}<div class="t"><small>${esc(brandLine(it))}</small><b>${esc(itemName(it))}</b></div><div class="add" data-id="${esc(k)}">${addHTML(k)}</div><div class="lp">${n} × ${fmt(p)} = <b>${fmt(n*p)}</b></div></div>`}).join("")+`</div>`});
+  $("cs-lines").innerHTML=html;
+  $("cs-total").textContent=fmt(t.total);
+  $("cs-save").textContent=t.save>0?`Ahorrás ${fmt(t.save)} por cantidad`:"";
+  $("cs-wa").href=`https://wa.me/${WA}?text=${encodeURIComponent(message(t))}`;
+  if(!t.u&&!$("cart-sheet").hidden)closeSheet($("cart-sheet"));
+}
+function message(t){const name=$("cs-name").value.trim();
+  let m="Hola Aurora Perfumes! Quiero hacer este pedido:\n";
+  const by=c=>Object.keys(cart).filter(k=>ITEMS[k].c===c);
+  const A=by("A"),E=by("E"),T=by("T"),H=by("H");
+  if(A.length){m+=`\nÁRABES ORIGINALES (${t.whA?"precio mayorista":"precio minorista"})\n`;
+    A.forEach(k=>{const it=ITEMS[k],c=cart[k],p=unitPrice(it,t);m+=`${c} x ${cap(it.n)} (${cap(it.b)}) ${it.ml} ml - ${fmt(p*c)}\n`});m+=`Subtotal: ${fmt(t.totA)}\n`}
+  if(E.length){m+=`\nEXTRACTOS 60 ML (${t.uE} u. a ${fmt(t.pE)} c/u)\n`;
+    E.forEach(k=>{const it=ITEMS[k],c=cart[k];m+=`${c} x Inspirado en ${cap(it.n)} (${cap(it.b)}) - ${fmt(t.pE*c)}\n`});m+=`Subtotal: ${fmt(t.totE)}\n`}
+  if(T.length){m+=`\nTUBITOS 35 ML (${t.uT} u. a ${fmt(t.pT)} c/u)\n`;
+    T.forEach(k=>{const it=ITEMS[k],c=cart[k];m+=`${c} x ${cap(it.n)} (${cap(it.b)}) - ${fmt(t.pT*c)}\n`});m+=`Subtotal: ${fmt(t.totT)}\n`}
+  if(H.length){m+=`\nPERFUMINAS Y DIFUSORES (${t.whH?"precio mayorista":"precio minorista"})\n`;
+    H.forEach(k=>{const it=ITEMS[k],c=cart[k],p=unitPrice(it,t);m+=`${c} x ${HMETA[it.b].k} ${cap(it.n)} ${it.ml} ml - ${fmt(p*c)}\n`});m+=`Subtotal: ${fmt(t.totH)}\n`}
+  m+=`\nTOTAL: ${fmt(t.total)} (${t.u} ${plural(t.u,"producto","productos")})`;
+  m+=`\n\nEntrega: ${OPT.ent}\nPago: ${OPT.pago}`;
+  if(name)m+=`\nNombre: ${name}`;return m}
+
+/* ---- Quantity changes ---- */
+let toastT;
+function setQty(id,d,fromCard){const c=(cart[id]||0)+d;if(c<=0)delete cart[id];else cart[id]=c;save();
+  document.querySelectorAll(".add").forEach(el=>{if(el.dataset.id===id)el.innerHTML=addHTML(id)});
+  renderCart();
+  if(d>0){const b=$("badge");b.classList.remove("bump");void b.offsetWidth;b.classList.add("bump");
+    if(fromCard)toast(`Agregaste ${itemName(ITEMS[id])}`)}}
+
+/* ---- Sheets ---- */
+let lastFocus=null;
+function openSheet(el){lastFocus=document.activeElement;el.hidden=false;document.body.classList.add("lock");setTimeout(()=>el.querySelector("[data-close]").focus({preventScroll:true}),30)}
+function closeSheet(el){el.hidden=true;if($("pd-sheet").hidden&&$("cart-sheet").hidden)document.body.classList.remove("lock");if(lastFocus&&document.contains(lastFocus))lastFocus.focus({preventScroll:true})}
+function openProduct(id){const it=ITEMS[id];const n=itemName(it);
+  const pics=it.ph.length?it.ph:[null];
+  const gal=it.ph.length?`<div class="gal"><div class="arch${CONTAIN.has(it.ph[0])?" cn":""}"><div class="slides" id="pd-sl">${it.ph.map((k,i)=>`<img src="${PHOTOS[k]}" alt="${esc(n)}, foto ${i+1}">`).join("")}</div></div>
+      ${it.ph.length>1?`<button class="nav p" type="button" data-nav="-1" aria-label="Foto anterior">${IC.left}</button><button class="nav n" type="button" data-nav="1" aria-label="Foto siguiente">${IC.right}</button><div class="dots">${it.ph.map((_,i)=>`<i${i?"":' class="on"'}></i>`).join("")}</div>`:""}</div>`
+    :`<div class="gal">${arch(it,"")}</div></div>`;
+  let pb;
+  if(it.c==="A"||it.c==="H")pb=`<ul class="tl"><li><span>Minorista</span><span><b>${fmt(it.pm)}</b></span></li><li class="best"><span>Mayorista${it.c==="A"?" (4 o más, pueden ser distintos)":" (10 o más combinados)"}</span><span><b>${fmt(it.pM)}</b></span></li></ul>`;
+  else pb=`<ul class="tl">${tierList(it.c)}</ul>`;
+  const wa=`https://wa.me/${WA}?text=${encodeURIComponent(`Hola Aurora Perfumes! Quería consultar por ${it.c==="E"?"el extracto inspirado en "+n:it.c==="T"?"el tubito "+n:it.c==="H"?HMETA[it.b].k.toLowerCase()+" "+n:n+" de "+cap(it.b)}.`)}`;
+  $("pd").innerHTML=`${gal}
+    <div><span class="br">${esc(brandLine(it))} · ${unitLabel(it)}</span><h3>${esc(n)}</h3></div>
+    <span class="stock${it.ok?"":" no"}">${it.ok?"En stock":"Sin stock por ahora"}</span>
+    <div class="pbox">${pb}</div>
+    <div class="add" data-id="${esc(id)}">${addHTML(id)}</div>
+    <a class="btn-ghost wa-q" href="${wa}" target="_blank" rel="noopener">${IC.wa}Consultar por WhatsApp</a>
+    ${it.c==="E"||it.c==="T"?`<p class="fine">Fragancia inspirada en ${esc(n)} de ${esc(cap(it.b))}. No es un producto original de la marca ni está asociado a ella.</p>`:""}`;
+  openSheet($("pd-sheet"));
+  const sl=$("pd-sl");if(sl)sl.addEventListener("scroll",()=>{const i=Math.round(sl.scrollLeft/sl.clientWidth);$("pd").querySelectorAll(".dots i").forEach((d,j)=>d.classList.toggle("on",j===i))},{passive:true});
+}
+
+/* ---- Events ---- */
+document.addEventListener("click",e=>{
+  const a=e.target.closest("button[data-act]");if(a){const id=a.closest(".add").dataset.id;setQty(id,a.dataset.act==="inc"?1:-1,!!a.closest("#list"));return}
+  const o=e.target.closest("[data-open]");if(o){openProduct(o.dataset.open);return}
+  const tb=e.target.closest(".tab");if(tb){if(q.trim()){const r=$("res-"+tb.dataset.c);if(r)scrollTo({top:r.getBoundingClientRect().top+scrollY-document.querySelector(".bar").offsetHeight-8,behavior:"smooth"});cat=tb.dataset.c;return}setCat(tb.dataset.c,true);return}
+  const ch=e.target.closest(".chip");if(ch){brand=ch.dataset.b;render();return}
+  const md=e.target.closest("[data-mode]");if(md){mode=md.dataset.mode;LS.set("pmode",mode);render();return}
+  const nv=e.target.closest("[data-nav]");if(nv){const sl=$("pd-sl");sl.scrollBy({left:sl.clientWidth*+nv.dataset.nav,behavior:"smooth"});return}
+  const cl=e.target.closest("[data-close]");if(cl){closeSheet(cl.closest(".sheet-bg"));return}
+  if(e.target.classList.contains("sheet-bg")){closeSheet(e.target);return}
+  if(e.target.id==="clear-q"){q="";$("q").value="";render();$("q").focus();return}
+});
+document.addEventListener("change",e=>{
+  if(e.target.id==="sort"){sort=e.target.value;render()}
+  if(e.target.id==="only"){onlyStock=e.target.checked;LS.set("stock",onlyStock?"1":"0");render()}
+});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){const s=[...document.querySelectorAll(".sheet-bg")].find(x=>!x.hidden);if(s)closeSheet(s)}});
+let qT;$("q").addEventListener("input",e=>{clearTimeout(qT);qT=setTimeout(()=>{q=e.target.value;render()},120)});
+$("qx").onclick=()=>{q="";$("q").value="";render();$("q").focus()};
+function toast(t){$("toast-t").textContent=t;$("toast").classList.add("on");clearTimeout(toastT);toastT=setTimeout(()=>$("toast").classList.remove("on"),2200)}
+$("cart-btn").onclick=()=>{if(Object.keys(cart).length)openSheet($("cart-sheet"));else toast("Tu pedido está vacío. Tocá Agregar en un producto.")};
+$("cb-open").onclick=()=>{$("toast").classList.remove("on");openSheet($("cart-sheet"))};
+document.querySelectorAll(".seg2").forEach(g=>g.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+  OPT[g.dataset.opt]=b.dataset.v;g.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));renderCart()}));
+$("cs-name").addEventListener("input",renderCart);
+$("cs-clear").onclick=()=>{if(confirm("¿Vaciar el pedido?")){cart={};save();render();renderCart()}};
+render();renderCart();
+</script>
+</body>
+</html>
