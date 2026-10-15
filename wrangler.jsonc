@@ -1,0 +1,6 @@
+{
+  // Cloudflare: publica la carpeta site/ como sitio estático
+  "name": "auroraperfumes",
+  "compatibility_date": "2025-09-01",
+  "assets": { "directory": "./site" }
+}
