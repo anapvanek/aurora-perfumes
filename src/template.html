@@ -429,20 +429,23 @@ const CATS={
   A:{label:"Árabes originales",short:"Árabes",word:["perfume","perfumes"]},
   E:{label:"Extractos 60 ml",short:"Extractos",word:["extracto","extractos"]},
   T:{label:"Tubitos 35 ml",short:"Tubitos",word:["tubito","tubitos"]},
-  H:{label:"Hogar y auto",short:"Hogar y auto",word:["producto","productos"]}
+  H:{label:"Hogar y auto",short:"Hogar y auto",word:["producto","productos"]},
+  B:{label:"Caja surtida de tubitos",short:"Caja",word:["caja","cajas"]}
 };
 const ORDER=["A","E","T","H"];
+const BOX_PRICE=36000;
 const ITEMS={},LIST={A:[],E:[],T:[],H:[]};
 function addItem(it){it.id=it.c+"|"+it.b+"|"+it.n;it.ph=(it.ph||[]).filter(k=>PHOTOS[k]);it.key=norm(it.b+" "+it.n+(it.c==="H"?" "+HMETA[it.b].k:""));ITEMS[it.id]=it;LIST[it.c].push(it)}
 DATA.forEach(([b,its])=>its.forEach(([n,ml,pm,pM,ph])=>addItem({c:"A",b,n,ml,pm,pM,ph,ok:!OUT_A.includes(n)})));
 EXT.forEach(([b,its])=>its.forEach(([n,ok,ph])=>addItem({c:"E",b,n,ml:60,ph,ok:!!ok})));
 TUB.forEach(([b,its])=>its.forEach(([n,ph])=>addItem({c:"T",b,n,ml:35,ph,ok:!OUT_T.includes(n)})));
+{const it={c:"B",b:"CAJA SURTIDA",n:"CAJA SURTIDA X20",ml:35,price:BOX_PRICE,ok:true,id:"B|BOX",ph:["tub-caja-surtida"].filter(k=>PHOTOS[k]),key:norm("caja surtida tubitos 20 x20")};ITEMS[it.id]=it;LIST.T.unshift(it)}
 HOG.forEach(([b,its])=>its.forEach(([n,ok])=>{const M=HMETA[b];addItem({c:"H",b,n,ml:M.ml,pm:M.pm,pM:M.pM,ph:M.ph,ok:!!ok})}));
 const BRANDS={};ORDER.forEach(c=>{BRANDS[c]=[];LIST[c].forEach(it=>{if(!BRANDS[c].includes(it.b))BRANDS[c].push(it.b)})});
 const brandName=(c,b)=>c==="H"?cap(b):cap(b);
-const itemName=it=>cap(it.n);
-const brandLine=it=>it.c==="A"?cap(it.b):it.c==="H"?HMETA[it.b].k:"Inspirado en "+cap(it.b);
-const unitLabel=it=>it.c==="T"?"Tubito 35 ml":it.ml+" ml";
+const itemName=it=>it.c==="B"?"Caja surtida x20":cap(it.n);
+const brandLine=it=>it.c==="B"?"20 tubitos de 35 ml":it.c==="A"?cap(it.b):it.c==="H"?HMETA[it.b].k:"Inspirado en "+cap(it.b);
+const unitLabel=it=>it.c==="B"?"20 tubitos":it.c==="T"?"Tubito 35 ml":it.ml+" ml";
 
 /* ---- State ---- */
 const LS={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:v}catch(e){return d}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
@@ -466,6 +469,7 @@ function addHTML(id){const it=ITEMS[id];
   return c?`<div class="step"><button type="button" data-act="dec" aria-label="Quitar uno de ${esc(itemName(it))}">−</button><span aria-live="polite">${c}</span><button type="button" data-act="inc" aria-label="Agregar otro ${esc(itemName(it))}">+</button></div>`
           :`<button class="btn-add" type="button" data-act="inc">${IC.plus}Agregar</button>`}
 function priceHTML(it){
+  if(it.c==="B")return `<b>${fmt(BOX_PRICE)}</b><small>${fmt(BOX_PRICE/20)} c/u · aromas surtidos, no se eligen</small>`;
   if(it.c==="A"||it.c==="H"){const n=WH[it.c];
     return mode==="may"?`<b>${fmt(it.pM)}</b><small>Mayorista desde ${n} u. · Minorista ${fmt(it.pm)}</small>`
                       :`<b>${fmt(it.pm)}</b><small>Mayorista ${fmt(it.pM)} desde ${n} u.</small>`}
@@ -485,7 +489,8 @@ function tierList(c,box){const T=TIERS[c];
     <li><span>10 o más</span><span>$2.600 c/u<small>(10 u. = $26.000)</small></span></li>
     <li><span>Caja de 20 a elección</span><span>$40.000<small>($2.000 c/u)</small></span></li>
     <li><span>3 cajas o más</span><span>$38.000 c/caja<small>($1.900 c/u)</small></span></li>
-    <li class="best"><span>5 cajas o más</span><span>$36.000 c/caja<small>($1.800 c/u)</small></span></li>`}
+    <li class="best"><span>5 cajas o más</span><span>$36.000 c/caja<small>($1.800 c/u)</small></span></li>
+    <li><span>Caja de 20 surtidas (los aromas no se eligen)</span><span>$36.000<small>($1.800 c/u)</small></span></li>`}
 const INTRO={
   A:()=>`<h2>Árabes originales</h2><p>Perfumes árabes 100% originales, en su caja. Llevando 4 o más, aunque sean modelos distintos, pagás precio mayorista.</p>`,
   E:()=>`<h2>Extractos 60 ml</h2><p>Extractos concentrados inspirados en perfumes conocidos. El precio baja según cuántos lleves, y podés combinar aromas.</p>
@@ -501,7 +506,7 @@ const INTRO={
 /* ---- Render ---- */
 function matches(it,ql){return !ql||ql.split(/\s+/).every(w=>it.key.includes(w))}
 function sorted(arr){const a=arr.slice();
-  const pk=it=>it.c==="A"||it.c==="H"?(mode==="may"?it.pM:it.pm):TIERS[it.c][0][1];
+  const pk=it=>it.c==="B"?it.price/20:it.c==="A"||it.c==="H"?(mode==="may"?it.pM:it.pm):TIERS[it.c][0][1];
   if(sort==="az")a.sort((x,y)=>itemName(x).localeCompare(itemName(y),"es"));
   else if(sort==="lo")a.sort((x,y)=>pk(x)-pk(y));
   else if(sort==="hi")a.sort((x,y)=>pk(y)-pk(x));
@@ -535,7 +540,7 @@ function render(){
     html=`<section class="group"><div class="grid">${f.map(it=>card(it,idx++)).join("")}</div></section>`;
   }else{
     BRANDS[cat].forEach(b=>{if(brand&&b!==brand)return;const f=sorted(LIST[cat].filter(it=>it.b===b&&vis(it)));if(!f.length)return;const w=CATS[cat].word;
-      html+=`<section class="group side"><div class="ghead"><h3>${esc(brandName(cat,b))}</h3><span>${f.length} ${plural(f.length,w[0],w[1])}</span></div><div class="grid">${f.map(it=>card(it,idx++)).join("")}</div></section>`});
+      html+=`<section class="group side"><div class="ghead"><h3>${esc(brandName(cat,b))}</h3><span>${b==="CAJA SURTIDA"?"Aromas a nuestra elección":f.length+" "+plural(f.length,w[0],w[1])}</span></div><div class="grid">${f.map(it=>card(it,idx++)).join("")}</div></section>`});
     if(!html)html=`<div class="empty"><h2>Sin productos en stock acá</h2><p>Desmarcá “Ocultar sin stock” para ver todo.</p></div>`;
   }
   $("list").innerHTML=html;
@@ -545,15 +550,16 @@ function setCat(c,scroll){cat=c;brand="";if(q){q="";$("q").value=""}render();
   if(scroll){const y=$("main").getBoundingClientRect().top+scrollY-document.querySelector(".bar").offsetHeight;if(scrollY>y)scrollTo({top:y,behavior:"smooth"})}}
 
 /* ---- Cart math ---- */
-function totals(){const t={u:0,uA:0,uE:0,uT:0,uH:0,minA:0,mayA:0,minH:0,mayH:0};
+function totals(){const t={u:0,uA:0,uE:0,uT:0,uH:0,uB:0,minA:0,mayA:0,minH:0,mayH:0};
   for(const k in cart){const it=ITEMS[k],n=cart[k];t.u+=n;t["u"+it.c]+=n;
     if(it.c==="A"){t.minA+=n*it.pm;t.mayA+=n*it.pM}if(it.c==="H"){t.minH+=n*it.pm;t.mayH+=n*it.pM}}
   t.whA=t.uA>=WH.A;t.whH=t.uH>=WH.H;
   t.totA=t.whA?t.mayA:t.minA;t.totH=t.whH?t.mayH:t.minH;
   t.pE=tierPrice("E",t.uE);t.totE=t.uE*t.pE;t.pT=tierPrice("T",t.uT);t.totT=t.uT*t.pT;
-  t.total=t.totA+t.totE+t.totT+t.totH;
-  t.list=t.minA+t.minH+t.uE*TIERS.E[0][1]+t.uT*TIERS.T[0][1];t.save=t.list-t.total;return t}
-const unitPrice=(it,t)=>it.c==="A"?(t.whA?it.pM:it.pm):it.c==="H"?(t.whH?it.pM:it.pm):it.c==="E"?t.pE:t.pT;
+  t.totB=t.uB*BOX_PRICE;
+  t.total=t.totA+t.totE+t.totT+t.totH+t.totB;
+  t.list=t.totB+t.minA+t.minH+t.uE*TIERS.E[0][1]+t.uT*TIERS.T[0][1];t.save=t.list-t.total;return t}
+const unitPrice=(it,t)=>it.c==="B"?BOX_PRICE:it.c==="A"?(t.whA?it.pM:it.pm):it.c==="H"?(t.whH?it.pM:it.pm):it.c==="E"?t.pE:t.pT;
 function progress(c,t){const u=t["u"+c];
   if(c==="A"||c==="H"){const n=WH[c],ok=u>=n,f=n-u;
     return {pct:Math.min(u/n,1),ok,t:ok?"Precio mayorista aplicado":`Sumá ${f} ${plural(f,"unidad más","unidades más")} y pagás precio mayorista${c==="H"?" (combinando perfuminas y difusores)":""}`}}
@@ -573,8 +579,8 @@ function renderCart(){const t=totals();
     if((c==="E"||c==="T")){const nx=nextTier(c,t["u"+c]);if(nx[0]-t["u"+c]<=3){const f=nx[0]-t["u"+c];tip=`Sumá ${f} ${plural(f,CATS[c].word[0],CATS[c].word[1])} y pagás ${fmt(nx[1])} c/u`;break}}}}
   $("cb-info").textContent=`${t.u} ${plural(t.u,"producto","productos")}${tip?" · "+tip:t.save>0?" · ahorrás "+fmt(t.save):""}`;
   let html="";
-  ORDER.forEach(c=>{const L=Object.keys(cart).filter(k=>ITEMS[k].c===c);if(!L.length)return;const P=progress(c,t);
-    html+=`<div class="cgrp"><h3>${CATS[c].label}</h3><div class="prog${P.ok?" done":""}"><span>${P.t}</span><div class="tr"><i style="width:${Math.round(P.pct*100)}%"></i></div></div>`+
+  ["A","E","T","B","H"].forEach(c=>{const L=Object.keys(cart).filter(k=>ITEMS[k].c===c);if(!L.length)return;const P=c==="B"?null:progress(c,t);
+    html+=`<div class="cgrp"><h3>${CATS[c].label}</h3>${P?`<div class="prog${P.ok?" done":""}"><span>${P.t}</span><div class="tr"><i style="width:${Math.round(P.pct*100)}%"></i></div></div>`:""}`+
     L.map(k=>{const it=ITEMS[k],n=cart[k],p=unitPrice(it,t);return `<div class="line">${thumb(it)}<div class="t"><small>${esc(brandLine(it))}</small><b>${esc(itemName(it))}</b></div><div class="add" data-id="${esc(k)}">${addHTML(k)}</div><div class="lp">${n} × ${fmt(p)} = <b>${fmt(n*p)}</b></div></div>`}).join("")+`</div>`});
   $("cs-lines").innerHTML=html;
   $("cs-total").textContent=fmt(t.total);
@@ -585,13 +591,14 @@ function renderCart(){const t=totals();
 function message(t){const name=$("cs-name").value.trim();
   let m="Hola Aurora Perfumes! Quiero hacer este pedido:\n";
   const by=c=>Object.keys(cart).filter(k=>ITEMS[k].c===c);
-  const A=by("A"),E=by("E"),T=by("T"),H=by("H");
+  const A=by("A"),E=by("E"),T=by("T"),H=by("H"),B=by("B");
   if(A.length){m+=`\nÁRABES ORIGINALES (${t.whA?"precio mayorista":"precio minorista"})\n`;
     A.forEach(k=>{const it=ITEMS[k],c=cart[k],p=unitPrice(it,t);m+=`${c} x ${cap(it.n)} (${cap(it.b)}) ${it.ml} ml - ${fmt(p*c)}\n`});m+=`Subtotal: ${fmt(t.totA)}\n`}
   if(E.length){m+=`\nEXTRACTOS 60 ML (${t.uE} u. a ${fmt(t.pE)} c/u)\n`;
     E.forEach(k=>{const it=ITEMS[k],c=cart[k];m+=`${c} x Inspirado en ${cap(it.n)} (${cap(it.b)}) - ${fmt(t.pE*c)}\n`});m+=`Subtotal: ${fmt(t.totE)}\n`}
   if(T.length){m+=`\nTUBITOS 35 ML (${t.uT} u. a ${fmt(t.pT)} c/u)\n`;
     T.forEach(k=>{const it=ITEMS[k],c=cart[k];m+=`${c} x ${cap(it.n)} (${cap(it.b)}) - ${fmt(t.pT*c)}\n`});m+=`Subtotal: ${fmt(t.totT)}\n`}
+  if(B.length){m+=`\nCAJA SURTIDA DE TUBITOS (aromas a elección del local)\n${t.uB} x Caja surtida x20 tubitos 35 ml - ${fmt(t.totB)}\n`}
   if(H.length){m+=`\nPERFUMINAS Y DIFUSORES (${t.whH?"precio mayorista":"precio minorista"})\n`;
     H.forEach(k=>{const it=ITEMS[k],c=cart[k],p=unitPrice(it,t);m+=`${c} x ${HMETA[it.b].k} ${cap(it.n)} ${it.ml} ml - ${fmt(p*c)}\n`});m+=`Subtotal: ${fmt(t.totH)}\n`}
   m+=`\nTOTAL: ${fmt(t.total)} (${t.u} ${plural(t.u,"producto","productos")})`;
@@ -616,15 +623,17 @@ function openProduct(id){const it=ITEMS[id];const n=itemName(it);
       ${it.ph.length>1?`<button class="nav p" type="button" data-nav="-1" aria-label="Foto anterior">${IC.left}</button><button class="nav n" type="button" data-nav="1" aria-label="Foto siguiente">${IC.right}</button><div class="dots">${it.ph.map((_,i)=>`<i${i?"":' class="on"'}></i>`).join("")}</div>`:""}</div>`
     :`<div class="gal">${arch(it,"")}</div></div>`;
   let pb;
-  if(it.c==="A"||it.c==="H")pb=`<ul class="tl"><li><span>Minorista</span><span><b>${fmt(it.pm)}</b></span></li><li class="best"><span>Mayorista${it.c==="A"?" (4 o más, pueden ser distintos)":" (10 o más combinados)"}</span><span><b>${fmt(it.pM)}</b></span></li></ul>`;
+  if(it.c==="B")pb=`<ul class="tl"><li class="best"><span>Caja de 20 tubitos de 35 ml</span><span><b>${fmt(BOX_PRICE)}</b><small>(${fmt(BOX_PRICE/20)} c/u)</small></span></li></ul>`;
+  else if(it.c==="A"||it.c==="H")pb=`<ul class="tl"><li><span>Minorista</span><span><b>${fmt(it.pm)}</b></span></li><li class="best"><span>Mayorista${it.c==="A"?" (4 o más, pueden ser distintos)":" (10 o más combinados)"}</span><span><b>${fmt(it.pM)}</b></span></li></ul>`;
   else pb=`<ul class="tl">${tierList(it.c)}</ul>`;
-  const wa=`https://wa.me/${WA}?text=${encodeURIComponent(`Hola Aurora Perfumes! Quería consultar por ${it.c==="E"?"el extracto inspirado en "+n:it.c==="T"?"el tubito "+n:it.c==="H"?HMETA[it.b].k.toLowerCase()+" "+n:n+" de "+cap(it.b)}.`)}`;
+  const wa=`https://wa.me/${WA}?text=${encodeURIComponent(`Hola Aurora Perfumes! Quería consultar por ${it.c==="B"?"la caja surtida de 20 tubitos":it.c==="E"?"el extracto inspirado en "+n:it.c==="T"?"el tubito "+n:it.c==="H"?HMETA[it.b].k.toLowerCase()+" "+n:n+" de "+cap(it.b)}.`)}`;
   $("pd").innerHTML=`${gal}
     <div><span class="br">${esc(brandLine(it))} · ${unitLabel(it)}</span><h3>${esc(n)}</h3></div>
     <span class="stock${it.ok?"":" no"}">${it.ok?"En stock":"Sin stock por ahora"}</span>
     <div class="pbox">${pb}</div>
     <div class="add" data-id="${esc(id)}">${addHTML(id)}</div>
     <a class="btn-ghost wa-q" href="${wa}" target="_blank" rel="noopener">${IC.wa}Consultar por WhatsApp</a>
+    ${it.c==="B"?`<p class="fine">20 tubitos de 35 ml con aromas surtidos inspirados en perfumes árabes. Los aromas los elegimos nosotros, no se pueden elegir. Para elegir cada aroma, agregá los tubitos por separado.</p>`:""}
     ${it.c==="E"||it.c==="T"?`<p class="fine">Fragancia inspirada en ${esc(n)} de ${esc(cap(it.b))}. No es un producto original de la marca ni está asociado a ella.</p>`:""}`;
   openSheet($("pd-sheet"));
   const sl=$("pd-sl");if(sl)sl.addEventListener("scroll",()=>{const i=Math.round(sl.scrollLeft/sl.clientWidth);$("pd").querySelectorAll(".dots i").forEach((d,j)=>d.classList.toggle("on",j===i))},{passive:true});
