@@ -235,6 +235,11 @@ footer p{margin:0 0 6px}
 .gal .slides{display:flex;width:100%;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
 .gal .slides::-webkit-scrollbar{display:none}
 .gal .slides img{flex:0 0 100%;scroll-snap-align:center}
+.gal .slides img.cn{object-fit:contain;padding:16% 8% 6%}
+.gal .slides img.fic{object-fit:contain;padding:0;background:#fff;cursor:zoom-in}
+.gal .arch{transition:border-radius .35s ease}
+.gal .arch.sq{border-radius:14px}
+.gal .arch.sq::after{border-radius:10px}
 .dots{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:6px;z-index:3}
 .dots i{width:7px;height:7px;border-radius:50%;background:rgba(29,38,24,.25)}
 .dots i.on{background:var(--forest)}
@@ -404,6 +409,7 @@ body.lock{overflow:hidden}
 {{DATA}}
 const PHOTOS={{PHOTOS}};
 const CONTAIN=new Set({{CONTAIN}});
+const isFic=k=>!!k&&k.startsWith("fic-");
 const WA="5492612420544";
 const TIERS={E:[[1,20000],[2,15000],[5,13000],[10,11000],[20,9500],[40,9000]],
              T:[[1,4000],[10,2600],[20,2000],[60,1900],[100,1800]]};
@@ -619,7 +625,7 @@ function openSheet(el){lastFocus=document.activeElement;el.hidden=false;document
 function closeSheet(el){el.hidden=true;if($("pd-sheet").hidden&&$("cart-sheet").hidden)document.body.classList.remove("lock");if(lastFocus&&document.contains(lastFocus))lastFocus.focus({preventScroll:true})}
 function openProduct(id){const it=ITEMS[id];const n=itemName(it);
   const pics=it.ph.length?it.ph:[null];
-  const gal=it.ph.length?`<div class="gal"><div class="arch${CONTAIN.has(it.ph[0])?" cn":""}"><div class="slides" id="pd-sl">${it.ph.map((k,i)=>`<img src="${PHOTOS[k]}" alt="${esc(n)}, foto ${i+1}">`).join("")}</div></div>
+  const gal=it.ph.length?`<div class="gal"><div class="arch${isFic(it.ph[0])?" sq":""}"><div class="slides" id="pd-sl">${it.ph.map((k,i)=>`<img src="${PHOTOS[k]}" alt="${esc(n)}, ${isFic(k)?"ficha de notas":"foto "+(i+1)}"${isFic(k)?' class="fic"':CONTAIN.has(k)?' class="cn"':""}>`).join("")}</div></div>
       ${it.ph.length>1?`<button class="nav p" type="button" data-nav="-1" aria-label="Foto anterior">${IC.left}</button><button class="nav n" type="button" data-nav="1" aria-label="Foto siguiente">${IC.right}</button><div class="dots">${it.ph.map((_,i)=>`<i${i?"":' class="on"'}></i>`).join("")}</div>`:""}</div>`
     :`<div class="gal">${arch(it,"")}</div></div>`;
   let pb;
@@ -636,7 +642,7 @@ function openProduct(id){const it=ITEMS[id];const n=itemName(it);
     ${it.c==="B"?`<p class="fine">20 tubitos de 35 ml con aromas surtidos inspirados en perfumes árabes. Los aromas los elegimos nosotros, no se pueden elegir. Para elegir cada aroma, agregá los tubitos por separado.</p>`:""}
     ${it.c==="E"||it.c==="T"?`<p class="fine">Fragancia inspirada en ${esc(n)} de ${esc(cap(it.b))}. No es un producto original de la marca ni está asociado a ella.</p>`:""}`;
   openSheet($("pd-sheet"));
-  const sl=$("pd-sl");if(sl)sl.addEventListener("scroll",()=>{const i=Math.round(sl.scrollLeft/sl.clientWidth);$("pd").querySelectorAll(".dots i").forEach((d,j)=>d.classList.toggle("on",j===i))},{passive:true});
+  const sl=$("pd-sl");if(sl)sl.addEventListener("click",e=>{if(e.target.classList.contains("fic"))window.open(e.target.src,"_blank","noopener")});sl.addEventListener("scroll",()=>{const i=Math.round(sl.scrollLeft/sl.clientWidth);$("pd").querySelectorAll(".dots i").forEach((d,j)=>d.classList.toggle("on",j===i));sl.parentNode.classList.toggle("sq",isFic(it.ph[i]))},{passive:true});
 }
 
 /* ---- Events ---- */

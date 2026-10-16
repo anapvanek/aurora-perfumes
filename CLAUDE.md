@@ -12,6 +12,8 @@ La dueña escribe en español rioplatense; responderle siempre en español.
 - `site/img/` – fotos (480x600 o 640x640 jpg). La clave en data.js = nombre del archivo sin `.jpg`. Fotos que la dueña manda por chat (sin Drive) usan nombre descriptivo, ej. `ext-goddess`.
   - árabes: nombre libre (ej. `asad`), fondo blanco.
   - extractos: `ext-<driveId>`, tubitos: `tub-<driveId>`, hogar: `hog-<driveId>` (recorte 4:5).
+  - fichas de notas (Fragrantica): `fic-<driveId>` (800x800), siempre como foto 2 del perfume en árabes, extractos y tubitos.
+    Carpeta Drive `1cqaheS2d4KB78Fg3hr7rDXc0pbsxxCLB`. En la galería se ven enteras (sin recorte) y se abren grandes al tocarlas.
 - `site/fonts/montserrat.woff2` – tipografía (Montserrat, pedida por la dueña; no cambiarla).
 
 ## Fuente de datos: Google Sheet
