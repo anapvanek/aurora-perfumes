@@ -465,7 +465,7 @@ const OPT={ent:"",pago:""};
 
 /* ---- Pieces ---- */
 function arch(it,cls,first){
-  const k=it.ph[0];const c=CONTAIN.has(k)?" cn":"";
+  const k=it.ph.find(x=>!isFic(x));const c=CONTAIN.has(k)?" cn":"";
   if(!k)return `<div class="arch ph ${cls||""}"><span class="mk">${esc(itemName(it).split(/\s+/).slice(0,2).map(w=>w[0]).join(""))}</span>`;
   return `<div class="arch${c} ${cls||""}"><img src="${PHOTOS[k]}" alt="${esc(brandLine(it)+" "+itemName(it))}" loading="${first?"eager":"lazy"}" decoding="async">`;
 }
@@ -573,7 +573,7 @@ function progress(c,t){const u=t["u"+c];
   if(!nx)return {pct:1,ok:1,t:`Mejor precio aplicado: ${fmt(p)} c/u`};
   const f=nx[0]-u;
   return {pct:u/nx[0],ok:0,t:`${u} a ${fmt(p)} c/u. Sumá ${f} ${plural(f,W[0],W[1])} más y pagás ${fmt(nx[1])} c/u`}}
-function thumb(it){const k=it.ph[0];if(!k)return `<div class="th ph"></div>`;return `<div class="th${CONTAIN.has(k)?" cn":""}"><img src="${PHOTOS[k]}" alt="" loading="lazy"></div>`}
+function thumb(it){const k=it.ph.find(x=>!isFic(x));if(!k)return `<div class="th ph"></div>`;return `<div class="th${CONTAIN.has(k)?" cn":""}"><img src="${PHOTOS[k]}" alt="" loading="lazy"></div>`}
 function renderCart(){const t=totals();
   $("cartbar").hidden=!t.u;$("fab").hidden=!!t.u;
   const b=$("badge");b.hidden=!t.u;b.textContent=t.u;
