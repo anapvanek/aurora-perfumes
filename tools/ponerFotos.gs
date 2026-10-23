@@ -1,6 +1,6 @@
 function ponerFotos() {
   const lock = LockService.getScriptLock();
-  if (!lock.tryLock(1000)) { Logger.log("Ya se está ejecutando, esperá a que termine."); return; }
+  if (!lock.tryLock(1000)) { Logger.log("Ya se está ejecutando, esperá a que termine."); return false; }
   try { ponerFotos_(); } finally { lock.releaseLock(); }
 }
 
@@ -68,7 +68,7 @@ function automatico() {
   const txt = UrlFetchApp.fetch("https://aurora-perfumes.tiendamendoza.workers.dev/fotos-planilla.json?v=" + Date.now()).getContentText();
   const huella = Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.MD5, txt));
   if (!props.getProperty("estado") && props.getProperty("huella") === huella) return;  // nada nuevo
-  ponerFotos();
+  if (ponerFotos() === false) return;
   if (!props.getProperty("estado")) props.setProperty("huella", huella);  // terminó
 }
 
