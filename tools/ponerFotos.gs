@@ -71,3 +71,9 @@ function automatico() {
   ponerFotos();
   if (!props.getProperty("estado")) props.setProperty("huella", huella);  // terminó
 }
+
+// Borra todas las fotos y las vuelve a poner desde cero.
+function empezarDeCero() {
+  PropertiesService.getScriptProperties().deleteAllProperties();
+  ponerFotos();
+}
