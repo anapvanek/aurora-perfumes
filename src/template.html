@@ -151,6 +151,8 @@ a{color:inherit}
 .ml-tag{position:absolute;z-index:3;top:12px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;background:rgba(251,250,246,.9);color:var(--forest);white-space:nowrap;box-shadow:0 0 0 1px rgba(47,69,40,.1)}
 .more-tag{position:absolute;z-index:3;right:10px;bottom:10px;font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;background:rgba(29,38,24,.62);color:#fff}
 .out-tag{position:absolute;z-index:3;left:50%;bottom:12px;transform:translateX(-50%);font-size:12px;font-weight:700;padding:5px 12px;border-radius:999px;background:var(--red);color:#fff;white-space:nowrap}
+.card.out .more-tag{display:none}
+.out-tag.soon{background:var(--forest);letter-spacing:.04em;text-transform:uppercase;font-size:11px}
 .card .meta{display:grid;gap:2px;min-width:0}
 .card .br{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .card .nm{font-size:15.5px;font-weight:600;line-height:1.25;margin:0;min-height:2.5em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -251,6 +253,7 @@ footer p{margin:0 0 6px}
 .pd .stock{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--ok)}
 .pd .stock::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
 .pd .stock.no{color:var(--red)}
+.pd .stock.soon{color:var(--forest)}
 .pbox{background:var(--paper);border:1px solid var(--line-2);border-radius:var(--r);padding:4px 16px}
 .pbox .tl{padding:0;border:0}
 .pd .add{min-height:48px}
@@ -442,7 +445,7 @@ const ORDER=["A","E","T","H"];
 const BOX_PRICE=36000;
 const ITEMS={},LIST={A:[],E:[],T:[],H:[]};
 function addItem(it){it.id=it.c+"|"+it.b+"|"+it.n;it.ph=(it.ph||[]).filter(k=>PHOTOS[k]);it.key=norm(it.b+" "+it.n+(it.c==="H"?" "+HMETA[it.b].k:""));ITEMS[it.id]=it;LIST[it.c].push(it)}
-DATA.forEach(([b,its])=>its.forEach(([n,ml,pm,pM,ph])=>addItem({c:"A",b,n,ml,pm,pM,ph,ok:!OUT_A.includes(n)})));
+DATA.forEach(([b,its])=>its.forEach(([n,ml,pm,pM,ph])=>addItem({c:"A",b,n,ml,pm,pM,ph,soon:SOON_A.includes(n),ok:!OUT_A.includes(n)&&!SOON_A.includes(n)})));
 EXT.forEach(([b,its])=>its.forEach(([n,ok,ph])=>addItem({c:"E",b,n,ml:60,ph,ok:!!ok})));
 TUB.forEach(([b,its])=>its.forEach(([n,ph])=>addItem({c:"T",b,n,ml:35,ph,ok:!OUT_T.includes(n)})));
 {const it={c:"B",b:"CAJA SURTIDA",n:"CAJA SURTIDA X20",ml:35,price:BOX_PRICE,ok:true,id:"B|BOX",ph:["tub-caja-surtida"].filter(k=>PHOTOS[k]),key:norm("caja surtida tubitos 20 x20")};ITEMS[it.id]=it;LIST.T.unshift(it)}
@@ -470,7 +473,7 @@ function arch(it,cls,first){
   return `<div class="arch${c} ${cls||""}"><img src="${PHOTOS[k]}" alt="${esc(brandLine(it)+" "+itemName(it))}" loading="${first?"eager":"lazy"}" decoding="async">`;
 }
 function addHTML(id){const it=ITEMS[id];
-  if(!it.ok)return `<button class="btn-add" type="button" disabled>Sin stock</button>`;
+  if(!it.ok)return `<button class="btn-add" type="button" disabled>${it.soon?"Próximamente":"Sin stock"}</button>`;
   const c=cart[id]||0;
   return c?`<div class="step"><button type="button" data-act="dec" aria-label="Quitar uno de ${esc(itemName(it))}">−</button><span aria-live="polite">${c}</span><button type="button" data-act="inc" aria-label="Agregar otro ${esc(itemName(it))}">+</button></div>`
           :`<button class="btn-add" type="button" data-act="inc">${IC.plus}Agregar</button>`}
@@ -483,7 +486,7 @@ function priceHTML(it){
 function card(it,i){
   const n=itemName(it);
   return `<article class="card${it.ok?"":" out"}">
-  <button class="pic" type="button" data-open="${esc(it.id)}" aria-label="Ver ${esc(n)}">${arch(it,"",i<4)}<span class="ml-tag">${unitLabel(it)}</span>${it.ph.length>1?`<span class="more-tag">${it.ph.length} fotos</span>`:""}${it.ok?"":`<span class="out-tag">Sin stock</span>`}</div></button>
+  <button class="pic" type="button" data-open="${esc(it.id)}" aria-label="Ver ${esc(n)}">${arch(it,"",i<4)}<span class="ml-tag">${unitLabel(it)}</span>${it.ph.length>1?`<span class="more-tag">${it.ph.length} fotos</span>`:""}${it.ok?"":it.soon?`<span class="out-tag soon">Próximamente</span>`:`<span class="out-tag">Sin stock</span>`}</div></button>
   <div class="meta"><span class="br">${esc(brandLine(it))}</span><h3 class="nm"><button type="button" data-open="${esc(it.id)}">${esc(n)}</button></h3></div>
   <div class="pr">${priceHTML(it)}</div>
   <div class="add" data-id="${esc(it.id)}">${addHTML(it.id)}</div></article>`}
@@ -516,7 +519,7 @@ function sorted(arr){const a=arr.slice();
   if(sort==="az")a.sort((x,y)=>itemName(x).localeCompare(itemName(y),"es"));
   else if(sort==="lo")a.sort((x,y)=>pk(x)-pk(y));
   else if(sort==="hi")a.sort((x,y)=>pk(y)-pk(x));
-  return a.sort((x,y)=>(y.ok?1:0)-(x.ok?1:0))}
+  return a.sort((x,y)=>(y.ok?2:y.soon?1:0)-(x.ok?2:x.soon?1:0))}
 function renderTabs(ql){
   $("tabs").innerHTML=ORDER.map(c=>{const n=ql?LIST[c].filter(it=>matches(it,ql)&&(!onlyStock||it.ok)).length:LIST[c].length;const C=CATS[c];
     return `<button class="tab" role="tab" type="button" data-c="${c}" aria-selected="${!ql&&c===cat}"${ql&&!n?" disabled":""}><b><span class="lg">${C.label}</span><span class="sm">${C.short}</span></b></button>`}).join("")}
@@ -635,7 +638,7 @@ function openProduct(id){const it=ITEMS[id];const n=itemName(it);
   const wa=`https://wa.me/${WA}?text=${encodeURIComponent(`Hola Aurora Perfumes! Quería consultar por ${it.c==="B"?"la caja surtida de 20 tubitos":it.c==="E"?"el extracto inspirado en "+n:it.c==="T"?"el tubito "+n:it.c==="H"?HMETA[it.b].k.toLowerCase()+" "+n:n+" de "+cap(it.b)}.`)}`;
   $("pd").innerHTML=`${gal}
     <div><span class="br">${esc(brandLine(it))} · ${unitLabel(it)}</span><h3>${esc(n)}</h3></div>
-    <span class="stock${it.ok?"":" no"}">${it.ok?"En stock":"Sin stock por ahora"}</span>
+    <span class="stock${it.ok?"":it.soon?" soon":" no"}">${it.ok?"En stock":it.soon?"Próximamente":"Sin stock por ahora"}</span>
     <div class="pbox">${pb}</div>
     <div class="add" data-id="${esc(id)}">${addHTML(id)}</div>
     <a class="btn-ghost wa-q" href="${wa}" target="_blank" rel="noopener">${IC.wa}Consultar por WhatsApp</a>
