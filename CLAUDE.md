@@ -36,7 +36,7 @@ Si la dueña corrió `activarAutomatico`, un disparador cada 10 min corre `autom
 rehace las fotos solo (no hace falta pedirle nada). Si no, después de agregar fotos: pedirle que corra `ponerFotos`.
 
 ## Reglas de negocio
-- Stock en la planilla: SI · NO (sin stock, `OUT_A`/`OUT_T`/ok=0) · PRÓXIMAMENTE (mercadería en camino: `SOON_A` en data.js; la tarjeta se ve en blanco y negro con el cartel "Próximamente" y no se puede agregar al pedido).
+- Stock en la planilla: SI · NO (sin stock, `OUT_A`/`OUT_T`/ok=0) · PRÓXIMAMENTE (mercadería en camino: `SOON_A` en data.js; la tarjeta se ve en blanco y negro con el cartel "Próximamente" y no se puede agregar al pedido). Cuenta regresiva "Llega en: 02d:07hs:36m:10s": `SOON_AT` en data.js ({"*": fecha ISO con -03:00} para todos, o por nombre); sin fecha o vencida muestra "Próximamente".
 - Precio de árabes desde factura del proveedor: (costo US$ + 2) × 1630, + 21000 minorista / + 16000 mayorista, redondeado para arriba a $1.000 (margen vigente desde 23/10/2026; antes +16000/+11000). Los precios de productos existentes no se tocan hasta que la dueña lo pida.
 - Árabes: 100% originales; mayorista desde 4 unidades combinadas.
 - Extractos 60 ml y tubitos 35 ml: inspirados, NO originales (mantener el aviso). Precio por escala (TIERS en template).
