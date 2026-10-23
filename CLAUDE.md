@@ -29,6 +29,8 @@ Reglas de la planilla (si se la edita): todas las filas de producto 62px, SIN fi
 (se borraron el 23/10/2026; las marcas se separan por el recuadro de la columna A), bordes completos B:G,
 columna A coloreada por marca. Ojo: las tablas de escala de precios están en I1:J8 de tubitos y extractos;
 borrar filas enteras las rompe (usar insertRange/deleteRange solo en A:G). Stock de árabes: SI/NO/PRÓXIMAMENTE (desplegable de la tabla).
+Las fotos de la planilla son imágenes flotantes (la API no las puede mover); si quedan corridas, la dueña corre
+`tools/arreglarFotos.gs` desde Extensiones → Apps Script (centra cada foto en su celda).
 
 ## Reglas de negocio
 - Stock en la planilla: SI · NO (sin stock, `OUT_A`/`OUT_T`/ok=0) · PRÓXIMAMENTE (mercadería en camino: `SOON_A` en data.js; la tarjeta se ve en blanco y negro con el cartel "Próximamente" y no se puede agregar al pedido).
