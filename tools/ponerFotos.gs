@@ -49,3 +49,19 @@ function ponerFotos() {
   props.deleteProperty("estado");
   Logger.log(faltan.length ? "Listo. Revisar:\n" + faltan.join("\n") : "Listo, todas las fotos puestas.");
 }
+
+// Se corre UNA sola vez: deja la planilla revisando sola cada 10 minutos si hay fotos nuevas en la página.
+function activarAutomatico() {
+  ScriptApp.getProjectTriggers().forEach(t => ScriptApp.deleteTrigger(t));
+  ScriptApp.newTrigger("automatico").timeBased().everyMinutes(10).create();
+  Logger.log("Listo: la planilla se va a actualizar sola cuando cambien las fotos de la página.");
+}
+
+function automatico() {
+  const props = PropertiesService.getScriptProperties();
+  const txt = UrlFetchApp.fetch("https://aurora-perfumes.tiendamendoza.workers.dev/fotos-planilla.json").getContentText();
+  const huella = Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.MD5, txt));
+  if (!props.getProperty("estado") && props.getProperty("huella") === huella) return;  // nada nuevo
+  ponerFotos();
+  if (!props.getProperty("estado")) props.setProperty("huella", huella);  // terminó
+}

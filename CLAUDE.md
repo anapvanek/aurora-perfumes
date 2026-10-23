@@ -32,7 +32,8 @@ borrar filas enteras las rompe (usar insertRange/deleteRange solo en A:G). Stock
 Las fotos de la planilla son imágenes flotantes (la API no las puede poner ni mover). Para cargarlas/corregirlas la dueña
 corre `ponerFotos` (tools/ponerFotos.gs, ya pegado en Extensiones → Apps Script de la planilla): borra las fotos de árabes,
 tubitos y extractos y pone las mismas de la página (B = foto, C = ficha), usando `site/fotos-planilla.json` que genera build.py.
-Después de agregar fotos a la página: build, push, y pedirle que vuelva a correr `ponerFotos`.
+Si la dueña corrió `activarAutomatico`, un disparador cada 10 min corre `automatico`: si cambió fotos-planilla.json
+rehace las fotos solo (no hace falta pedirle nada). Si no, después de agregar fotos: pedirle que corra `ponerFotos`.
 
 ## Reglas de negocio
 - Stock en la planilla: SI · NO (sin stock, `OUT_A`/`OUT_T`/ok=0) · PRÓXIMAMENTE (mercadería en camino: `SOON_A` en data.js; la tarjeta se ve en blanco y negro con el cartel "Próximamente" y no se puede agregar al pedido).
