@@ -1,4 +1,10 @@
 function ponerFotos() {
+  const lock = LockService.getScriptLock();
+  if (!lock.tryLock(1000)) { Logger.log("Ya se está ejecutando, esperá a que termine."); return; }
+  try { ponerFotos_(); } finally { lock.releaseLock(); }
+}
+
+function ponerFotos_() {
   const SITIO = "https://aurora-perfumes.tiendamendoza.workers.dev/";
   const FOTOS = JSON.parse(UrlFetchApp.fetch(SITIO + "fotos-planilla.json?v=" + Date.now()).getContentText());
   const ss = SpreadsheetApp.getActive(), props = PropertiesService.getScriptProperties();
