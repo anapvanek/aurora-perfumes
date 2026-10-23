@@ -155,7 +155,7 @@ a{color:inherit}
 .out-tag.soon{background:var(--forest);letter-spacing:.04em;text-transform:uppercase;font-size:11px}
 .out-tag.soon.cd{text-transform:none;letter-spacing:0;display:flex;flex-direction:column;align-items:center;line-height:1.15;padding:5px 12px 6px;border-radius:14px}
 .out-tag.soon.cd small{font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;opacity:.85}
-.out-tag.soon.cd b,.pd .stock b{font-variant-numeric:tabular-nums;font-size:12.5px}
+.out-tag.soon.cd b{font-size:13px;font-weight:700;letter-spacing:.02em}
 .card .meta{display:grid;gap:2px;min-width:0}
 .card .br{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .card .nm{font-size:15.5px;font-weight:600;line-height:1.25;margin:0;min-height:2.5em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -686,7 +686,7 @@ render();renderCart();
 function tick(){const now=Date.now();document.querySelectorAll("[data-cd]").forEach(el=>{
   const ms=Date.parse(el.dataset.cd)-now;
   if(!(ms>0)){if(el.dataset.on){el.textContent="Próximamente";el.classList.remove("cd");delete el.dataset.on}return}
-  const t=Math.floor(ms/1000),c=`${p(Math.floor(t/86400))}d:${p(Math.floor(t%86400/3600))}hs:${p(Math.floor(t%3600/60))}m:${p(t%60)}s`;
+  const t=Math.floor(ms/1000),c=`${p(Math.floor(t/86400))}:${p(Math.floor(t%86400/3600))}:${p(Math.floor(t%3600/60))}:${p(t%60)}`;
   el.dataset.on=1;
   if(el.dataset.cd1)el.innerHTML=`Llega en: <b>${c}</b>`;else{el.classList.add("cd");el.innerHTML=`<small>Llega en</small><b>${c}</b>`}})}
 tick();setInterval(tick,1000)})();
