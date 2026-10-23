@@ -25,8 +25,10 @@ Cuando la dueña dice **"actualizá"**: leer todas las pestañas, comparar con `
 (nombres, precios, stock SI/NO/PRÓXIMAMENTE, fotos por ID de Drive), aplicar los cambios, `python3 src/build.py`,
 commit y push. Contarle qué cambió.
 
-Reglas de la planilla (si se la edita): filas de producto 62px, separadoras 21px, una fila vacía
-entre marcas, bordes completos B:G, columna A coloreada por marca.
+Reglas de la planilla (si se la edita): todas las filas de producto 62px, SIN filas separadoras entre marcas
+(se borraron el 23/10/2026; las marcas se separan por el recuadro de la columna A), bordes completos B:G,
+columna A coloreada por marca. Ojo: las tablas de escala de precios están en I1:J8 de tubitos y extractos;
+borrar filas enteras las rompe (usar insertRange/deleteRange solo en A:G). Stock de árabes: SI/NO/PRÓXIMAMENTE (desplegable de la tabla).
 
 ## Reglas de negocio
 - Stock en la planilla: SI · NO (sin stock, `OUT_A`/`OUT_T`/ok=0) · PRÓXIMAMENTE (mercadería en camino: `SOON_A` en data.js; la tarjeta se ve en blanco y negro con el cartel "Próximamente" y no se puede agregar al pedido).
