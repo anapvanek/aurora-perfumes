@@ -231,6 +231,8 @@ footer p{margin:0 0 6px}
 @media (min-width:760px){.grab{display:none}}
 .sh-head{display:flex;justify-content:space-between;align-items:center;gap:12px;position:sticky;top:-8px;background:var(--linen);padding:8px 0;z-index:2}
 .sh-head h2{font:700 22px/1.2 var(--display);margin:0;color:var(--forest)}
+.share{display:inline-flex;align-items:center;gap:7px;height:38px;padding:0 16px 0 13px;border-radius:999px;border:0;background:var(--paper);box-shadow:0 0 0 1px var(--line);color:var(--forest);font-weight:600;font-size:14px;cursor:pointer}
+.share svg{width:18px;height:18px}
 .x{flex:none;width:38px;height:38px;border-radius:50%;border:0;background:var(--paper);box-shadow:0 0 0 1px var(--line);color:var(--ink);cursor:pointer;display:grid;place-items:center}
 .x svg{width:18px;height:18px}
 /* product detail */
@@ -387,7 +389,7 @@ body.lock{overflow:hidden}
 <div class="sheet-bg" id="pd-sheet" hidden>
   <div class="sheet" role="dialog" aria-modal="true" aria-label="Detalle del producto">
     <div class="grab"></div>
-    <div class="sh-head"><span></span><button class="x" data-close type="button" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <div class="sh-head"><button class="share" id="pd-share" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>Compartir</button><button class="x" data-close type="button" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
     <div class="pd" id="pd"></div>
   </div>
 </div>
@@ -466,6 +468,8 @@ let cat=({"#extractos":"E","#tubitos":"T","#hogar":"H"})[location.hash]||"A";
 let mode=LS.get("pmode","min"),brand="",q="",sort="brand",onlyStock=LS.get("stock","0")==="1";
 let cart={};
 try{const s=JSON.parse(LS.get("cart","{}"));for(const k in s){const kk=ITEMS[k]?k:ITEMS["A|"+k]?"A|"+k:null;if(kk&&s[k]>0&&ITEMS[kk].ok)cart[kk]=s[k]}}catch(e){}
+let curP=null;
+const slug=it=>(it.c+"-"+it.b+"-"+it.n).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 const save=()=>LS.set("cart",JSON.stringify(cart));
 const OPT={ent:"",pago:""};
 
@@ -628,8 +632,8 @@ function setQty(id,d,fromCard){const c=(cart[id]||0)+d;if(c<=0)delete cart[id];e
 /* ---- Sheets ---- */
 let lastFocus=null;
 function openSheet(el){lastFocus=document.activeElement;el.hidden=false;document.body.classList.add("lock");setTimeout(()=>el.querySelector("[data-close]").focus({preventScroll:true}),30)}
-function closeSheet(el){el.hidden=true;if($("pd-sheet").hidden&&$("cart-sheet").hidden)document.body.classList.remove("lock");if(lastFocus&&document.contains(lastFocus))lastFocus.focus({preventScroll:true})}
-function openProduct(id){const it=ITEMS[id];const n=itemName(it);
+function closeSheet(el){el.hidden=true;if(el.id==="pd-sheet"){curP=null;try{history.replaceState(null,"",location.pathname+(HASH[cat]||""))}catch(e){}}if($("pd-sheet").hidden&&$("cart-sheet").hidden)document.body.classList.remove("lock");if(lastFocus&&document.contains(lastFocus))lastFocus.focus({preventScroll:true})}
+function openProduct(id){const it=ITEMS[id];curP=id;try{history.replaceState(null,"","?p="+slug(it)+(HASH[cat]||""))}catch(e){}const n=itemName(it);
   const pics=it.ph.length?it.ph:[null];
   const gal=it.ph.length?`<div class="gal"><div class="arch${isFic(it.ph[0])?" sq":""}"><div class="slides" id="pd-sl">${it.ph.map((k,i)=>`<img src="${PHOTOS[k]}" alt="${esc(n)}, ${isFic(k)?"ficha de notas":"foto "+(i+1)}"${isFic(k)?' class="fic"':CONTAIN.has(k)?' class="cn"':""}>`).join("")}</div></div>
       ${it.ph.length>1?`<button class="nav p" type="button" data-nav="-1" aria-label="Foto anterior">${IC.left}</button><button class="nav n" type="button" data-nav="1" aria-label="Foto siguiente">${IC.right}</button><div class="dots">${it.ph.map((_,i)=>`<i${i?"":' class="on"'}></i>`).join("")}</div>`:""}</div>`
@@ -680,6 +684,15 @@ $("cs-name").value=LS.get("name","");
 $("cs-name").addEventListener("input",e=>{LS.set("name",e.target.value);renderCart()});
 $("cs-clear").onclick=()=>{if(confirm("¿Vaciar el pedido?")){cart={};save();render();renderCart()}};
 render();renderCart();
+
+/* ---- Compartir producto: enlace ?p=<slug> ---- */
+$("pd-share").onclick=async()=>{const it=ITEMS[curP];if(!it)return;
+  const url=location.origin+location.pathname+"?p="+slug(it),n=itemName(it);
+  const text=`${n}${it.c==="A"?" de "+cap(it.b):""} en Aurora Perfumes`;
+  if(navigator.share){try{await navigator.share({title:n,text,url})}catch(e){}return}
+  try{await navigator.clipboard.writeText(url);toast("Enlace copiado")}catch(e){prompt("Copiá el enlace:",url)}};
+{const p=new URLSearchParams(location.search).get("p");const id=p&&Object.keys(ITEMS).find(k=>slug(ITEMS[k])===p);
+  if(id){const c=ITEMS[id].c==="B"?"T":ITEMS[id].c;if(c!==cat){cat=c;render()}openProduct(id)}}
 
 // Cuenta regresiva de lo "Próximamente" (fecha en SOON_AT de data.js)
 (function(){const p=n=>String(n).padStart(2,"0");

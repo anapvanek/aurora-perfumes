@@ -43,4 +43,5 @@ rehace las fotos solo (no hace falta pedirle nada). Si no, después de agregar f
 - Tubitos: 1 u $4.000 · 10+ $2.600 · 20+ $2.000 · 60+ $1.900 · 100+ $1.800. Caja surtida x20 (aromas a elección del local, no se eligen) $36.000: producto aparte (B|BOX en template, foto tub-caja-surtida), no suma a la escala de tubitos.
 - Hogar y auto: mayorista desde 10 unidades combinadas entre perfuminas y difusores.
 - Precios por cantidad: tablas siempre visibles (sin desplegables).
+- Detalle de producto: botón "Compartir" (arriba a la izquierda). Enlace directo `?p=<categoría>-<marca>-<nombre>` (slug en template) abre ese producto.
 - WhatsApp de pedidos: 5492612420544.
