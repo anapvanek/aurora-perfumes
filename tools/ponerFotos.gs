@@ -1,6 +1,6 @@
 function ponerFotos() {
   const SITIO = "https://aurora-perfumes.tiendamendoza.workers.dev/";
-  const FOTOS = JSON.parse(UrlFetchApp.fetch(SITIO + "fotos-planilla.json").getContentText());
+  const FOTOS = JSON.parse(UrlFetchApp.fetch(SITIO + "fotos-planilla.json?v=" + Date.now()).getContentText());
   const ss = SpreadsheetApp.getActive(), props = PropertiesService.getScriptProperties();
   const inicio = Date.now(), tabs = Object.keys(FOTOS), faltan = [];
   let est = JSON.parse(props.getProperty("estado") || '{"t":0,"j":0}');
@@ -31,7 +31,7 @@ function ponerFotos() {
         return;
       }
       const lote = tareas.slice(j, j + 15);
-      const resp = UrlFetchApp.fetchAll(lote.map(x => ({url: SITIO + "img/" + x[2] + ".jpg", muteHttpExceptions: true})));
+      const resp = UrlFetchApp.fetchAll(lote.map(x => ({url: SITIO + "img/" + x[2] + ".jpg?v=" + Date.now(), muteHttpExceptions: true})));
       resp.forEach((res, n) => {
         const [row, col] = lote[n];
         if (res.getResponseCode() !== 200) { faltan.push(tab + ": fila " + row + " sin foto"); return; }
@@ -59,7 +59,7 @@ function activarAutomatico() {
 
 function automatico() {
   const props = PropertiesService.getScriptProperties();
-  const txt = UrlFetchApp.fetch("https://aurora-perfumes.tiendamendoza.workers.dev/fotos-planilla.json").getContentText();
+  const txt = UrlFetchApp.fetch("https://aurora-perfumes.tiendamendoza.workers.dev/fotos-planilla.json?v=" + Date.now()).getContentText();
   const huella = Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.MD5, txt));
   if (!props.getProperty("estado") && props.getProperty("huella") === huella) return;  // nada nuevo
   ponerFotos();
