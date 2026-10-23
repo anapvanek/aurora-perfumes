@@ -9,7 +9,9 @@ function ponerFotos() {
     const vals = sh.getRange(2, 1, sh.getLastRow() - 1, 4).getValues();
     let marca = "";
     const pedidos = [], destinos = [];
-    vals.forEach((r, i) => {
+    if (FOTOS[tab]._fila2) {  // hogar y auto: foto general en la primera fila
+      FOTOS[tab]._fila2.forEach((f, k) => { if (f) { pedidos.push({url: SITIO + "img/" + f + ".jpg", muteHttpExceptions: true}); destinos.push([2, k + 1]); } });
+    } else vals.forEach((r, i) => {
       if (r[0]) marca = String(r[0]).trim();
       const nombre = String(r[3]).trim().replace(/\s+\d+\s*ML$/i, "");
       if (!nombre) return;

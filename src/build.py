@@ -26,3 +26,8 @@ fotos={"ÁRABES ORIGINALES":{f"{b}|{it[0]}":_par(it[4]) for b,its in json.loads(
        "TUBITOS ÁRABES 35ML":{f"{b}|{it[0]}":_par(it[1]) for b,its in _arr('TUB') for it in its},
        "EXTRACTOS 60ML":{f"{b}|{it[0]}":_par(it[2]) for b,its in _arr('EXT') for it in its}}
 json.dump(fotos,open(os.path.join(SITE,'fotos-planilla.json'),'w',encoding='utf8'),ensure_ascii=False)
+# Hogar y auto: una foto general por pestaña, en la primera fila (columnas FOTO y FOTO 2)
+_h=json.loads(re.search(r'const HMETA=(\{.*?\});\s*\n',data,re.S).group(1))
+for k,tab in [("PERFUMINAS TEXTILES","PERFUMINAS TEXTILES 250ML"),("DIFUSORES DE AMBIENTE","DIFUSORES DE AMBIENTE 125ML"),("DIFUSORES PARA AUTO","DIFUSORES PARA AUTO 10ML")]:
+    if k in _h: fotos[tab]={"_fila2":(_h[k]['ph']+['',''])[:2]}
+json.dump(fotos,open(os.path.join(SITE,'fotos-planilla.json'),'w',encoding='utf8'),ensure_ascii=False)
