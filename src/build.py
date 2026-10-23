@@ -16,3 +16,13 @@ open(os.path.join(SITE,'index.html'),'w',encoding='utf8').write(s)
 shutil.copy(os.path.join(SRC,'og.jpg'),os.path.join(SITE,'og.jpg'))
 missing=[k for k in re.findall(r'"((?:ext|tub|hog)-[\w-]+)"',data) if k not in ph]
 print(f"site/index.html: {len(s)//1024} KB, {len(ph)} fotos", "| FALTAN: "+", ".join(sorted(set(missing))) if missing else "")
+# Mapa de fotos para la planilla (lo usa tools/ponerFotos.gs): "MARCA|NOMBRE" -> [foto, ficha]
+def _arr(name):
+    return json.loads(re.search(r'const '+name+r'=(\[.*?\]);\s*\n',data,re.S).group(1))
+def _par(p):
+    a=[x for x in p if not x.startswith('fic-')];f=[x for x in p if x.startswith('fic-')]
+    return [a[0] if a else '', f[0] if f else (a[1] if len(a)>1 else '')]
+fotos={"ÁRABES ORIGINALES":{f"{b}|{it[0]}":_par(it[4]) for b,its in json.loads(m.group(1)) for it in its},
+       "TUBITOS ÁRABES 35ML":{f"{b}|{it[0]}":_par(it[1]) for b,its in _arr('TUB') for it in its},
+       "EXTRACTOS 60ML":{f"{b}|{it[0]}":_par(it[2]) for b,its in _arr('EXT') for it in its}}
+json.dump(fotos,open(os.path.join(SITE,'fotos-planilla.json'),'w',encoding='utf8'),ensure_ascii=False)
