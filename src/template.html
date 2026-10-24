@@ -185,30 +185,6 @@ a{color:inherit}
 .empty p{margin:0;color:var(--muted);max-width:40ch}
 .btn-ghost{border:1px solid var(--forest);background:transparent;color:var(--forest);border-radius:999px;padding:10px 18px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
 
-/* ---------- Reseñas ---------- */
-.revs{margin-top:56px;display:grid;gap:16px}
-.rv-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px}
-.rv-head h2{font:700 22px/1.2 var(--display);margin:0;color:var(--forest)}
-.rv-avg{margin:4px 0 0;color:var(--muted);font-size:14px}.rv-avg b{color:var(--ink)}
-.rv-list{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(260px,82%);gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;scrollbar-width:none}
-.rv-list::-webkit-scrollbar{display:none}
-@media (min-width:760px){.rv-list{grid-auto-columns:minmax(280px,calc((100% - 24px)/3))}}
-.rv{scroll-snap-align:start;background:var(--paper);border:1px solid var(--line-2);border-radius:var(--r);padding:16px 18px;display:grid;gap:8px;align-content:start}
-.rv .st,.rv-avg .st{color:#c99a2e;letter-spacing:2px;font-size:15px}
-.rv p{margin:0;font-size:14.5px;line-height:1.5;white-space:pre-line}
-.rv small{color:var(--muted);font-size:13px}.rv small b{color:var(--ink);font-weight:600}
-.rv-empty{background:var(--paper);border:1px dashed var(--line);border-radius:var(--r);padding:18px;color:var(--muted);font-size:14.5px;margin:0}
-.rv-form{display:grid;gap:14px;padding-top:4px}
-.rv-stars{display:flex;gap:6px}
-.rv-stars button{border:0;background:none;font-size:34px;line-height:1;color:var(--line);cursor:pointer;padding:0 2px}
-.rv-stars button.on{color:#c99a2e}
-.fld textarea{font:inherit;font-size:16px;font-weight:400;padding:11px 14px;border:1px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);resize:vertical;min-height:96px}
-.fld textarea:focus{outline:none;border-color:var(--forest);box-shadow:0 0 0 3px rgba(47,69,40,.15)}
-.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-.rv-msg{margin:0;font-size:14px;min-height:0}.rv-msg.err{color:var(--red)}.rv-msg.ok{color:var(--forest);font-weight:600}
-.rv-send{border:0;background:var(--forest);color:var(--cream);border-radius:999px;padding:14px 18px;font-weight:700;font-size:16px;cursor:pointer}
-.rv-send:disabled{opacity:.6;cursor:default}
-
 /* ---------- How to buy + info ---------- */
 .how{margin-top:56px;background:var(--forest);color:var(--cream);border-radius:22px;padding:26px 20px;display:grid;gap:18px}
 .how h2{font:700 22px/1.2 var(--display);margin:0}
@@ -384,10 +360,6 @@ body.lock{overflow:hidden}
       <li><div><b>Envialo por WhatsApp</b><span>Se abre el chat con el pedido escrito. Ahí coordinamos pago y entrega.</span></div></li>
     </ol>
   </section>
-  <section class="revs" id="revs" hidden aria-labelledby="rv-t">
-    <div class="rv-head"><div><h2 id="rv-t">Lo que dicen nuestros clientes</h2><p class="rv-avg" id="rv-avg"></p></div><button class="btn-ghost" id="rv-open" type="button">Dejar una reseña</button></div>
-    <div class="rv-list" id="rv-list"></div>
-  </section>
   <section class="info" aria-label="Información">
     <div class="ibox"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M6 15h4"/></svg>Formas de pago</h3><p>Efectivo o transferencia.</p></div>
     <div class="ibox"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg>Entregas</h3><p>Retiro en Mendoza Ciudad o envío a domicilio.</p></div>
@@ -419,22 +391,6 @@ body.lock{overflow:hidden}
     <div class="grab"></div>
     <div class="sh-head"><button class="share" id="pd-share" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>Compartir</button><button class="x" data-close type="button" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
     <div class="pd" id="pd"></div>
-  </div>
-</div>
-
-<div class="sheet-bg" id="rv-sheet" hidden>
-  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="rv-st">
-    <div class="grab"></div>
-    <div class="sh-head"><h2 id="rv-st">Dejá tu reseña</h2><button class="x" data-close type="button" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
-    <form class="rv-form" id="rv-form" novalidate>
-      <div class="fld"><span>¿Cuántas estrellas nos das?</span><div class="rv-stars" id="rv-stars" role="radiogroup" aria-label="Estrellas"><button type="button" role="radio" aria-checked="false" data-s="1" aria-label="1 estrella">★</button><button type="button" role="radio" aria-checked="false" data-s="2" aria-label="2 estrellas">★</button><button type="button" role="radio" aria-checked="false" data-s="3" aria-label="3 estrellas">★</button><button type="button" role="radio" aria-checked="false" data-s="4" aria-label="4 estrellas">★</button><button type="button" role="radio" aria-checked="false" data-s="5" aria-label="5 estrellas">★</button></div></div>
-      <label class="fld" for="rv-name">Tu nombre<input id="rv-name" type="text" maxlength="40" autocomplete="given-name" placeholder="Ej: Sofía"></label>
-      <label class="fld" for="rv-text">Tu experiencia<textarea id="rv-text" maxlength="600" rows="4" placeholder="Contanos qué compraste y qué te pareció"></textarea></label>
-      <input class="hp" id="rv-web" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <p class="rv-msg" id="rv-msg" role="status"></p>
-      <button class="rv-send" id="rv-send" type="submit">Enviar reseña</button>
-      <p class="small">Las reseñas se publican después de que las revisamos.</p>
-    </form>
   </div>
 </div>
 
@@ -676,7 +632,7 @@ function setQty(id,d,fromCard){const c=(cart[id]||0)+d;if(c<=0)delete cart[id];e
 /* ---- Sheets ---- */
 let lastFocus=null;
 function openSheet(el){lastFocus=document.activeElement;el.hidden=false;document.body.classList.add("lock");setTimeout(()=>el.querySelector("[data-close]").focus({preventScroll:true}),30)}
-function closeSheet(el){el.hidden=true;if(el.id==="pd-sheet"){curP=null;try{history.replaceState(null,"",location.pathname+(HASH[cat]||""))}catch(e){}}if($("pd-sheet").hidden&&$("cart-sheet").hidden&&$("rv-sheet").hidden)document.body.classList.remove("lock");if(lastFocus&&document.contains(lastFocus))lastFocus.focus({preventScroll:true})}
+function closeSheet(el){el.hidden=true;if(el.id==="pd-sheet"){curP=null;try{history.replaceState(null,"",location.pathname+(HASH[cat]||""))}catch(e){}}if($("pd-sheet").hidden&&$("cart-sheet").hidden)document.body.classList.remove("lock");if(lastFocus&&document.contains(lastFocus))lastFocus.focus({preventScroll:true})}
 function openProduct(id){const it=ITEMS[id];curP=id;try{history.replaceState(null,"","?p="+slug(it)+(HASH[cat]||""))}catch(e){}const n=itemName(it);
   const pics=it.ph.length?it.ph:[null];
   const gal=it.ph.length?`<div class="gal"><div class="arch${isFic(it.ph[0])?" sq":""}"><div class="slides" id="pd-sl">${it.ph.map((k,i)=>`<img src="${PHOTOS[k]}" alt="${esc(n)}, ${isFic(k)?"ficha de notas":"foto "+(i+1)}"${isFic(k)?' class="fic"':CONTAIN.has(k)?' class="cn"':""}>`).join("")}</div></div>
@@ -728,35 +684,6 @@ $("cs-name").value=LS.get("name","");
 $("cs-name").addEventListener("input",e=>{LS.set("name",e.target.value);renderCart()});
 $("cs-clear").onclick=()=>{if(confirm("¿Vaciar el pedido?")){cart={};save();render();renderCart()}};
 render();renderCart();
-
-/* ---- Reseñas (Apps Script de la planilla, pestaña RESEÑAS) ---- */
-if(typeof REV_URL==="string"&&REV_URL){
-  $("revs").hidden=false;
-  const stars=n=>"★".repeat(n)+"☆".repeat(5-n);
-  const MES=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
-  const showRevs=r=>{
-    if(!Array.isArray(r)||!r.length){$("rv-avg").textContent="";$("rv-list").innerHTML=`<p class="rv-empty">Todavía no hay reseñas publicadas. ¡Contanos qué te pareció tu compra!</p>`;return}
-    const avg=r.reduce((a,x)=>a+(+x.e||0),0)/r.length;
-    $("rv-avg").innerHTML=`<span class="st">${stars(Math.round(avg))}</span> <b>${avg.toFixed(1).replace(".",",")}</b> · ${r.length} ${plural(r.length,"reseña","reseñas")}`;
-    $("rv-list").innerHTML=r.map(x=>{const d=new Date(x.f+"T12:00:00");return `<article class="rv"><span class="st" aria-label="${x.e} de 5 estrellas">${stars(Math.max(1,Math.min(5,+x.e||5)))}</span><p>${esc(x.c)}</p><small><b>${esc(x.n)}</b>${isNaN(d)?"":" · "+MES[d.getMonth()]+" "+d.getFullYear()}</small></article>`}).join("")};
-  $("rv-list").innerHTML=`<p class="rv-empty">Cargando reseñas…</p>`;
-  fetch(REV_URL).then(r=>r.json()).then(showRevs).catch(()=>{$("revs").hidden=true});
-  let rvS=0;
-  const paint=()=>$("rv-stars").querySelectorAll("button").forEach(b=>{const on=+b.dataset.s<=rvS;b.classList.toggle("on",on);b.setAttribute("aria-checked",+b.dataset.s===rvS)});
-  $("rv-stars").onclick=e=>{const b=e.target.closest("button");if(b){rvS=+b.dataset.s;paint()}};
-  $("rv-open").onclick=()=>{$("rv-msg").textContent="";$("rv-msg").className="rv-msg";$("rv-form").hidden=false;openSheet($("rv-sheet"))};
-  $("rv-form").onsubmit=async e=>{e.preventDefault();const m=$("rv-msg");
-    const nombre=$("rv-name").value.trim(),comentario=$("rv-text").value.trim();
-    if(!rvS){m.className="rv-msg err";m.textContent="Elegí cuántas estrellas nos das.";return}
-    if(!nombre){m.className="rv-msg err";m.textContent="Poné tu nombre.";return}
-    if(comentario.length<5){m.className="rv-msg err";m.textContent="Contanos un poco más en tu experiencia.";return}
-    $("rv-send").disabled=true;m.className="rv-msg";m.textContent="Enviando…";
-    try{await fetch(REV_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({nombre,estrellas:rvS,comentario,web:$("rv-web").value})});
-      m.className="rv-msg ok";m.textContent="¡Gracias por tu reseña! La vamos a publicar en cuanto la revisemos.";
-      $("rv-name").value="";$("rv-text").value="";rvS=0;paint();
-    }catch(err){m.className="rv-msg err";m.textContent="No se pudo enviar. Probá de nuevo en un rato."}
-    $("rv-send").disabled=false};
-}
 
 /* ---- Compartir producto: enlace ?p=<slug> ---- */
 $("pd-share").onclick=async()=>{const it=ITEMS[curP];if(!it)return;

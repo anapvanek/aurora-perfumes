@@ -44,8 +44,4 @@ rehace las fotos solo (no hace falta pedirle nada). Si no, después de agregar f
 - Hogar y auto: mayorista desde 10 unidades combinadas entre perfuminas y difusores.
 - Precios por cantidad: tablas siempre visibles (sin desplegables).
 - Detalle de producto: botón "Compartir" (arriba a la izquierda). Enlace directo `?p=<categoría>-<marca>-<nombre>` (slug en template) abre ese producto.
-- Reseñas generales del local: sección "Lo que dicen nuestros clientes" + formulario. Backend = app web de Apps Script
-  (tools/resenas.gs, archivo "Reseñas" en el proyecto de la planilla): doPost agrega fila en la pestaña RESEÑAS
-  (FECHA, NOMBRE, ESTRELLAS, COMENTARIO, PUBLICAR=NO) y le manda un mail a la dueña; doGet devuelve las que tienen PUBLICAR=SI.
-  `REV_URL` en data.js = URL /exec de esa app web (vacío = la sección no se muestra). Nunca inventar reseñas.
 - WhatsApp de pedidos: 5492612420544.
