@@ -38,6 +38,7 @@ rehace las fotos solo (no hace falta pedirle nada). Si no, después de agregar f
 ## Reglas de negocio
 - Stock en la planilla: SI · NO (sin stock, `OUT_A`/`OUT_T`/ok=0) · PRÓXIMAMENTE (mercadería en camino: `SOON_A` en data.js; la tarjeta se ve en blanco y negro con el cartel "Próximamente" y no se puede agregar al pedido). Cuenta regresiva "Llega en 02:07:36:10" (días:horas:min:seg, sin letras): `SOON_AT` en data.js ({"*": fecha ISO con -03:00} para todos, o por nombre); sin fecha o vencida muestra "Próximamente".
 - Precio de árabes desde factura del proveedor: (costo US$ + 2) × 1630, + 21000 minorista / + 16000 mayorista, redondeado para arriba a $1.000 (margen vigente desde 23/10/2026; antes +16000/+11000). Los precios de productos existentes no se tocan hasta que la dueña lo pida.
+- Promo especial de árabes: `PROMO_A` en data.js {"NOMBRE":[precio, "motivo"]}: precio único (min y may), cartel "Promo especial", precio viejo tachado. La planilla mantiene el precio normal (no tocar al sincronizar).
 - Árabes: 100% originales; mayorista desde 4 unidades combinadas.
 - Extractos 60 ml y tubitos 35 ml: inspirados, NO originales (mantener el aviso). Precio por escala (TIERS en template).
 - Tubitos: 1 u $4.000 · 10+ $2.600 · 20+ $2.000 · 60+ $1.900 · 100+ $1.800. Caja surtida x20 (aromas a elección del local, no se eligen) $36.000: producto aparte (B|BOX en template, foto tub-caja-surtida), no suma a la escala de tubitos.

@@ -151,7 +151,10 @@ a{color:inherit}
 .ml-tag{position:absolute;z-index:3;top:12px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;background:rgba(251,250,246,.9);color:var(--forest);white-space:nowrap;box-shadow:0 0 0 1px rgba(47,69,40,.1)}
 .more-tag{position:absolute;z-index:3;right:10px;bottom:10px;font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;background:rgba(29,38,24,.62);color:#fff}
 .out-tag{position:absolute;z-index:3;left:50%;bottom:12px;transform:translateX(-50%);font-size:12px;font-weight:700;padding:5px 12px;border-radius:999px;background:var(--red);color:#fff;white-space:nowrap}
-.card.out .more-tag{display:none}
+.card.out .more-tag,.card.promo .more-tag{display:none}
+.out-tag.promo{background:#b5452b;letter-spacing:.04em;text-transform:uppercase;font-size:11px}
+.pr s{font-size:13px;font-weight:500;color:var(--muted);margin-left:4px}
+.pr .why{color:#b5452b;font-weight:600}
 .out-tag.soon{background:var(--forest);letter-spacing:.04em;text-transform:uppercase;font-size:11px}
 .out-tag.soon.cd{text-transform:none;letter-spacing:0;display:flex;flex-direction:column;align-items:center;line-height:1.15;padding:5px 12px 6px;border-radius:14px}
 .out-tag.soon.cd small{font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;opacity:.85}
@@ -450,7 +453,8 @@ const ORDER=["A","E","T","H"];
 const BOX_PRICE=36000;
 const ITEMS={},LIST={A:[],E:[],T:[],H:[]};
 function addItem(it){it.id=it.c+"|"+it.b+"|"+it.n;it.ph=(it.ph||[]).filter(k=>PHOTOS[k]);it.key=norm(it.b+" "+it.n+(it.c==="H"?" "+HMETA[it.b].k:""));ITEMS[it.id]=it;LIST[it.c].push(it)}
-DATA.forEach(([b,its])=>its.forEach(([n,ml,pm,pM,ph])=>addItem({c:"A",b,n,ml,pm,pM,ph,soon:SOON_A.includes(n),at:SOON_A.includes(n)?(SOON_AT[n]||SOON_AT["*"]||""):"",ok:!OUT_A.includes(n)&&!SOON_A.includes(n)})));
+const PR=typeof PROMO_A==="object"?PROMO_A:{};
+DATA.forEach(([b,its])=>its.forEach(([n,ml,pm,pM,ph])=>addItem({c:"A",b,n,ml,ph,...(PR[n]?{pm:PR[n][0],pM:PR[n][0],was:pm,why:PR[n][1]}:{pm,pM}),soon:SOON_A.includes(n),at:SOON_A.includes(n)?(SOON_AT[n]||SOON_AT["*"]||""):"",ok:!OUT_A.includes(n)&&!SOON_A.includes(n)})));
 EXT.forEach(([b,its])=>its.forEach(([n,ok,ph])=>addItem({c:"E",b,n,ml:60,ph,ok:!!ok})));
 TUB.forEach(([b,its])=>its.forEach(([n,ph])=>addItem({c:"T",b,n,ml:35,ph,ok:!OUT_T.includes(n)})));
 {const it={c:"B",b:"CAJA SURTIDA",n:"CAJA SURTIDA X20",ml:35,price:BOX_PRICE,ok:true,id:"B|BOX",ph:["tub-caja-surtida"].filter(k=>PHOTOS[k]),key:norm("caja surtida tubitos 20 x20")};ITEMS[it.id]=it;LIST.T.unshift(it)}
@@ -486,14 +490,15 @@ function addHTML(id){const it=ITEMS[id];
           :`<button class="btn-add" type="button" data-act="inc">${IC.plus}Agregar</button>`}
 function priceHTML(it){
   if(it.c==="B")return `<b>${fmt(BOX_PRICE)}</b><small>${fmt(BOX_PRICE/20)} c/u · aromas surtidos, no se eligen</small>`;
+  if(it.was)return `<b>${fmt(it.pm)} <s>${fmt(it.was)}</s></b><small class="why">${esc(it.why)}</small>`;
   if(it.c==="A"||it.c==="H"){const n=WH[it.c];
     return mode==="may"?`<b>${fmt(it.pM)}</b><small>Mayorista desde ${n} u. · Minorista ${fmt(it.pm)}</small>`
                       :`<b>${fmt(it.pm)}</b><small>Mayorista ${fmt(it.pM)} desde ${n} u.</small>`}
   const T=TIERS[it.c];return `<b>${fmt(T[0][1])}</b><small>Por cantidad, desde ${fmt(T[T.length-1][1])} c/u</small>`}
 function card(it,i){
   const n=itemName(it);
-  return `<article class="card${it.ok?"":" out"}">
-  <button class="pic" type="button" data-open="${esc(it.id)}" aria-label="Ver ${esc(n)}">${arch(it,"",i<4)}<span class="ml-tag">${unitLabel(it)}</span>${it.ph.length>1?`<span class="more-tag">${it.ph.length} fotos</span>`:""}${it.ok?"":it.soon?`<span class="out-tag soon"${it.at?` data-cd="${esc(it.at)}"`:""}>Próximamente</span>`:`<span class="out-tag">Sin stock</span>`}</div></button>
+  return `<article class="card${it.ok?"":" out"}${it.was&&it.ok?" promo":""}">
+  <button class="pic" type="button" data-open="${esc(it.id)}" aria-label="Ver ${esc(n)}">${arch(it,"",i<4)}<span class="ml-tag">${unitLabel(it)}</span>${it.was&&it.ok?`<span class="out-tag promo">Promo especial</span>`:""}${it.ph.length>1?`<span class="more-tag">${it.ph.length} fotos</span>`:""}${it.ok?"":it.soon?`<span class="out-tag soon"${it.at?` data-cd="${esc(it.at)}"`:""}>Próximamente</span>`:`<span class="out-tag">Sin stock</span>`}</div></button>
   <div class="meta"><span class="br">${esc(brandLine(it))}</span><h3 class="nm"><button type="button" data-open="${esc(it.id)}">${esc(n)}</button></h3></div>
   <div class="pr">${priceHTML(it)}</div>
   <div class="add" data-id="${esc(it.id)}">${addHTML(it.id)}</div></article>`}
@@ -609,7 +614,7 @@ function message(t){const name=$("cs-name").value.trim();
   const by=c=>Object.keys(cart).filter(k=>ITEMS[k].c===c);
   const A=by("A"),E=by("E"),T=by("T"),H=by("H"),B=by("B");
   if(A.length){m+=`\nÁRABES ORIGINALES (${t.whA?"precio mayorista":"precio minorista"})\n`;
-    A.forEach(k=>{const it=ITEMS[k],c=cart[k],p=unitPrice(it,t);m+=`${c} x ${cap(it.n)} (${cap(it.b)}) ${it.ml} ml - ${fmt(p*c)}\n`});m+=`Subtotal: ${fmt(t.totA)}\n`}
+    A.forEach(k=>{const it=ITEMS[k],c=cart[k],p=unitPrice(it,t);m+=`${c} x ${cap(it.n)} (${cap(it.b)}) ${it.ml} ml${it.was?" [PROMO: "+it.why.toLowerCase()+"]":""} - ${fmt(p*c)}\n`});m+=`Subtotal: ${fmt(t.totA)}\n`}
   if(E.length){m+=`\nEXTRACTOS 60 ML (${t.uE} u. a ${fmt(t.pE)} c/u)\n`;
     E.forEach(k=>{const it=ITEMS[k],c=cart[k];m+=`${c} x Inspirado en ${cap(it.n)} (${cap(it.b)}) - ${fmt(t.pE*c)}\n`});m+=`Subtotal: ${fmt(t.totE)}\n`}
   if(T.length){m+=`\nTUBITOS 35 ML (${t.uT} u. a ${fmt(t.pT)} c/u)\n`;
@@ -640,6 +645,7 @@ function openProduct(id){const it=ITEMS[id];curP=id;try{history.replaceState(nul
     :`<div class="gal">${arch(it,"")}</div></div>`;
   let pb;
   if(it.c==="B")pb=`<ul class="tl"><li class="best"><span>Caja de 20 tubitos de 35 ml</span><span><b>${fmt(BOX_PRICE)}</b><small>(${fmt(BOX_PRICE/20)} c/u)</small></span></li></ul>`;
+  else if(it.was)pb=`<ul class="tl"><li class="best"><span>Precio promo<small style="display:block;font-weight:400">${esc(it.why)} · mismo precio por unidad o por mayor</small></span><span><b>${fmt(it.pm)}</b><small><s>${fmt(it.was)}</s></small></span></li></ul>`;
   else if(it.c==="A"||it.c==="H")pb=`<ul class="tl"><li><span>Minorista</span><span><b>${fmt(it.pm)}</b></span></li><li class="best"><span>Mayorista${it.c==="A"?" (4 o más, pueden ser distintos)":" (10 o más combinados)"}</span><span><b>${fmt(it.pM)}</b></span></li></ul>`;
   else pb=`<ul class="tl">${tierList(it.c)}</ul>`;
   const wa=`https://wa.me/${WA}?text=${encodeURIComponent(`Hola Aurora Perfumes! Quería consultar por ${it.c==="B"?"la caja surtida de 20 tubitos":it.c==="E"?"el extracto inspirado en "+n:it.c==="T"?"el tubito "+n:it.c==="H"?HMETA[it.b].k.toLowerCase()+" "+n:n+" de "+cap(it.b)}.`)}`;
