@@ -41,6 +41,7 @@ rehace las fotos solo (no hace falta pedirle nada). Si no, después de agregar f
 - Promo especial de árabes: `PROMO_A` en data.js {"NOMBRE":[precio, "motivo"]}: precio único (min y may), cartel "Promo especial", precio viejo tachado. La planilla mantiene el precio normal (no tocar al sincronizar).
 - Árabes: 100% originales; mayorista desde 4 unidades combinadas.
 - Extractos 60 ml y tubitos 35 ml: inspirados, NO originales (mantener el aviso). Precio por escala (TIERS en template).
+- Extractos: 1 u $20.000 · 2+ $15.000 · 5+ $13.000 · 10+ $11.000 · 20+ $9.500 (la escala de 40+ a $9.000 se sacó el 26/10/2026).
 - Tubitos: 1 u $4.000 · 10+ $2.600 · 20+ $2.000 · 60+ $1.900 · 100+ $1.800. Caja surtida x20 (aromas a elección del local, no se eligen) $36.000: producto aparte (B|BOX en template, foto tub-caja-surtida), no suma a la escala de tubitos.
 - Hogar y auto: mayorista desde 10 unidades combinadas entre perfuminas y difusores.
 - Precios por cantidad: tablas siempre visibles (sin desplegables).
