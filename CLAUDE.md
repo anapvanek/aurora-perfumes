@@ -9,7 +9,7 @@ La dueña escribe en español rioplatense; responderle siempre en español.
 - `src/data.js` – datos del catálogo (DATA árabes, EXT extractos, TUB tubitos, HOG hogar y auto, HMETA, OUT_A, OUT_T).
 - `src/template.html` – diseño y lógica (carrito, pedido por WhatsApp, precios por cantidad).
 - `src/build.py` – genera `site/index.html`. Correr `python3 src/build.py` antes de cada commit.
-- `site/img/` – fotos (480x600 o 640x640 jpg). La clave en data.js = nombre del archivo sin `.jpg`. Fotos que la dueña manda por chat (sin Drive) usan nombre descriptivo, ej. `ext-goddess`.
+- `site/img/` – fotos de las tarjetas (tubitos/extractos/hogar 600x750, árabes 640x640 jpg). `site/img/hd/` – misma clave en alta (hasta 1200x1500, fichas 1200x1200): la usa la galería del detalle si existe (build.py arma el set HD). Al sumar fotos de Drive, generar las dos (recorte 4:5 centro; card -resize 600x750 q85, hd -resize '1200x1500>' q86). La clave en data.js = nombre del archivo sin `.jpg`. Fotos que la dueña manda por chat (sin Drive) usan nombre descriptivo, ej. `ext-goddess`.
   - árabes: nombre libre (ej. `asad`), fondo blanco.
   - extractos: `ext-<driveId>`, tubitos: `tub-<driveId>`, hogar: `hog-<driveId>` (recorte 4:5).
   - fichas de notas (Fragrantica): `fic-<driveId>` (800x800), siempre como foto 2 del perfume en árabes, extractos y tubitos.

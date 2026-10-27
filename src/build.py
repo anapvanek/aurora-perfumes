@@ -11,7 +11,8 @@ ph={f[:-4]:'img/'+f for f in sorted(os.listdir(os.path.join(SITE,'img'))) if f.e
 m=re.search(r'const DATA=(\[.*?\n\]);',data,re.S)
 contain=sorted({k for b,its in json.loads(m.group(1)) for it in its for k in it[4]})
 s=open(os.path.join(SRC,'template.html'),encoding='utf8').read()
-s=s.replace('{{DATA}}',data).replace('{{PHOTOS}}',json.dumps(ph)).replace('{{CONTAIN}}',json.dumps(contain)).replace('{{SITE}}',URL)
+hd=sorted(f[:-4] for f in os.listdir(os.path.join(SITE,'img','hd')) if f.endswith('.jpg')) if os.path.isdir(os.path.join(SITE,'img','hd')) else []
+s=s.replace('{{DATA}}',data).replace('{{HD}}',json.dumps(hd)).replace('{{PHOTOS}}',json.dumps(ph)).replace('{{CONTAIN}}',json.dumps(contain)).replace('{{SITE}}',URL)
 open(os.path.join(SITE,'index.html'),'w',encoding='utf8').write(s)
 shutil.copy(os.path.join(SRC,'og.jpg'),os.path.join(SITE,'og.jpg'))
 missing=[k for k in re.findall(r'"((?:ext|tub|hog)-[\w-]+)"',data) if k not in ph]

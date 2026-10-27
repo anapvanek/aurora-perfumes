@@ -420,6 +420,7 @@ body.lock{overflow:hidden}
 {{DATA}}
 const PHOTOS={{PHOTOS}};
 const CONTAIN=new Set({{CONTAIN}});
+const HD=new Set({{HD}});const big=k=>HD.has(k)?"img/hd/"+k+".jpg":PHOTOS[k];
 const isFic=k=>!!k&&k.startsWith("fic-");
 const WA="5492612420544";
 const TIERS={E:[[1,20000],[2,15000],[5,13000],[10,11000],[20,9500]],
@@ -640,7 +641,7 @@ function openSheet(el){lastFocus=document.activeElement;el.hidden=false;document
 function closeSheet(el){el.hidden=true;if(el.id==="pd-sheet"){curP=null;try{history.replaceState(null,"",location.pathname+(HASH[cat]||""))}catch(e){}}if($("pd-sheet").hidden&&$("cart-sheet").hidden)document.body.classList.remove("lock");if(lastFocus&&document.contains(lastFocus))lastFocus.focus({preventScroll:true})}
 function openProduct(id){const it=ITEMS[id];curP=id;try{history.replaceState(null,"","?p="+slug(it)+(HASH[cat]||""))}catch(e){}const n=itemName(it);
   const pics=it.ph.length?it.ph:[null];
-  const gal=it.ph.length?`<div class="gal"><div class="arch${isFic(it.ph[0])?" sq":""}"><div class="slides" id="pd-sl">${it.ph.map((k,i)=>`<img src="${PHOTOS[k]}" alt="${esc(n)}, ${isFic(k)?"ficha de notas":"foto "+(i+1)}"${isFic(k)?' class="fic"':CONTAIN.has(k)?' class="cn"':""}>`).join("")}</div></div>
+  const gal=it.ph.length?`<div class="gal"><div class="arch${isFic(it.ph[0])?" sq":""}"><div class="slides" id="pd-sl">${it.ph.map((k,i)=>`<img src="${big(k)}"${i?' loading="lazy"':""} alt="${esc(n)}, ${isFic(k)?"ficha de notas":"foto "+(i+1)}"${isFic(k)?' class="fic"':CONTAIN.has(k)?' class="cn"':""}>`).join("")}</div></div>
       ${it.ph.length>1?`<button class="nav p" type="button" data-nav="-1" aria-label="Foto anterior">${IC.left}</button><button class="nav n" type="button" data-nav="1" aria-label="Foto siguiente">${IC.right}</button><div class="dots">${it.ph.map((_,i)=>`<i${i?"":' class="on"'}></i>`).join("")}</div>`:""}</div>`
     :`<div class="gal">${arch(it,"")}</div></div>`;
   let pb;
