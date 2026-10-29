@@ -455,7 +455,7 @@ const BOX_PRICE=36000;
 const ITEMS={},LIST={A:[],E:[],T:[],H:[]};
 function addItem(it){it.id=it.c+"|"+it.b+"|"+it.n;it.ph=(it.ph||[]).filter(k=>PHOTOS[k]);it.key=norm(it.b+" "+it.n+(it.c==="H"?" "+HMETA[it.b].k:""));ITEMS[it.id]=it;LIST[it.c].push(it)}
 const PR=typeof PROMO_A==="object"?PROMO_A:{};
-DATA.forEach(([b,its])=>its.forEach(([n,ml,pm,pM,ph])=>(typeof HIDE_SOON!=="undefined"&&HIDE_SOON&&SOON_A.includes(n))||addItem({c:"A",b,n,ml,ph,...(PR[n]?{pm:PR[n][0],pM:PR[n][0],was:pm,why:PR[n][1]}:{pm,pM}),soon:SOON_A.includes(n),at:SOON_A.includes(n)?(SOON_AT[n]||SOON_AT["*"]||""):"",ok:!OUT_A.includes(n)&&!SOON_A.includes(n)})));
+DATA.forEach(([b,its])=>its.forEach(([n,ml,pm,pM,ph])=>(typeof HIDE_SOON!=="undefined"&&HIDE_SOON&&SOON_A.includes(n))||(typeof HIDE_OUT!=="undefined"&&HIDE_OUT&&OUT_A.includes(n))||addItem({c:"A",b,n,ml,ph,...(PR[n]?{pm:PR[n][0],pM:PR[n][0],was:pm,why:PR[n][1]}:{pm,pM}),soon:SOON_A.includes(n),at:SOON_A.includes(n)?(SOON_AT[n]||SOON_AT["*"]||""):"",ok:!OUT_A.includes(n)&&!SOON_A.includes(n)})));
 EXT.forEach(([b,its])=>its.forEach(([n,ok,ph])=>addItem({c:"E",b,n,ml:60,ph,ok:!!ok})));
 TUB.forEach(([b,its])=>its.forEach(([n,ph])=>addItem({c:"T",b,n,ml:35,ph,ok:!OUT_T.includes(n)})));
 {const it={c:"B",b:"CAJA SURTIDA",n:"CAJA SURTIDA X20",ml:35,price:BOX_PRICE,ok:true,id:"B|BOX",ph:["tub-caja-surtida"].filter(k=>PHOTOS[k]),key:norm("caja surtida tubitos 20 x20")};ITEMS[it.id]=it;LIST.T.unshift(it)}
