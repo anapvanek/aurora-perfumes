@@ -23,7 +23,7 @@ DIFUSORES DE AMBIENTE 125ML · DIFUSORES PARA AUTO 10ML.
 
 Cuando la dueña dice **"actualizá"**: leer todas las pestañas, comparar con `src/data.js`
 (nombres, precios, stock SI/NO/PRÓXIMAMENTE, fotos por ID de Drive), aplicar los cambios, `python3 src/build.py`,
-commit y push. Contarle qué cambió.
+commit y push. Contarle qué cambió. Para comparar: bajar las 6 pestañas con get_spreadsheet (fields formattedValue) y correr `python3 -I tools/comparar_planilla.py <archivo.json>`.
 
 Reglas de la planilla (si se la edita): todas las filas de producto 62px, SIN filas separadoras entre marcas
 (se borraron el 23/10/2026; las marcas se separan por el recuadro de la columna A), bordes completos B:G,
