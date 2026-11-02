@@ -46,4 +46,6 @@ rehace las fotos solo (no hace falta pedirle nada). Si no, después de agregar f
 - Hogar y auto: mayorista desde 10 unidades combinadas entre perfuminas y difusores.
 - Precios por cantidad: tablas siempre visibles (sin desplegables).
 - Detalle de producto: botón "Compartir" (arriba a la izquierda). Enlace directo `?p=<categoría>-<marca>-<nombre>` (slug en template) abre ese producto.
+- Detalle de producto: "Te puede gustar" (4 parecidos en stock de la misma categoría: misma primera palabra, misma marca, precio cercano; función similar() en template).
+- Botón de WhatsApp en la barra fija (al lado del carrito), sin botón flotante. Botón "volver arriba" abajo a la derecha. Encabezado compacto en celular (sin el texto de presentación). "Ocultar sin stock" solo aparece si la categoría tiene productos sin stock.
 - WhatsApp de pedidos: 5492612420544.
