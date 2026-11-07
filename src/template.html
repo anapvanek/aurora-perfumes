@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Aurora Perfumes</title>
-<meta name="description" content="Catálogo de Aurora Perfumes, Mendoza: perfumes árabes originales, extractos de 60 ml, tubitos de 35 ml, perfuminas textiles y difusores. Armá tu pedido y envialo por WhatsApp.">
+<meta name="description" content="Catálogo de Aurora Perfumes, Mendoza: perfumes originales, extractos de 60 ml, tubitos de 35 ml, perfuminas textiles y difusores. Armá tu pedido y envialo por WhatsApp.">
 <meta name="theme-color" content="#2f4528">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Aurora Perfumes · Catálogo">
-<meta property="og:description" content="Perfumes árabes originales, extractos, tubitos, perfuminas y difusores. Armá tu pedido y envialo por WhatsApp.">
+<meta property="og:description" content="Perfumes originales, extractos, tubitos, perfuminas y difusores. Armá tu pedido y envialo por WhatsApp.">
 <meta property="og:image" content="{{SITE}}og.jpg">
 <meta property="og:url" content="{{SITE}}">
 <meta name="twitter:card" content="summary_large_image">
@@ -361,9 +361,9 @@ body.lock{overflow:hidden}
       <h1>Aurora Perfumes</h1>
       <p class="where">Mendoza, Argentina</p>
     </div>
-    <p class="lede">Perfumes árabes 100% originales, extractos de 60 ml y tubitos de 35 ml inspirados en las fragancias más buscadas. También perfuminas textiles y difusores para tu casa y tu auto.</p>
+    <p class="lede">Perfumes 100% originales, extractos de 60 ml y tubitos de 35 ml inspirados en las fragancias más buscadas. También perfuminas textiles y difusores para tu casa y tu auto.</p>
     <ul class="perks">
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l7 3v6c0 4.4-3 7.8-7 9-4-1.2-7-4.6-7-9V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg>Árabes originales</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l7 3v6c0 4.4-3 7.8-7 9-4-1.2-7-4.6-7-9V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg>Perfumes originales</li>
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg>Retiro o envío en Mendoza</li>
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 12h-8M4 7h16M4 17h10"/></svg>Precios por cantidad</li>
     </ul>
@@ -413,7 +413,7 @@ body.lock{overflow:hidden}
     <img src="logo.png" alt="" width="44" height="44" loading="lazy">
     <div>
       <p>Precios en pesos argentinos, sujetos a cambios sin previo aviso.</p>
-      <p>Árabes originales: precio mayorista desde 4 unidades, combinables entre modelos. Extractos y tubitos: el precio baja según la cantidad total de cada categoría. Perfuminas y difusores: precio mayorista desde 10 unidades combinadas.</p>
+      <p>Perfumes originales: precio mayorista desde 4 unidades, combinables entre modelos. Extractos y tubitos: el precio baja según la cantidad total de cada categoría. Perfuminas y difusores: precio mayorista desde 10 unidades combinadas.</p>
       <p>Los extractos y tubitos son fragancias inspiradas en perfumes de las marcas mencionadas; no son productos originales de esas marcas ni están asociados a ellas.</p>
     </div>
   </footer>
@@ -485,7 +485,7 @@ const IC={
 
 /* ---- Catalog model ---- */
 const CATS={
-  A:{label:"Árabes originales",short:"Árabes",word:["perfume","perfumes"]},
+  A:{label:"Perfumes originales",short:"Originales",word:["perfume","perfumes"]},
   E:{label:"Extractos 60 ml",short:"Extractos",word:["extracto","extractos"]},
   T:{label:"Tubitos 35 ml",short:"Tubitos",word:["tubito","tubitos"]},
   H:{label:"Hogar y auto",short:"Hogar y auto",word:["producto","productos"]},
@@ -555,7 +555,7 @@ function tierList(c,box){const T=TIERS[c];
     <li class="best"><span>5 cajas o más</span><span>$36.000 c/caja<small>($1.800 c/u)</small></span></li>
     <li><span>Caja de 20 surtidas (los aromas no se eligen)</span><span>$36.000<small>($1.800 c/u)</small></span></li>`}
 const INTRO={
-  A:()=>`<h2>Árabes originales</h2><p>Perfumes árabes 100% originales sellados. Llevando 4 o más, aunque sean modelos distintos, pagás precio mayorista.</p>`,
+  A:()=>`<h2>Perfumes originales</h2><p>Perfumes 100% originales sellados. Llevando 4 o más, aunque sean modelos distintos, pagás precio mayorista.</p>`,
   E:()=>`<h2>Extractos 60 ml</h2><p>Extractos concentrados inspirados en perfumes conocidos. El precio baja según cuántos lleves, y podés combinar aromas.</p>
     <div class="prices-box"><div class="pb-h">Precio por cantidad<small>De $20.000 a $10.000 c/u</small></div><ul class="tl">${tierList("E")}</ul></div>
     <p class="fine">No son productos originales de las marcas mencionadas ni están asociados a ellas.</p>`,
@@ -655,7 +655,7 @@ function message(t){const name=$("cs-name").value.trim();
   let m="Hola Aurora Perfumes! Quiero hacer este pedido:\n";
   const by=c=>Object.keys(cart).filter(k=>ITEMS[k].c===c);
   const A=by("A"),E=by("E"),T=by("T"),H=by("H"),B=by("B");
-  if(A.length){m+=`\nÁRABES ORIGINALES (${t.whA?"precio mayorista":"precio minorista"})\n`;
+  if(A.length){m+=`\nPERFUMES ORIGINALES (${t.whA?"precio mayorista":"precio minorista"})\n`;
     A.forEach(k=>{const it=ITEMS[k],c=cart[k],p=unitPrice(it,t);m+=`${c} x ${cap(it.n)} (${cap(it.b)}) ${it.ml} ml${it.was?" [PROMO: "+it.why.toLowerCase()+"]":""} - ${fmt(p*c)}\n`});m+=`Subtotal: ${fmt(t.totA)}\n`}
   if(E.length){m+=`\nEXTRACTOS 60 ML (${t.uE} u. a ${fmt(t.pE)} c/u)\n`;
     E.forEach(k=>{const it=ITEMS[k],c=cart[k];m+=`${c} x Inspirado en ${cap(it.n)} (${cap(it.b)}) - ${fmt(t.pE*c)}\n`});m+=`Subtotal: ${fmt(t.totE)}\n`}
