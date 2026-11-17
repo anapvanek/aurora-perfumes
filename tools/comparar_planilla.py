@@ -59,6 +59,7 @@ for k in web:
 print('T tiers:',[(r[8],r[9]) for r in R[:8]])
 # HOGAR
 for tab,cat in [("PERFUMINAS TEXTILES 250ML","PERFUMINAS TEXTILES"),("DIFUSORES DE AMBIENTE 125ML","DIFUSORES DE AMBIENTE"),("DIFUSORES PARA AUTO 10ML","DIFUSORES PARA AUTO")]:
+  if cat not in dict(HOG):continue  # categoría sacada de la página
   R=rows(tab);web=dict(dict(HOG)[cat]);M=HMETA[cat];seen=set()
   for r in R[1:]:
     n=r[2].strip()
