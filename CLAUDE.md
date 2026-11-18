@@ -45,7 +45,7 @@ rehace las fotos solo (no hace falta pedirle nada). Si no, después de agregar f
 - Extractos: 1 u $20.000 · 2+ $15.000 · 5+ $13.000 · 10+ $11.000 · 20+ $10.000 (desde 06/11/2026; antes $9.500; la escala de 40+ a $9.000 se sacó el 26/10/2026).
 - Tubitos: 1 u $4.000 · 10+ $2.600 · 20+ $2.000 · 60+ $1.900 · 100+ $1.800. Caja surtida x20 (aromas a elección del local, no se eligen) $36.000: producto aparte (B|BOX en template, foto tub-caja-surtida), no suma a la escala de tubitos.
 - Hogar y auto: mayorista desde 10 unidades combinadas entre difusores. Las perfuminas textiles se sacaron de la página el 17/11/2026 (la pestaña sigue en la planilla; comparar_planilla la ignora porque no está en HOG).
-- Precios por cantidad: tablas siempre visibles (sin desplegables).
+- Precios por cantidad: siempre visibles (sin desplegables), como fila compacta de "pastillas" arriba de los productos (tierPills en template, desde 18/11/2026) para que al entrar a cada categoría ya se vean productos en el celular. Texto de presentación de cada categoría: 1-2 renglones. El aviso de "no originales" de extractos y tubitos va al final de la lista y en cada detalle.
 - Detalle de producto: botón "Compartir" (arriba a la izquierda). Enlace directo `?p=<categoría>-<marca>-<nombre>` (slug en template) abre ese producto.
 - Detalle de producto: "Te puede gustar" (4 parecidos en stock de la misma categoría: misma primera palabra, misma marca, precio cercano; función similar() en template).
 - Botón de WhatsApp en la barra fija (al lado del carrito), sin botón flotante. Botón "volver arriba" abajo a la derecha. Encabezado compacto en celular (sin el texto de presentación). "Ocultar sin stock" solo aparece si la categoría tiene productos sin stock.

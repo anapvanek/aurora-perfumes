@@ -109,6 +109,11 @@ a{color:inherit}
 .intro h2{font:700 clamp(24px,5vw,34px)/1.1 var(--display);letter-spacing:-.01em;margin:0;color:var(--forest)}
 .intro p{margin:0;max-width:66ch;color:#3c4535}
 .intro .fine{font-size:13px;color:var(--muted)}
+.tiers{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-inline:calc(var(--gut)*-1);padding:2px var(--gut);scroll-padding-inline:var(--gut)}.tiers::-webkit-scrollbar{display:none}
+.tier{flex:none;display:grid;gap:0;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:6px 11px;line-height:1.2;font-variant-numeric:tabular-nums}
+.tier small{font-size:11.5px;color:var(--muted)}.tier b{font-size:14px;color:var(--forest);white-space:nowrap}
+.tier.best{background:var(--forest);border-color:var(--forest)}.tier.best small{color:rgba(239,233,220,.8)}.tier.best b{color:var(--cream)}
+.list-fine{font-size:13px;color:var(--muted);margin:18px 0 0}
 .prices-box{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;max-width:640px}
 .pb-h{padding:13px 16px 10px;font-weight:700}
 .pb-h small{display:block;font-weight:400;font-size:13px;color:var(--muted)}
@@ -606,20 +611,18 @@ function tierList(c,box){const T=TIERS[c];
     <li><span>3 cajas o más</span><span>$38.000 c/caja<small>($1.900 c/u)</small></span></li>
     <li class="best"><span>5 cajas o más</span><span>$36.000 c/caja<small>($1.800 c/u)</small></span></li>
     <li><span>Caja de 20 surtidas (los aromas no se eligen)</span><span>$36.000<small>($1.800 c/u)</small></span></li>`}
+const tierPills=L=>`<div class="tiers" role="list">${L.map(([l,v,b])=>`<span class="tier${b?" best":""}" role="listitem"><small>${l}</small><b>${v}</b></span>`).join("")}</div>`;
 const INTRO={
-  D:()=>{const P=[];LIST.D.forEach(x=>{let r=P.find(y=>y.b===x.b&&y.n===x.n);if(!r)P.push(r={b:x.b,n:x.n,s:[]});r.s.push(x)});
-    return `<h2>Decants originales</h2><p>Perfume 100% original, fraccionado de la botella a un frasco atomizador de ${[...new Set(LIST.D.map(x=>x.ml))].sort((a,b)=>a-b).join(" o ")} ml. Ideal para probar un perfume de diseñador o nicho, o para llevar en la cartera o de viaje.</p>
-    ${LIST.D.some(x=>x.price)?`<div class="prices-box"><div class="pb-h">Precios<small>Por decant</small></div><ul class="tl">${P.map(r=>`<li><span>${esc(cap(r.n))}<small style="display:block;font-weight:400;color:var(--muted)">${esc(cap(r.b))}</small></span><span>${r.s.map(x=>`${x.ml} ml ${x.price?fmt(x.price):"a consultar"}`).join("<br>")}</span></li>`).join("")}</ul></div>`:""}`},
-  A:()=>`<h2>Perfumes originales</h2><p>Perfumes 100% originales sellados. Llevando 4 o más, aunque sean modelos distintos, pagás precio mayorista.</p>`,
-  E:()=>`<h2>Extractos 60 ml</h2><p>Extractos concentrados inspirados en perfumes conocidos. El precio baja según cuántos lleves, y podés combinar aromas.</p>
-    <div class="prices-box"><div class="pb-h">Precio por cantidad<small>De $20.000 a $10.000 c/u</small></div><ul class="tl">${tierList("E")}</ul></div>
-    <p class="fine">No son productos originales de las marcas mencionadas ni están asociados a ellas.</p>`,
-  T:()=>`<h2>Tubitos 35 ml</h2><p>Tubitos con aromas inspirados en perfumes árabes. El precio baja según cuántos lleves, combinando los aromas que quieras.</p>
-    <div class="prices-box"><div class="pb-h">Precio por cantidad<small>De $4.000 a $1.800 c/u</small></div><ul class="tl">${tierList("T")}</ul></div>
-    <p class="fine">No son productos originales de las marcas mencionadas ni están asociados a ellas.</p>`,
-  H:()=>`<h2>Hogar y auto</h2><p>Difusores de ambiente y difusores para auto. Llevando 10 o más, combinados como quieras, pagás precio mayorista.</p>
-    <div class="prices-box"><div class="pb-h">Precios<small>Minorista y mayorista por producto</small></div><ul class="tl">${HOG.map(([b])=>{const M=HMETA[b];return `<li><span>${M.k} ${M.ml} ml</span><span>${fmt(M.pm)}<small>(mayorista ${fmt(M.pM)})</small></span></li>`}).join("")}</ul></div>`
+  A:()=>`<h2>Perfumes originales</h2><p>100% originales y sellados. Llevando 4 o más, aunque sean distintos, pagás precio mayorista.</p>`,
+  D:()=>`<h2>Decants originales</h2><p>Perfume 100% original fraccionado en frasco atomizador de ${[...new Set(LIST.D.map(x=>x.ml))].sort((a,b)=>a-b).join(" o ")} ml. Ideal para probar o para llevar.</p>`,
+  E:()=>`<h2>Extractos 60 ml</h2><p>Inspirados en perfumes conocidos. El precio baja según cuántos lleves, combinando aromas:</p>
+    ${tierPills(TIERS.E.map(([q,v],i,a)=>[q===1?"1 unidad":q+" o más",fmt(v)+(q>1?" c/u":""),i===a.length-1]))}`,
+  T:()=>`<h2>Tubitos 35 ml</h2><p>Inspirados en perfumes árabes. El precio baja según cuántos lleves, combinando aromas:</p>
+    ${tierPills([["1 unidad","$4.000"],["10 o más","$2.600 c/u"],["Caja de 20 a elección","$40.000"],["3 cajas o más","$38.000 c/caja"],["5 cajas o más","$36.000 c/caja",1],["Caja surtida x20","$36.000"]])}`,
+  H:()=>`<h2>Hogar y auto</h2><p>Llevando 10 o más, combinados como quieras, pagás precio mayorista:</p>
+    ${tierPills(HOG.map(([b])=>{const M=HMETA[b];return [`${M.k} ${M.ml} ml`,`${fmt(M.pm)} · may. ${fmt(M.pM)}`]}))}`
 };
+const FINE={E:1,T:1};
 
 /* ---- Render ---- */
 function matches(it,ql){return !ql||ql.split(/\s+/).every(w=>it.key.includes(w))}
@@ -661,6 +664,7 @@ function render(){
       html+=`<section class="group side"><div class="ghead"><h3>${esc(brandName(cat,b))}</h3><span>${b==="CAJA SURTIDA"?"Aromas a nuestra elección":f.length+" "+plural(f.length,w[0],w[1])}</span></div><div class="grid">${f.map(it=>card(it,idx++)).join("")}</div></section>`});
     if(!html)html=`<div class="empty"><h2>Sin productos en stock acá</h2><p>Desmarcá “Ocultar sin stock” para ver todo.</p></div>`;
   }
+  if(!searching&&FINE[cat])html+=`<p class="fine list-fine">No son productos originales de las marcas mencionadas ni están asociados a ellas.</p>`;
   $("list").innerHTML=html;
 }
 function setCat(c,scroll){cat=c;brand="";if(q){q="";$("q").value=""}render();
