@@ -642,7 +642,7 @@ function render(){
   $("qx").hidden=!q;
   const searching=!!ql;
   $("intro").hidden=searching;$("chips").hidden=searching;
-  if(!searching){const L=LIST[cat].filter(it=>it.ok&&it.c!=="B").length,W=CATS[cat].word;$("intro").innerHTML=INTRO[cat]()+(cat==="E"||cat==="T"||cat==="H"?`<button type="button" class="to-list" id="to-list">Ver los ${L} ${cat==="H"?"productos":W[1]} ${IC.chev}</button>`:"")}
+  if(!searching){const L=LIST[cat].filter(it=>it.ok&&it.c!=="B").length,W=CATS[cat].word;$("intro").innerHTML=INTRO[cat]()+(cat==="E"||cat==="T"||cat==="H"?`<button type="button" class="to-list" id="to-list">Ver fragancias disponibles ${IC.chev}</button>`:"")}
   const priceMode=!searching&&(cat==="A"||cat==="H");
   const sortOpts=cat==="A"||cat==="H"||cat==="D"?[["brand","Por marca"],["lo","Menor precio"],["hi","Mayor precio"],["az","Nombre A–Z"]]:[["brand",cat==="H"?"Por producto":"Por marca"],["az","Nombre A–Z"]];
   if(!sortOpts.some(o=>o[0]===sort))sort="brand";
