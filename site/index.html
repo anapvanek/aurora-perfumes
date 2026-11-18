@@ -582,7 +582,7 @@ function addHTML(id){const it=ITEMS[id];
   return c?`<div class="step"><button type="button" data-act="dec" aria-label="Quitar uno de ${esc(itemName(it))}">−</button><span aria-live="polite">${c}</span><button type="button" data-act="inc" aria-label="Agregar otro ${esc(itemName(it))}">+</button></div>`
           :`<button class="btn-add" type="button" data-act="inc">${IC.plus}Agregar</button>`}
 function priceHTML(it){
-  if(it.c==="D")return it.price?`<b>${fmt(it.price)}</b><small>Decant original</small>`:`<b class="ask">Precio a consultar</b><small>Decant original</small>`;
+  if(it.c==="D")return it.price?`<b>${fmt(it.price)}</b>`:`<b class="ask">Precio a consultar</b>`;
   if(it.c==="B")return `<b>${fmt(BOX_PRICE)}</b><small>${fmt(BOX_PRICE/20)} c/u · aromas surtidos, no se eligen</small>`;
   if(it.was)return `<b>${fmt(it.pm)} <s>${fmt(it.was)}</s></b><small class="why">${esc(it.why)}</small>`;
   if(it.c==="A"||it.c==="H"){const n=WH[it.c];
