@@ -10,6 +10,8 @@ ph={f[:-4]:'img/'+f for f in sorted(os.listdir(os.path.join(SITE,'img'))) if f.e
 # Fotos de árabes originales: producto sobre fondo blanco -> se muestran enteras (contain)
 m=re.search(r'const DATA=(\[.*?\n\]);',data,re.S)
 contain=sorted({k for b,its in json.loads(m.group(1)) for it in its for k in it[4]})
+# Decants: la foto es una placa cuadrada con texto -> también enteras
+contain=sorted(set(contain)|{k for k in ph if k.startswith('dec-')})
 s=open(os.path.join(SRC,'template.html'),encoding='utf8').read()
 hd=sorted(f[:-4] for f in os.listdir(os.path.join(SITE,'img','hd')) if f.endswith('.jpg')) if os.path.isdir(os.path.join(SITE,'img','hd')) else []
 s=s.replace('{{DATA}}',data).replace('{{HD}}',json.dumps(hd)).replace('{{PHOTOS}}',json.dumps(ph)).replace('{{CONTAIN}}',json.dumps(contain)).replace('{{SITE}}',URL)
