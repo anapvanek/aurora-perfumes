@@ -552,8 +552,8 @@ HOG.forEach(([b,its])=>its.forEach(([n,ok])=>{const M=HMETA[b];addItem({c:"H",b,
 const ORDER=ORDER0.filter(c=>LIST[c].length);
 const BRANDS={};ORDER.forEach(c=>{BRANDS[c]=[];LIST[c].forEach(it=>{if(!BRANDS[c].includes(it.b))BRANDS[c].push(it.b)})});
 const brandName=(c,b)=>c==="H"?cap(b):cap(b);
-const itemName=it=>it.c==="B"?"Caja surtida x20":cap(it.n);
-const brandLine=it=>it.c==="B"?"20 tubitos de 35 ml":it.c==="D"?"Decant "+it.ml+" ml · "+cap(it.b):it.c==="A"?cap(it.b):it.c==="H"?HMETA[it.b].k:"Inspirado en "+cap(it.b);
+const itemName=it=>it.c==="B"?"Caja surtida x20":it.c==="D"?cap(it.n)+" "+it.ml+" ml":cap(it.n);
+const brandLine=it=>it.c==="B"?"20 tubitos de 35 ml":it.c==="D"?"Decant original · "+cap(it.b):it.c==="A"?cap(it.b):it.c==="H"?HMETA[it.b].k:"Inspirado en "+cap(it.b);
 const unitLabel=it=>it.c==="D"?it.ml+" ml":it.c==="B"?"20 tubitos":it.c==="T"?"Tubito 35 ml":it.ml+" ml";
 
 /* ---- State ---- */
@@ -574,7 +574,7 @@ function arch(it,cls,first){
   if(!k)return `<div class="arch ph ${cls||""}"><span class="mk">${esc(itemName(it).split(/\s+/).slice(0,2).map(w=>w[0]).join(""))}</span>`;
   return `<div class="arch${c} ${cls||""}"><img src="${PHOTOS[k]}" alt="${esc(brandLine(it)+" "+itemName(it))}" loading="${first?"eager":"lazy"}" decoding="async">`;
 }
-const dWa=it=>`https://wa.me/${WA}?text=${encodeURIComponent(`Hola Aurora Perfumes! Quería consultar el precio del decant original de ${it.ml} ml de ${itemName(it)} de ${cap(it.b)}.`)}`;
+const dWa=it=>`https://wa.me/${WA}?text=${encodeURIComponent(`Hola Aurora Perfumes! Quería consultar el precio del decant original de ${it.ml} ml de ${cap(it.n)} de ${cap(it.b)}.`)}`;
 function addHTML(id){const it=ITEMS[id];
   if(it.c==="D"&&it.ok&&!it.price)return `<a class="btn-add" href="${dWa(it)}" target="_blank" rel="noopener">${IC.wa}Consultar precio</a>`;
   if(!it.ok)return `<button class="btn-add" type="button" disabled>${it.soon?"Próximamente":"Sin stock"}</button>`;
@@ -731,7 +731,7 @@ function setQty(id,d,fromCard){const c=(cart[id]||0)+d;if(c<=0)delete cart[id];e
   document.querySelectorAll(".add").forEach(el=>{if(el.dataset.id===id)el.innerHTML=addHTML(id)});
   renderCart();
   if(d>0){const b=$("badge");b.classList.remove("bump");void b.offsetWidth;b.classList.add("bump");
-    if(fromCard)toast(`Agregaste ${ITEMS[id].c==="D"?"decant "+ITEMS[id].ml+" ml de ":""}${itemName(ITEMS[id])}`)}}
+    if(fromCard)toast(`Agregaste ${ITEMS[id].c==="D"?"decant ":""}${itemName(ITEMS[id])}`)}}
 
 /* ---- Sheets ---- */
 let lastFocus=null;
@@ -769,11 +769,11 @@ function openProduct(id){if(ITEMS[id].c==="D")return openDecant(id);const it=ITE
 
 function openDecant(id){const s=ITEMS[id];curP=id;
   try{history.replaceState(null,"","?p="+slug(s)+(HASH[cat]||""))}catch(e){}
-  const n=itemName(s),k=s.ph[0],oth=s.sib.filter(x=>x!==id).map(x=>ITEMS[x]);
+  const n=cap(s.n),k=s.ph[0],oth=s.sib.filter(x=>x!==id).map(x=>ITEMS[x]);
   const gal=k?`<div class="gal"><div class="arch dq"><div class="slides" id="pd-sl"><img src="${big(k)}" alt="${esc(n)}, decant ${s.ml} ml"></div></div></div>`:`<div class="gal">${arch(s,"")}</div></div>`;
   const wa=`https://wa.me/${WA}?text=${encodeURIComponent(`Hola Aurora Perfumes! Quería consultar por el decant original de ${s.ml} ml de ${n} de ${cap(s.b)}.`)}`;
   $("pd").innerHTML=`${gal}
-    <div><span class="br">Decant original ${s.ml} ml · ${esc(cap(s.b))}</span><h3>${esc(n)}</h3></div>
+    <div><span class="br">Decant original · ${esc(cap(s.b))}</span><h3>${esc(itemName(s))}</h3></div>
     <span class="stock${s.ok?"":" no"}">${s.ok?"En stock":"Sin stock por ahora"}</span>
     <div class="pbox"><ul class="tl"><li class="best"><span>Decant ${s.ml} ml</span><span><b>${s.price?fmt(s.price):"A consultar"}</b></span></li></ul></div>
     <div class="add" data-id="${esc(id)}">${addHTML(id)}</div>
