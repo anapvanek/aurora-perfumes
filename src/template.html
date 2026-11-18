@@ -113,6 +113,7 @@ a{color:inherit}
 .tier{flex:none;display:grid;gap:0;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:6px 11px;line-height:1.2;font-variant-numeric:tabular-nums}
 .tier small{font-size:11.5px;color:var(--muted)}.tier b{font-size:14px;color:var(--forest);white-space:nowrap}
 .tier.best{background:var(--forest);border-color:var(--forest)}.tier.best small{color:rgba(239,233,220,.8)}.tier.best b{color:var(--cream)}
+.to-list{justify-self:start;display:inline-flex;align-items:center;gap:6px;border:0;background:var(--forest);color:var(--cream);font:inherit;font-size:14.5px;font-weight:600;padding:10px 18px;border-radius:999px;cursor:pointer}.to-list svg{width:16px;height:16px}
 .list-fine{font-size:13px;color:var(--muted);margin:18px 0 0}
 .prices-box{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;max-width:640px}
 .pb-h{padding:13px 16px 10px;font-weight:700}
@@ -583,12 +584,12 @@ const tierPills=L=>`<div class="tiers" role="list">${L.map(([l,v,b])=>`<span cla
 const INTRO={
   A:()=>`<h2>Perfumes originales</h2><p>100% originales y sellados. Llevando 4 o más, aunque sean distintos, pagás precio mayorista.</p>`,
   D:()=>`<h2>Decants originales</h2><p>Perfume 100% original fraccionado en frasco atomizador de ${[...new Set(LIST.D.map(x=>x.ml))].sort((a,b)=>a-b).join(" o ")} ml. Ideal para probar o para llevar.</p>`,
-  E:()=>`<h2>Extractos 60 ml</h2><p>Inspirados en perfumes conocidos. El precio baja según cuántos lleves, combinando aromas:</p>
-    ${tierPills(TIERS.E.map(([q,v],i,a)=>[q===1?"1 unidad":q+" o más",fmt(v)+(q>1?" c/u":""),i===a.length-1]))}`,
-  T:()=>`<h2>Tubitos 35 ml</h2><p>Inspirados en perfumes árabes. El precio baja según cuántos lleves, combinando aromas:</p>
-    ${tierPills([["1 unidad","$4.000"],["10 o más","$2.600 c/u"],["Caja de 20 a elección","$40.000"],["3 cajas o más","$38.000 c/caja"],["5 cajas o más","$36.000 c/caja",1],["Caja surtida x20","$36.000"]])}`,
-  H:()=>`<h2>Hogar y auto</h2><p>Llevando 10 o más, combinados como quieras, pagás precio mayorista:</p>
-    ${tierPills(HOG.map(([b])=>{const M=HMETA[b];return [`${M.k} ${M.ml} ml`,`${fmt(M.pm)} · may. ${fmt(M.pM)}`]}))}`
+  E:()=>`<h2>Extractos 60 ml</h2><p>Inspirados en perfumes conocidos. El precio baja según cuántos lleves, combinando aromas.</p>
+    <div class="prices-box"><div class="pb-h">Precio por cantidad<small>De $20.000 a $10.000 c/u</small></div><ul class="tl">${tierList("E")}</ul></div>`,
+  T:()=>`<h2>Tubitos 35 ml</h2><p>Inspirados en perfumes árabes. El precio baja según cuántos lleves, combinando aromas.</p>
+    <div class="prices-box"><div class="pb-h">Precio por cantidad<small>De $4.000 a $1.800 c/u</small></div><ul class="tl">${tierList("T")}</ul></div>`,
+  H:()=>`<h2>Hogar y auto</h2><p>Llevando 10 o más, combinados como quieras, pagás precio mayorista.</p>
+    <div class="prices-box"><div class="pb-h">Precios<small>Minorista y mayorista por producto</small></div><ul class="tl">${HOG.map(([b])=>{const M=HMETA[b];return `<li><span>${M.k} ${M.ml} ml</span><span>${fmt(M.pm)}<small>(mayorista ${fmt(M.pM)})</small></span></li>`}).join("")}</ul></div>`
 };
 const FINE={E:1,T:1};
 
@@ -609,7 +610,7 @@ function render(){
   $("qx").hidden=!q;
   const searching=!!ql;
   $("intro").hidden=searching;$("chips").hidden=searching;
-  if(!searching)$("intro").innerHTML=INTRO[cat]();
+  if(!searching){const L=LIST[cat].filter(it=>it.ok&&it.c!=="B").length,W=CATS[cat].word;$("intro").innerHTML=INTRO[cat]()+(cat==="E"||cat==="T"||cat==="H"?`<button type="button" class="to-list" id="to-list">Ver los ${L} ${cat==="H"?"productos":W[1]} ${IC.chev}</button>`:"")}
   const priceMode=!searching&&(cat==="A"||cat==="H");
   const sortOpts=cat==="A"||cat==="H"||cat==="D"?[["brand","Por marca"],["lo","Menor precio"],["hi","Mayor precio"],["az","Nombre A–Z"]]:[["brand",cat==="H"?"Por producto":"Por marca"],["az","Nombre A–Z"]];
   if(!sortOpts.some(o=>o[0]===sort))sort="brand";
@@ -767,6 +768,7 @@ document.addEventListener("click",e=>{
   const nv=e.target.closest("[data-nav]");if(nv){const sl=$("pd-sl");sl.scrollBy({left:sl.clientWidth*+nv.dataset.nav,behavior:"smooth"});return}
   const cl=e.target.closest("[data-close]");if(cl){closeSheet(cl.closest(".sheet-bg"));return}
   if(e.target.classList.contains("sheet-bg")){closeSheet(e.target);return}
+  if(e.target.closest("#to-list")){const y=$("list").getBoundingClientRect().top+scrollY-document.querySelector(".bar").offsetHeight-60;scrollTo({top:y,behavior:"smooth"});return}
   if(e.target.id==="clear-q"){q="";$("q").value="";render();$("q").focus();return}
 });
 document.addEventListener("change",e=>{
