@@ -187,6 +187,7 @@ a{color:inherit}
 .dcard .arch{aspect-ratio:1;border-radius:12px}.dcard .arch::after{display:none}.dcard .arch.cn img{object-fit:cover;padding:0}
 .gal .arch.dq{aspect-ratio:1;border-radius:14px}.gal .arch.dq::after{display:none}.gal .arch.dq img{object-fit:cover;padding:0}
 .dsz{display:flex;gap:6px}
+a.btn-add{text-decoration:none}.pr b.ask{font-size:16px}
 .dsz button{flex:1;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:7px 0;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer}
 .dsz button[aria-pressed="true"]{background:var(--forest);border-color:var(--forest);color:var(--cream)}
 .dsz button:disabled{opacity:.4;text-decoration:line-through;cursor:default}
@@ -514,8 +515,8 @@ TUB.forEach(([b,its])=>its.forEach(([n,ph])=>addItem({c:"T",b,n,ml:35,ph,ok:!OUT
 HOG.forEach(([b,its])=>its.forEach(([n,ok])=>{const M=HMETA[b];addItem({c:"H",b,n,ml:M.ml,pm:M.pm,pM:M.pM,ph:M.ph,ok:!!ok})}));
 /* Decants: una tarjeta por perfume (g) con un ítem por tamaño (s) para el pedido */
 const DSEL={};
-(typeof DEC!=="undefined"?DEC:[]).forEach(([b,its])=>its.forEach(([n,sz])=>{const S=sz.filter(s=>s[1]>0);if(!S.length)return;
-  const g={c:"D",b,n,ml:S[0][0],ph:S.map(s=>s[3]),pm:Math.min(...S.map(s=>s[1])),ok:S.some(s=>s[2]),sizes:[]};addItem(g);
+(typeof DEC!=="undefined"?DEC:[]).forEach(([b,its])=>its.forEach(([n,sz])=>{const S=sz;if(!S.length)return;
+  const g={c:"D",b,n,ml:S[0][0],ph:S.map(s=>s[3]),pm:Math.min(...S.map(s=>s[1]||1e9))%1e9,ok:S.some(s=>s[2]),sizes:[]};addItem(g);
   S.forEach(([ml,p,ok,k])=>{const s={c:"D",b,n,ml,price:p,pm:p,ok:!!ok,ph:[k].filter(x=>PHOTOS[x]),g:g.id,id:g.id+"|"+ml,key:g.key};ITEMS[s.id]=s;g.sizes.push(s.id)});
   DSEL[g.id]=g.sizes.find(id=>ITEMS[id].ok)||g.sizes[0]}));
 const ORDER=ORDER0.filter(c=>LIST[c].length);
@@ -543,7 +544,9 @@ function arch(it,cls,first){
   if(!k)return `<div class="arch ph ${cls||""}"><span class="mk">${esc(itemName(it).split(/\s+/).slice(0,2).map(w=>w[0]).join(""))}</span>`;
   return `<div class="arch${c} ${cls||""}"><img src="${PHOTOS[k]}" alt="${esc(brandLine(it)+" "+itemName(it))}" loading="${first?"eager":"lazy"}" decoding="async">`;
 }
+const dWa=it=>`https://wa.me/${WA}?text=${encodeURIComponent(`Hola Aurora Perfumes! Quería consultar el precio del decant original de ${it.ml} ml de ${itemName(it)} de ${cap(it.b)}.`)}`;
 function addHTML(id){const it=ITEMS[id];
+  if(it.c==="D"&&it.ok&&!it.price)return `<a class="btn-add" href="${dWa(it)}" target="_blank" rel="noopener">${IC.wa}Consultar precio</a>`;
   if(!it.ok)return `<button class="btn-add" type="button" disabled>${it.soon?"Próximamente":"Sin stock"}</button>`;
   const c=cart[id]||0;
   return c?`<div class="step"><button type="button" data-act="dec" aria-label="Quitar uno de ${esc(itemName(it))}">−</button><span aria-live="polite">${c}</span><button type="button" data-act="inc" aria-label="Agregar otro ${esc(itemName(it))}">+</button></div>`
@@ -560,7 +563,7 @@ function dCard(g,i){const s=ITEMS[DSEL[g.id]],n=itemName(g);
   <button class="pic" type="button" data-open="${esc(s.id)}" aria-label="Ver ${esc(n)}">${arch(s,"",i<4)}${g.ok?"":`<span class="out-tag">Sin stock</span>`}</div></button>
   <div class="meta"><span class="br">${esc(cap(g.b))}</span><h3 class="nm"><button type="button" data-open="${esc(s.id)}">${esc(n)}</button></h3></div>
   <div class="dsz" role="group" aria-label="Elegí el tamaño">${g.sizes.map(id=>{const x=ITEMS[id];return `<button type="button" data-dsz="${esc(id)}" aria-pressed="${id===s.id}"${x.ok?"":" disabled"}>${x.ml} ml</button>`}).join("")}</div>
-  <div class="pr"><b>${fmt(s.price)}</b><small>Decant original · ${s.ml} ml</small></div>
+  <div class="pr">${s.price?`<b>${fmt(s.price)}</b>`:`<b class="ask">Precio a consultar</b>`}<small>Decant original · ${s.ml} ml</small></div>
   <div class="add" data-id="${esc(s.id)}">${addHTML(s.id)}</div></article>`}
 function card(it,i){
   if(it.c==="D")return dCard(it,i);
@@ -582,7 +585,7 @@ function tierList(c,box){const T=TIERS[c];
     <li><span>Caja de 20 surtidas (los aromas no se eligen)</span><span>$36.000<small>($1.800 c/u)</small></span></li>`}
 const INTRO={
   D:()=>`<h2>Decants originales</h2><p>Perfume 100% original, fraccionado de la botella a un frasco atomizador de ${[...new Set(LIST.D.flatMap(g=>g.sizes.map(id=>ITEMS[id].ml)))].sort((a,b)=>a-b).join(" o ")} ml. Ideal para probar un perfume de diseñador o nicho, o para llevar en la cartera o de viaje. Elegí el tamaño en cada perfume.</p>
-    <div class="prices-box"><div class="pb-h">Precios<small>Por decant</small></div><ul class="tl">${LIST.D.map(g=>`<li><span>${esc(itemName(g))}<small style="display:block;font-weight:400;color:var(--muted)">${esc(cap(g.b))}</small></span><span>${g.sizes.map(id=>{const x=ITEMS[id];return `${x.ml} ml ${fmt(x.price)}`}).join("<br>")}</span></li>`).join("")}</ul></div>`,
+    ${LIST.D.some(g=>g.pm)?`<div class="prices-box"><div class="pb-h">Precios<small>Por decant</small></div><ul class="tl">${LIST.D.map(g=>`<li><span>${esc(itemName(g))}<small style="display:block;font-weight:400;color:var(--muted)">${esc(cap(g.b))}</small></span><span>${g.sizes.map(id=>{const x=ITEMS[id];return `${x.ml} ml ${x.price?fmt(x.price):"a consultar"}`}).join("<br>")}</span></li>`).join("")}</ul></div>`:""}`,
   A:()=>`<h2>Perfumes originales</h2><p>Perfumes 100% originales sellados. Llevando 4 o más, aunque sean modelos distintos, pagás precio mayorista.</p>`,
   E:()=>`<h2>Extractos 60 ml</h2><p>Extractos concentrados inspirados en perfumes conocidos. El precio baja según cuántos lleves, y podés combinar aromas.</p>
     <div class="prices-box"><div class="pb-h">Precio por cantidad<small>De $20.000 a $10.000 c/u</small></div><ul class="tl">${tierList("E")}</ul></div>
@@ -714,7 +717,7 @@ function similar(it){
   const pool=LIST[it.c==="B"?"T":it.c].filter(x=>x.ok&&x.id!==it.id&&x.c!=="B");
   const p0=it.pm||0,h=s=>{let n=0;for(const ch of s)n=(n*31+ch.charCodeAt(0))%9973;return n};
   return pool.map(x=>{let sc=(x.b===it.b?3:0)+(x.n.split(" ")[0]===it.n.split(" ")[0]?4:0);if(p0&&x.pm)sc+=Math.max(0,2-Math.abs(x.pm-p0)/p0*6);if(x.ph.some(k=>!isFic(k)))sc+=.5;return [sc+(h(it.id+x.id)%100)/1000,x]}).sort((a,b)=>b[0]-a[0]).slice(0,4).map(a=>a[1])}
-function simPrice(x){if(x.c==="D")return "Desde "+fmt(x.pm);if(x.c==="A"||x.c==="H")return fmt(mode==="may"&&!x.was?x.pM:x.pm);const T=TIERS[x.c];return fmt(T[0][1])}
+function simPrice(x){if(x.c==="D")return x.pm?"Desde "+fmt(x.pm):"Precio a consultar";if(x.c==="A"||x.c==="H")return fmt(mode==="may"&&!x.was?x.pM:x.pm);const T=TIERS[x.c];return fmt(T[0][1])}
 function openProduct(id){if(ITEMS[id].c==="D")return openDecant(id);const it=ITEMS[id];curP=id;try{history.replaceState(null,"","?p="+slug(it)+(HASH[cat]||""))}catch(e){}const n=itemName(it);
   const pics=it.ph.length?it.ph:[null];
   const gal=it.ph.length?`<div class="gal"><div class="arch${isFic(it.ph[0])?" sq":""}"><div class="slides" id="pd-sl">${it.ph.map((k,i)=>`<img src="${big(k)}"${i?' loading="lazy"':""} alt="${esc(n)}, ${isFic(k)?"ficha de notas":"foto "+(i+1)}"${isFic(k)?' class="fic"':CONTAIN.has(k)?' class="cn"':""}>`).join("")}</div></div>
@@ -749,7 +752,7 @@ function openDecant(id){let s=ITEMS[id];if(s.sizes)s=ITEMS[DSEL[s.id]];const g=I
   $("pd").innerHTML=`${gal}
     <div><span class="br">Decant original · ${esc(cap(g.b))}</span><h3>${esc(n)}</h3></div>
     <span class="stock${g.ok?"":" no"}">${g.ok?"En stock":"Sin stock por ahora"}</span>
-    <div class="dsizes">${sz.map(x=>`<div class="drow${x.ok?"":" out"}"><div><b>Decant ${x.ml} ml</b><span>${fmt(x.price)}</span></div><div class="add" data-id="${esc(x.id)}">${addHTML(x.id)}</div></div>`).join("")}</div>
+    <div class="dsizes">${sz.map(x=>`<div class="drow${x.ok?"":" out"}"><div><b>Decant ${x.ml} ml</b><span>${x.price?fmt(x.price):"A consultar"}</span></div><div class="add" data-id="${esc(x.id)}">${addHTML(x.id)}</div></div>`).join("")}</div>
     <a class="btn-ghost wa-q" href="${wa}" target="_blank" rel="noopener">${IC.wa}Consultar por WhatsApp</a>
     <p class="fine">Perfume ${esc(n)} de ${esc(cap(g.b))} 100% original, fraccionado de la botella original a un frasco atomizador.</p>`;
   const sim=LIST.D.filter(x=>x.ok&&x.id!==g.id).slice(0,4);
