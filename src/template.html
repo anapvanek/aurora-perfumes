@@ -193,6 +193,7 @@ a{color:inherit}
 .dcard .arch{aspect-ratio:1;border-radius:12px}.dcard .arch::after{display:none}.dcard .arch.cn img{object-fit:cover;padding:0}
 .gal .arch.dq{aspect-ratio:1;border-radius:14px}.gal .arch.dq::after{display:none}.gal .arch.dq img{object-fit:cover;padding:0}
 .dcard .ml-tag{display:none}
+.pr small.spr{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .dspr{display:flex;gap:8px;align-items:flex-start;margin:0;font-size:14px;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 12px}.dspr svg{width:18px;height:18px;flex:none;color:var(--forest);margin-top:1px}
 .dalt{display:flex;gap:6px;flex-wrap:wrap}.dsz{display:flex;gap:6px}
 a.btn-add{text-decoration:none}.pr b.ask{font-size:16px}
@@ -557,7 +558,7 @@ function addHTML(id){const it=ITEMS[id];
   return c?`<div class="step"><button type="button" data-act="dec" aria-label="Quitar uno de ${esc(itemName(it))}">−</button><span aria-live="polite">${c}</span><button type="button" data-act="inc" aria-label="Agregar otro ${esc(itemName(it))}">+</button></div>`
           :`<button class="btn-add" type="button" data-act="inc">${IC.plus}Agregar</button>`}
 function priceHTML(it){
-  if(it.c==="D")return (it.price?`<b>${fmt(it.price)}</b>`:`<b class="ask">Precio a consultar</b>`)+`<small>Rinde aprox. ${it.ml*SPRAYS_ML} atomizaciones</small>`;
+  if(it.c==="D")return (it.price?`<b>${fmt(it.price)}</b>`:`<b class="ask">Precio a consultar</b>`)+`<small class="spr">≈ ${it.ml*SPRAYS_ML} atomizaciones</small>`;
   if(it.c==="B")return `<b>${fmt(BOX_PRICE)}</b><small>${fmt(BOX_PRICE/20)} c/u · aromas surtidos, no se eligen</small>`;
   if(it.was)return `<b>${fmt(it.pm)} <s>${fmt(it.was)}</s></b><small class="why">${esc(it.why)}</small>`;
   if(it.c==="A"||it.c==="H"){const n=WH[it.c];
@@ -741,7 +742,7 @@ function openProduct(id){if(ITEMS[id].c==="D")return openDecant(id);const it=ITE
   const sl=$("pd-sl");if(sl)sl.addEventListener("click",e=>{if(e.target.classList.contains("fic"))window.open(e.target.src,"_blank","noopener")});sl.addEventListener("scroll",()=>{const i=Math.round(sl.scrollLeft/sl.clientWidth);$("pd").querySelectorAll(".dots i").forEach((d,j)=>d.classList.toggle("on",j===i));sl.parentNode.classList.toggle("sq",isFic(it.ph[i]))},{passive:true});
 }
 
-const SPRAYS_ML=12; // atomizaciones aprox. por ml (atomizador estándar: 10 a 15 por ml)
+const SPRAYS_ML=18; // atomizaciones aprox. por ml (dato de la dueña: 5 ml = 90)
 function openDecant(id){const s=ITEMS[id];curP=id;
   try{history.replaceState(null,"","?p="+slug(s)+(HASH[cat]||""))}catch(e){}
   const n=cap(s.n),k=s.ph[0],oth=s.sib.filter(x=>x!==id).map(x=>ITEMS[x]);
