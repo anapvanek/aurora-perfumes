@@ -193,6 +193,7 @@ a{color:inherit}
 .dcard .arch{aspect-ratio:1;border-radius:12px}.dcard .arch::after{display:none}.dcard .arch.cn img{object-fit:cover;padding:0}
 .gal .arch.dq{aspect-ratio:1;border-radius:14px}.gal .arch.dq::after{display:none}.gal .arch.dq img{object-fit:cover;padding:0}
 .dcard .ml-tag{display:none}
+.dspr{display:flex;gap:8px;align-items:flex-start;margin:0;font-size:14px;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 12px}.dspr svg{width:18px;height:18px;flex:none;color:var(--forest);margin-top:1px}
 .dalt{display:flex;gap:6px;flex-wrap:wrap}.dsz{display:flex;gap:6px}
 a.btn-add{text-decoration:none}.pr b.ask{font-size:16px}
 .dsz button{flex:1;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:7px 0;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer}
@@ -536,7 +537,7 @@ const IC={
 /* ---- Catalog model ---- */
 const CATS={
   A:{label:"Perfumes originales",short:"Originales",word:["perfume","perfumes"]},
-  D:{label:"Decants originales",short:"Decants",word:["decant","decants"]},
+  D:{label:"Decants",short:"Decants",word:["decant","decants"]},
   E:{label:"Extractos 60 ml",short:"Extractos",word:["extracto","extractos"]},
   T:{label:"Tubitos 35 ml",short:"Tubitos",word:["tubito","tubitos"]},
   H:{label:"Hogar y auto",short:"Hogar y auto",word:["producto","productos"]},
@@ -588,7 +589,7 @@ function addHTML(id){const it=ITEMS[id];
   return c?`<div class="step"><button type="button" data-act="dec" aria-label="Quitar uno de ${esc(itemName(it))}">−</button><span aria-live="polite">${c}</span><button type="button" data-act="inc" aria-label="Agregar otro ${esc(itemName(it))}">+</button></div>`
           :`<button class="btn-add" type="button" data-act="inc">${IC.plus}Agregar</button>`}
 function priceHTML(it){
-  if(it.c==="D")return it.price?`<b>${fmt(it.price)}</b>`:`<b class="ask">Precio a consultar</b>`;
+  if(it.c==="D")return (it.price?`<b>${fmt(it.price)}</b>`:`<b class="ask">Precio a consultar</b>`)+`<small>Rinde aprox. ${it.ml*SPRAYS_ML} atomizaciones</small>`;
   if(it.c==="B")return `<b>${fmt(BOX_PRICE)}</b><small>${fmt(BOX_PRICE/20)} c/u · aromas surtidos, no se eligen</small>`;
   if(it.was)return `<b>${fmt(it.pm)} <s>${fmt(it.was)}</s></b><small class="why">${esc(it.why)}</small>`;
   if(it.c==="A"||it.c==="H"){const n=WH[it.c];
@@ -615,7 +616,7 @@ function tierList(c,box){const T=TIERS[c];
 const tierPills=L=>`<div class="tiers" role="list">${L.map(([l,v,b])=>`<span class="tier${b?" best":""}" role="listitem"><small>${l}</small><b>${v}</b></span>`).join("")}</div>`;
 const INTRO={
   A:()=>`<h2>Perfumes originales</h2><p>100% originales y sellados. Llevando 4 o más, aunque sean distintos, pagás precio mayorista.</p>`,
-  D:()=>`<h2>Decants originales</h2><p>Perfume 100% original fraccionado en frasco atomizador de ${[...new Set(LIST.D.map(x=>x.ml))].sort((a,b)=>a-b).join(" o ")} ml. Ideal para probar o para llevar.</p>`,
+  D:()=>`<h2>Decants</h2><p>Perfume 100% original fraccionado en frasco atomizador de ${[...new Set(LIST.D.map(x=>x.ml))].sort((a,b)=>a-b).join(" o ")} ml. Ideal para probar o para llevar.</p>`,
   E:()=>`<h2>Extractos 60 ml</h2><p>Inspirados en perfumes conocidos. El precio baja según cuántos lleves, combinando aromas.</p>
     <div class="prices-box"><div class="pb-h">Precio por cantidad<small>De $20.000 a $10.000 c/u</small></div><ul class="tl">${tierList("E")}</ul></div>`,
   T:()=>`<h2>Tubitos 35 ml</h2><p>Inspirados en perfumes árabes. El precio baja según cuántos lleves, combinando aromas.</p>
@@ -657,7 +658,7 @@ function render(){
     ORDER.forEach(c=>{const f=sorted(LIST[c].filter(it=>matches(it,ql)&&vis(it)));if(!f.length)return;
       html+=`<section class="group" id="res-${c}"><div class="ghead"><h2>${CATS[c].label}</h2><span>${f.length} ${plural(f.length,"resultado","resultados")}</span></div><div class="grid">${f.map(it=>card(it,idx++)).join("")}</div></section>`});
     if(!html)html=`<div class="empty"><h2>No encontramos “${esc(q.trim())}”</h2><p>Probá con otra palabra, por ejemplo la marca o parte del nombre. Si no lo ves, preguntanos por WhatsApp.</p><button class="btn-ghost" type="button" id="clear-q">Borrar búsqueda</button></div>`;
-  }else if(sort!=="brand"||cat==="D"){
+  }else if(sort!=="brand"){
     const f=sorted(LIST[cat].filter(it=>(!brand||it.b===brand)&&vis(it)));
     html=`<section class="group"><div class="grid">${f.map(it=>card(it,idx++)).join("")}</div></section>`;
   }else{
@@ -772,6 +773,7 @@ function openProduct(id){if(ITEMS[id].c==="D")return openDecant(id);const it=ITE
   const sl=$("pd-sl");if(sl)sl.addEventListener("click",e=>{if(e.target.classList.contains("fic"))window.open(e.target.src,"_blank","noopener")});sl.addEventListener("scroll",()=>{const i=Math.round(sl.scrollLeft/sl.clientWidth);$("pd").querySelectorAll(".dots i").forEach((d,j)=>d.classList.toggle("on",j===i));sl.parentNode.classList.toggle("sq",isFic(it.ph[i]))},{passive:true});
 }
 
+const SPRAYS_ML=12; // atomizaciones aprox. por ml (atomizador estándar: 10 a 15 por ml)
 function openDecant(id){const s=ITEMS[id];curP=id;
   try{history.replaceState(null,"","?p="+slug(s)+(HASH[cat]||""))}catch(e){}
   const n=cap(s.n),k=s.ph[0],oth=s.sib.filter(x=>x!==id).map(x=>ITEMS[x]);
@@ -784,7 +786,8 @@ function openDecant(id){const s=ITEMS[id];curP=id;
     <div class="add" data-id="${esc(id)}">${addHTML(id)}</div>
     ${oth.length?`<div class="dalt">${oth.map(x=>`<button type="button" class="chip" data-open="${esc(x.id)}">También en ${x.ml} ml${x.price?" · "+fmt(x.price):""}</button>`).join("")}</div>`:""}
     ${s.price?`<a class="btn-ghost wa-q" href="${wa}" target="_blank" rel="noopener">${IC.wa}Consultar por WhatsApp</a>`:""}
-    <p class="fine">Perfume ${esc(n)} de ${esc(cap(s.b))} 100% original, fraccionado de la botella original a un frasco atomizador de ${s.ml} ml.</p>`;
+    <p class="fine">Perfume ${esc(n)} de ${esc(cap(s.b))} 100% original, fraccionado de la botella original a un frasco atomizador de ${s.ml} ml.</p>
+    <p class="dspr">${IC.check||""}<span><b>${s.ml} ml rinden aprox. ${s.ml*SPRAYS_ML} atomizaciones.</b> Con 2 o 3 por día, te dura alrededor de ${Math.round(s.ml*SPRAYS_ML/2.5/7)} semanas.</span></p>`;
   const sim=LIST.D.filter(x=>x.ok&&x.ml===s.ml&&x.n!==s.n).slice(0,6);
   if(sim.length)$("pd").insertAdjacentHTML("beforeend",`<div class="sim"><h4>Más decants de ${s.ml} ml</h4><div class="sim-row">${sim.map(x=>{const k=x.ph[0];return `<button class="sim-c" type="button" data-open="${esc(x.id)}">${k?`<span class="sim-i cn"><img src="${PHOTOS[k]}" alt="" loading="lazy"></span>`:`<span class="sim-i ph">${esc(itemName(x).slice(0,2))}</span>`}<small>${esc(cap(x.b))}</small><b>${esc(itemName(x))}</b><span class="sim-p">${simPrice(x)}</span></button>`}).join("")}</div></div>`);
   openSheet($("pd-sheet"));const shp=$("pd-sheet").querySelector(".sheet");if(shp)shp.scrollTop=0;
