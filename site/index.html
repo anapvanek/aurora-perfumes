@@ -788,7 +788,7 @@ function openDecant(id){const s=ITEMS[id];curP=id;
     ${oth.length?`<div class="dalt">${oth.map(x=>`<button type="button" class="chip" data-open="${esc(x.id)}">También en ${x.ml} ml${x.price?" · "+fmt(x.price):""}</button>`).join("")}</div>`:""}
     ${s.price?`<a class="btn-ghost wa-q" href="${wa}" target="_blank" rel="noopener">${IC.wa}Consultar por WhatsApp</a>`:""}
     <p class="fine">Perfume ${esc(n)} de ${esc(cap(s.b))} 100% original, fraccionado de la botella original a un frasco atomizador de ${s.ml} ml.</p>
-    <p class="dspr">${IC.check||""}<span><b>${s.ml} ml rinden aprox. ${s.ml*SPRAYS_ML} atomizaciones.</b> Con 2 o 3 por día, te dura alrededor de ${Math.round(s.ml*SPRAYS_ML/2.5/7)} semanas.</span></p>`;
+    <p class="dspr">${IC.check||""}<span><b>${s.ml} ml rinden aprox. ${s.ml*SPRAYS_ML} atomizaciones.</b> Con 5 o 6 por día, te dura alrededor de ${Math.round(s.ml*SPRAYS_ML/5.5/7)} semanas.</span></p>`;
   const sim=LIST.D.filter(x=>x.ok&&x.ml===s.ml&&x.n!==s.n).slice(0,6);
   if(sim.length)$("pd").insertAdjacentHTML("beforeend",`<div class="sim"><h4>Más decants de ${s.ml} ml</h4><div class="sim-row">${sim.map(x=>{const k=x.ph[0];return `<button class="sim-c" type="button" data-open="${esc(x.id)}">${k?`<span class="sim-i cn"><img src="${PHOTOS[k]}" alt="" loading="lazy"></span>`:`<span class="sim-i ph">${esc(itemName(x).slice(0,2))}</span>`}<small>${esc(cap(x.b))}</small><b>${esc(itemName(x))}</b><span class="sim-p">${simPrice(x)}</span></button>`}).join("")}</div></div>`);
   openSheet($("pd-sheet"));const shp=$("pd-sheet").querySelector(".sheet");if(shp)shp.scrollTop=0;
