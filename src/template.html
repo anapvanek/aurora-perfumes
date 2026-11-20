@@ -562,8 +562,8 @@ function priceHTML(it){
   if(it.c==="B")return `<b>${fmt(BOX_PRICE)}</b><small>${fmt(BOX_PRICE/20)} c/u · aromas surtidos, no se eligen</small>`;
   if(it.was)return `<b>${fmt(it.pm)} <s>${fmt(it.was)}</s></b><small class="why">${esc(it.why)}</small>`;
   if(it.c==="A"||it.c==="H"){const n=WH[it.c];
-    return mode==="may"?`<b>${fmt(it.pM)}</b><small>Mayorista desde ${n} u. · Minorista ${fmt(it.pm)}</small>`
-                      :`<b>${fmt(it.pm)}</b><small>Mayorista ${fmt(it.pM)} desde ${n} u.</small>`}
+    return mode==="may"?`<b>${fmt(it.pM)}</b><small>Mayorista desde ${n} u. combinadas · Minorista ${fmt(it.pm)}</small>`
+                      :`<b>${fmt(it.pm)}</b><small>Mayorista ${fmt(it.pM)} desde ${n} u. combinadas</small>`}
   const T=TIERS[it.c];return `<b>${fmt(T[0][1])}</b><small>Por cantidad, desde ${fmt(T[T.length-1][1])} c/u</small>`}
 function card(it,i){
   const n=itemName(it);
@@ -584,7 +584,7 @@ function tierList(c,box){const T=TIERS[c];
     <li><span>Caja de 20 surtidas (los aromas no se eligen)</span><span>$36.000<small>($1.800 c/u)</small></span></li>`}
 const tierPills=L=>`<div class="tiers" role="list">${L.map(([l,v,b])=>`<span class="tier${b?" best":""}" role="listitem"><small>${l}</small><b>${v}</b></span>`).join("")}</div>`;
 const INTRO={
-  A:()=>`<h2>Perfumes originales</h2><p>100% originales y sellados. Llevando 4 o más, aunque sean distintos, pagás precio mayorista.</p>`,
+  A:()=>`<h2>Perfumes originales</h2><p>100% originales y sellados. Precio mayorista llevando 4 o más, combinados como quieras: no hace falta que sean 4 del mismo perfume.</p>`,
   D:()=>`<h2>Decants</h2><p>Perfume 100% original fraccionado en frasco atomizador de ${[...new Set(LIST.D.map(x=>x.ml))].sort((a,b)=>a-b).join(" o ")} ml. Ideal para probar o para llevar.</p>`,
   E:()=>`<h2>Extractos 60 ml</h2><p>Inspirados en perfumes conocidos. El precio baja según cuántos lleves, combinando aromas.</p>
     <div class="prices-box"><div class="pb-h">Precio por cantidad<small>De $20.000 a $10.000 c/u</small></div><ul class="tl">${tierList("E")}</ul></div>`,
@@ -725,7 +725,7 @@ function openProduct(id){if(ITEMS[id].c==="D")return openDecant(id);const it=ITE
   let pb;
   if(it.c==="B")pb=`<ul class="tl"><li class="best"><span>Caja de 20 tubitos de 35 ml</span><span><b>${fmt(BOX_PRICE)}</b><small>(${fmt(BOX_PRICE/20)} c/u)</small></span></li></ul>`;
   else if(it.was)pb=`<ul class="tl"><li class="best"><span>Precio promo<small style="display:block;font-weight:400">${esc(it.why)} · mismo precio por unidad o por mayor</small></span><span><b>${fmt(it.pm)}</b><small><s>${fmt(it.was)}</s></small></span></li></ul>`;
-  else if(it.c==="A"||it.c==="H")pb=`<ul class="tl"><li><span>Minorista</span><span><b>${fmt(it.pm)}</b></span></li><li class="best"><span>Mayorista${it.c==="A"?" (4 o más, pueden ser distintos)":" (10 o más combinados)"}</span><span><b>${fmt(it.pM)}</b></span></li></ul>`;
+  else if(it.c==="A"||it.c==="H")pb=`<ul class="tl"><li><span>Minorista</span><span><b>${fmt(it.pm)}</b></span></li><li class="best"><span>Mayorista${it.c==="A"?" (4 o más combinados, pueden ser distintos)":" (10 o más combinados)"}</span><span><b>${fmt(it.pM)}</b></span></li></ul>`;
   else pb=`<ul class="tl">${tierList(it.c)}</ul>`;
   const wa=`https://wa.me/${WA}?text=${encodeURIComponent(`Hola Aurora Perfumes! Quería consultar por ${it.c==="B"?"la caja surtida de 20 tubitos":it.c==="E"?"el extracto inspirado en "+n:it.c==="T"?"el tubito "+n:it.c==="H"?HMETA[it.b].k.toLowerCase()+" "+n:n+" de "+cap(it.b)}.`)}`;
   $("pd").innerHTML=`${gal}
